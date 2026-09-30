@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'payment.html';
         return;
       }
-      if (item.id === 'actionGoldPrice') {
-        window.location.href = 'liverate.html';
+      if (item.id === 'actionInstagram') {
+        window.open('https://instagram.com', '_blank');
         return;
       }
       const label = item.querySelector('.action-label')?.innerText.replace(/\n/g, ' ') || 'Action';

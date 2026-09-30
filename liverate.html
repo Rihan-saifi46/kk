@@ -7,8 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
@@ -18,15 +18,15 @@
             sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
           },
           colors: {
-            appBg: '#FDFBF7',
-            appSurface: '#FFFFFF',
+            appBg: '#FAF7F2',
             forestDark: '#083E32',
             forestHover: '#062F26',
-            beigeLight: '#F3EFE6',
-            beigeMuted: '#EAE4D6',
+            creamMuted: '#F0ECE3',
+            cardBg: '#FFFFFF',
+            cardBorder: '#ECE7DD',
             badgeGreen: '#EAF6EC',
             badgeGreenText: '#1B8347',
-            subtleGray: '#8C887B',
+            subtleMuted: '#78746B',
           }
         }
       }
@@ -34,30 +34,20 @@
   </script>
 
   <style>
-    /* Custom scrollbar styling for mobile viewport */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    /* Smooth transitions for card visibility */
+    .fade-enter {
+      opacity: 0;
+      transform: translateY(6px);
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    /* iPhone Device Frame styling */
-    .iphone-case {
-      box-shadow: 
-        0 0 0 10px #D8C3A5, 
-        0 0 0 12px #BCA88C, 
-        0 25px 60px -15px rgba(35, 25, 15, 0.35),
-        0 10px 25px -5px rgba(0, 0, 0, 0.15);
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* Subtle smooth transition */
-    .transition-all-200 {
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Spinning animation for refresh button */
+    /* Refresh button rotation animation */
     @keyframes spin-anim {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -65,365 +55,368 @@
     .spin-active {
       animation: spin-anim 0.75s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+    /* Subtle custom focus state */
+    input:focus, select:focus {
+      outline: none;
+      border-color: #083E32;
+      box-shadow: 0 0 0 2px rgba(8, 62, 50, 0.12);
+    }
   </style>
 </head>
-<body class="bg-[#212529] min-h-screen py-4 md:py-10 px-2 sm:px-4 flex items-center justify-center font-sans antialiased text-[#2D2A26] selection:bg-[#083E32] selection:text-white">
 
-  <div class="relative w-full max-w-[428px] bg-black rounded-[52px] p-[10px] iphone-case mx-auto">
-    <!-- Physical Buttons & Antenna Details -->
-    <div class="absolute -left-[14px] top-[115px] w-[4px] h-[26px] bg-[#BCA88C] rounded-l-sm"></div>
-    <div class="absolute -left-[14px] top-[160px] w-[4px] h-[50px] bg-[#BCA88C] rounded-l-sm"></div>
-    <div class="absolute -left-[14px] top-[225px] w-[4px] h-[50px] bg-[#BCA88C] rounded-l-sm"></div>
-    <div class="absolute -right-[14px] top-[180px] w-[4px] h-[75px] bg-[#BCA88C] rounded-r-sm"></div>
+<body class="bg-[#F5F2EB] min-h-screen text-[#1E1B18] font-sans antialiased flex flex-col items-center justify-start py-6 sm:py-10 px-3 sm:px-6">
 
-    <!-- Phone Screen Interior -->
-    <div class="relative w-full bg-[#FAF7F2] rounded-[44px] overflow-hidden border-[4px] border-black flex flex-col max-h-[915px] h-[915px]">
+  <!-- Main Container -->
+  <main class="w-full max-w-xl bg-[#FAF7F2] rounded-3xl shadow-[0_12px_40px_rgba(28,25,23,0.06)] border border-[#ECE7DD] overflow-hidden p-4 sm:p-7">
+    
+    <!-- Top Bar Navigation -->
+    <header class="flex items-center justify-between pb-3 border-b border-[#ECE7DD]/60">
+      <button id="backBtn" aria-label="Go Back" class="w-10 h-10 rounded-full flex items-center justify-center text-[#1E1B18] hover:bg-[#F0ECE3] active:scale-95 transition-all">
+        <svg class="w-5 h-5 stroke-[2.4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+      </button>
 
-      <div class="px-5 pt-5 pb-1 flex items-center justify-between z-20">
-        <button id="backBtn" onclick="window.location.href='index.html'" aria-label="Go Back" class="w-9 h-9 flex items-center justify-start text-[#1e1e1e] active:scale-95 transition-transform">
-          <svg class="w-5 h-5 stroke-[2.4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
+      <h1 class="text-2xl sm:text-[28px] font-bold font-serif text-[#141210] tracking-tight">Live Rates</h1>
+
+      <button id="refreshBtn" aria-label="Refresh Rates" class="w-10 h-10 rounded-full flex items-center justify-center text-[#1E1B18] hover:bg-[#F0ECE3] active:scale-90 transition-all">
+        <svg id="refreshIcon" class="w-5 h-5 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Subtitle description -->
+    <p class="text-center text-[13.5px] sm:text-[14px] leading-relaxed text-[#726E65] max-w-sm mx-auto font-medium mt-4">
+      Stay updated with the latest gold and silver rates in real time.
+    </p>
+
+    <!-- Top Metal Switcher Toggle (Gold / Silver Exclusive Toggle) -->
+    <div class="bg-[#F0ECE3] p-1 rounded-2xl flex items-center justify-between text-sm font-semibold tracking-wide mt-4">
+      <button id="topToggleGold" onclick="switchRateView('gold')" class="flex-1 py-2.5 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200">
+        Gold
+      </button>
+      <button id="topToggleSilver" onclick="switchRateView('silver')" class="flex-1 py-2.5 rounded-xl text-[#6B665C] hover:text-[#1E1B18] transition-all duration-200">
+        Silver
+      </button>
+    </div>
+
+    <section class="mt-4">
+      
+      <!-- GOLD CARD (Visible when Gold is selected) -->
+      <article id="goldRateCard" class="fade-enter bg-white rounded-3xl p-4 sm:p-5 shadow-[0_4px_24px_rgba(0,0,0,0.03)] border border-[#ECE7DD] transition-all">
+        <div class="flex items-start justify-between">
+          <div class="flex space-x-3.5 items-center">
+            
+            <!-- Metallic Gold 3D Stacked Bars SVG Artwork -->
+            <div class="w-[84px] h-[78px] flex-shrink-0 relative">
+              <svg viewBox="0 0 120 100" class="w-full h-full drop-shadow-md">
+                <defs>
+                  <linearGradient id="goldTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFF3B0" />
+                    <stop offset="45%" stop-color="#E8BE52" />
+                    <stop offset="100%" stop-color="#B28221" />
+                  </linearGradient>
+                  <linearGradient id="goldFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#F2C85A" />
+                    <stop offset="50%" stop-color="#D9A128" />
+                    <stop offset="100%" stop-color="#8F6212" />
+                  </linearGradient>
+                  <linearGradient id="goldSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#C58E1B" />
+                    <stop offset="100%" stop-color="#734A06" />
+                  </linearGradient>
+                  <linearGradient id="shineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="20%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+                    <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Rear Stacked Bar -->
+                <polygon points="62,40 85,28 107,35 84,48" fill="url(#goldTopGrad)" />
+                <polygon points="62,40 84,48 84,65 62,56" fill="url(#goldFrontGrad)" />
+                <polygon points="84,48 107,35 107,52 84,65" fill="url(#goldSideGrad)" />
+
+                <!-- Bottom Right Bar -->
+                <polygon points="68,60 92,47 114,54 90,68" fill="url(#goldTopGrad)" />
+                <polygon points="68,60 90,68 90,85 68,76" fill="url(#goldFrontGrad)" />
+                <polygon points="90,68 114,54 114,71 90,85" fill="url(#goldSideGrad)" />
+
+                <!-- Main Angled Foreground Bar -->
+                <polygon points="12,65 52,22 88,32 46,77" fill="url(#goldTopGrad)" stroke="#DFB54A" stroke-width="0.5"/>
+                <polygon points="17,63 50,26 62,29 25,65" fill="url(#shineGrad)"/>
+                <polygon points="12,65 46,77 46,88 12,75" fill="url(#goldFrontGrad)" />
+                <polygon points="46,77 88,32 88,44 46,88" fill="url(#goldSideGrad)" />
+
+                <!-- 999.9 Stamping -->
+                <text x="46" y="52" fill="#885E0E" font-size="6" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" transform="rotate(13 46 52)" opacity="0.65" letter-spacing="1">999.9</text>
+                <text x="36" y="60" fill="#75500A" font-size="4.5" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" transform="rotate(13 36 60)" opacity="0.55">GOLD</text>
+              </svg>
+            </div>
+
+            <!-- Price & Header Info -->
+            <div>
+              <div class="flex items-center space-x-1.5">
+                <span id="goldRateHeaderTitle" class="text-[13.5px] font-semibold text-[#1C1A18]">Gold Rate (24K)</span>
+                <button title="Gold benchmark rate from MCX spot market" class="text-[#A29E93] hover:text-black">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                </button>
+              </div>
+              <div class="text-[26px] font-extrabold text-[#111] leading-none mt-1 tracking-tight">
+                <span id="goldDisplayPrice">₹6,842</span>
+              </div>
+              <div class="text-[11.5px] text-[#868277] font-medium mt-0.5">per gram</div>
+            </div>
+          </div>
+
+          <!-- 24K / 22K / 18K Card Purity Picker -->
+          <div class="relative">
+            <select id="goldRateCardPurity" onchange="updateGoldCardPurity(this.value)" class="appearance-none bg-[#F7F5F0] hover:bg-[#EFECE3] font-semibold text-[12.5px] text-[#2F2C27] py-1 pl-3 pr-7 rounded-lg border border-[#E3DDD1] cursor-pointer transition-colors">
+              <option value="24K" selected>24K</option>
+              <option value="22K">22K</option>
+              <option value="18K">18K</option>
+            </select>
+            <svg class="w-3.5 h-3.5 absolute right-2 top-2.5 text-[#504C44] pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Gold Card Bottom Row: Change Metric + Sparkline + Timeframe -->
+        <div class="mt-3 pt-1 flex items-end justify-between">
+          <div class="inline-flex items-center space-x-1 bg-badgeGreen text-badgeGreenText px-2 py-1 rounded-md text-[11.5px] font-semibold tracking-tight">
+            <span class="text-[10px]">▲</span>
+            <span id="goldChangeText">+ ₹32 (0.47%) Today</span>
+          </div>
+
+          <!-- Sparkline Chart -->
+          <div class="w-[145px] sm:w-[160px] h-[45px] relative">
+            <svg id="goldSparkline" viewBox="0 0 160 50" class="w-full h-full overflow-visible">
+              <defs>
+                <linearGradient id="goldChartGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E5C158" stop-opacity="0.45"/>
+                  <stop offset="100%" stop-color="#FFF8E0" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <path id="goldChartArea" d="M 0,42 Q 25,37 45,26 T 90,30 T 130,16 T 160,10 L 160,50 L 0,50 Z" fill="url(#goldChartGradient)" />
+              <path id="goldChartLine" d="M 0,42 Q 25,37 45,26 T 90,30 T 130,16 T 160,10" fill="none" stroke="#DDA833" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Timeframe Selectors -->
+        <div class="mt-2.5 flex justify-end items-center space-x-1.5 text-[11px] font-semibold text-[#7E7A6F]">
+          <button onclick="setTimeframe('gold', '1D', this)" class="tf-btn-gold px-2.5 py-0.5 rounded bg-[#083E32] text-white">1D</button>
+          <button onclick="setTimeframe('gold', '1W', this)" class="tf-btn-gold px-2.5 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1W</button>
+          <button onclick="setTimeframe('gold', '1M', this)" class="tf-btn-gold px-2.5 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1M</button>
+          <button onclick="setTimeframe('gold', '1Y', this)" class="tf-btn-gold px-2.5 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1Y</button>
+        </div>
+      </article>
+
+      <!-- SILVER CARD (Hidden initially, visible when Silver is selected) -->
+      <article id="silverRateCard" class="hidden fade-enter bg-white rounded-3xl p-4 sm:p-5 shadow-[0_4px_24px_rgba(0,0,0,0.03)] border border-[#ECE7DD] transition-all">
+        <div class="flex items-start justify-between">
+          <div class="flex space-x-3.5 items-center">
+            
+            <!-- Metallic Silver 3D Stacked Bars SVG Artwork -->
+            <div class="w-[84px] h-[78px] flex-shrink-0 relative">
+              <svg viewBox="0 0 120 100" class="w-full h-full drop-shadow-md">
+                <defs>
+                  <linearGradient id="silverTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="50%" stop-color="#D9DEE3" />
+                    <stop offset="100%" stop-color="#A5ACB2" />
+                  </linearGradient>
+                  <linearGradient id="silverFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#E2E6E9" />
+                    <stop offset="50%" stop-color="#A9B1B7" />
+                    <stop offset="100%" stop-color="#73797E" />
+                  </linearGradient>
+                  <linearGradient id="silverSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#8F969C" />
+                    <stop offset="100%" stop-color="#55595D" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Rear Bar -->
+                <polygon points="62,40 85,28 107,35 84,48" fill="url(#silverTopGrad)" />
+                <polygon points="62,40 84,48 84,65 62,56" fill="url(#silverFrontGrad)" />
+                <polygon points="84,48 107,35 107,52 84,65" fill="url(#silverSideGrad)" />
+
+                <!-- Bottom Right Bar -->
+                <polygon points="68,60 92,47 114,54 90,68" fill="url(#silverTopGrad)" />
+                <polygon points="68,60 90,68 90,85 68,76" fill="url(#silverFrontGrad)" />
+                <polygon points="90,68 114,54 114,71 90,85" fill="url(#silverSideGrad)" />
+
+                <!-- Main Angled Silver Bar -->
+                <polygon points="12,65 52,22 88,32 46,77" fill="url(#silverTopGrad)" stroke="#CAD1D6" stroke-width="0.5"/>
+                <polygon points="17,63 50,26 62,29 25,65" fill="url(#shineGrad)"/>
+                <polygon points="12,65 46,77 46,88 12,75" fill="url(#silverFrontGrad)" />
+                <polygon points="46,77 88,32 88,44 46,88" fill="url(#silverSideGrad)" />
+
+                <!-- 999 Fine Silver stamping -->
+                <text x="46" y="52" fill="#5A6166" font-size="6" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" transform="rotate(13 46 52)" opacity="0.65" letter-spacing="1">999.0</text>
+                <text x="35" y="60" fill="#4B5156" font-size="4.5" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" transform="rotate(13 35 60)" opacity="0.55">SILVER</text>
+              </svg>
+            </div>
+
+            <!-- Price & Header Info -->
+            <div>
+              <div class="flex items-center space-x-1.5">
+                <span class="text-[13.5px] font-semibold text-[#1C1A18]">Silver Rate (99.9%)</span>
+                <button title="Silver benchmark spot market price per gram" class="text-[#A29E93] hover:text-black">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                </button>
+              </div>
+              <div class="text-[26px] font-extrabold text-[#111] leading-none mt-1 tracking-tight">
+                <span id="silverDisplayPrice">₹82.40</span>
+              </div>
+              <div class="text-[11.5px] text-[#868277] font-medium mt-0.5">per gram</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Silver Card Bottom Row -->
+        <div class="mt-3 pt-1 flex items-end justify-between">
+          <div class="inline-flex items-center space-x-1 bg-badgeGreen text-badgeGreenText px-2 py-1 rounded-md text-[11.5px] font-semibold tracking-tight">
+            <span class="text-[10px]">▲</span>
+            <span id="silverChangeText">+ ₹0.60 (0.73%) Today</span>
+          </div>
+
+          <!-- Silver Sparkline Chart Container -->
+          <div class="w-[145px] sm:w-[160px] h-[45px] relative">
+            <svg id="silverSparkline" viewBox="0 0 160 50" class="w-full h-full overflow-visible">
+              <defs>
+                <linearGradient id="silverChartGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9CA3AF" stop-opacity="0.38"/>
+                  <stop offset="100%" stop-color="#F3F4F6" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <path id="silverChartArea" d="M 0,44 Q 28,38 50,30 T 95,24 T 132,18 T 160,8 L 160,50 L 0,50 Z" fill="url(#silverChartGradient)" />
+              <path id="silverChartLine" d="M 0,44 Q 28,38 50,30 T 95,24 T 132,18 T 160,8" fill="none" stroke="#8E959E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Timeframe Selectors -->
+        <div class="mt-2.5 flex justify-end items-center space-x-1.5 text-[11px] font-semibold text-[#7E7A6F]">
+          <button onclick="setTimeframe('silver', '1D', this)" class="tf-btn-silver px-2.5 py-0.5 rounded bg-[#083E32] text-white">1D</button>
+          <button onclick="setTimeframe('silver', '1W', this)" class="tf-btn-silver px-2.5 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1W</button>
+          <button onclick="setTimeframe('silver', '1M', this)" class="tf-btn-silver px-2.5 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1M</button>
+          <button onclick="setTimeframe('silver', '1Y', this)" class="tf-btn-silver px-2.5 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1Y</button>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="mt-6 pt-3 border-t border-[#ECE7DD]">
+      <h2 class="font-serif text-[21px] sm:text-[22px] font-bold text-[#141210] tracking-tight">Metal Value Calculator</h2>
+      <p class="text-[13px] text-[#78746B] mt-0.5 font-medium">Calculate the value of your gold or silver easily.</p>
+
+      <!-- Calculator Independent Metal Switcher Toggle -->
+      <div class="bg-[#F0ECE3] p-1 rounded-2xl flex items-center justify-between text-[13px] font-semibold mt-3">
+        <button id="calcToggleGold" onclick="setCalcMetal('gold')" class="flex-1 py-2 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200">
+          Gold
         </button>
-
-        <h1 class="text-[27px] font-bold font-serif text-[#161413] tracking-normal">Live Rates</h1>
-
-        <button id="refreshBtn" aria-label="Refresh Rates" class="w-9 h-9 flex items-center justify-end text-[#1e1e1e] active:scale-90 transition-transform">
-          <svg id="refreshIcon" class="w-[22px] h-[22px] stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-          </svg>
+        <button id="calcToggleSilver" onclick="setCalcMetal('silver')" class="flex-1 py-2 rounded-xl text-[#6B665C] hover:text-[#1E1B18] transition-all duration-200">
+          Silver
         </button>
       </div>
 
-      <div class="flex-1 overflow-y-auto no-scrollbar px-4 pb-8 space-y-4 pt-0.5">
-
-        <!-- Subtitle description -->
-        <p class="text-center text-[13.5px] leading-snug text-[#726E65] max-w-[290px] mx-auto font-medium">
-          Stay updated with the latest gold and silver rates in real time.
-        </p>
-
-        <div class="bg-[#F0ECE3] p-1 rounded-2xl flex items-center justify-between text-sm font-semibold tracking-wide">
-          <button id="topToggleGold" onclick="handleTopToggle('gold')" class="flex-1 py-2.5 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200">
-            Gold
-          </button>
-          <button id="topToggleSilver" onclick="handleTopToggle('silver')" class="flex-1 py-2.5 rounded-xl text-[#6B665C] transition-all duration-200">
-            Silver
-          </button>
-        </div>
-
-        <div id="goldCard" class="bg-white rounded-3xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-[#F4EFE6] transition-transform duration-200 hover:shadow-md">
-          <div class="flex items-start justify-between">
-            <div class="flex space-x-3 items-center">
-              <!-- Metallic Gold 3D Bars SVG Artwork -->
-              <div class="w-[84px] h-[78px] flex-shrink-0 relative">
-                <svg viewBox="0 0 120 100" class="w-full h-full drop-shadow-md">
-                  <defs>
-                    <linearGradient id="goldTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#FFF2A8" />
-                      <stop offset="45%" stop-color="#E7BC4C" />
-                      <stop offset="100%" stop-color="#B28221" />
-                    </linearGradient>
-                    <linearGradient id="goldFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stop-color="#F2C85A" />
-                      <stop offset="50%" stop-color="#D9A128" />
-                      <stop offset="100%" stop-color="#8F6212" />
-                    </linearGradient>
-                    <linearGradient id="goldSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#C58E1B" />
-                      <stop offset="100%" stop-color="#734A06" />
-                    </linearGradient>
-                    <!-- Glossy overlay -->
-                    <linearGradient id="shineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="20%" stop-color="#FFFFFF" stop-opacity="0.6"/>
-                      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
-                    </linearGradient>
-                  </defs>
-
-                  <!-- Rear Stacked Bar -->
-                  <polygon points="62,40 85,28 107,35 84,48" fill="url(#goldTopGrad)" />
-                  <polygon points="62,40 84,48 84,65 62,56" fill="url(#goldFrontGrad)" />
-                  <polygon points="84,48 107,35 107,52 84,65" fill="url(#goldSideGrad)" />
-
-                  <!-- Bottom Right Bar -->
-                  <polygon points="68,60 92,47 114,54 90,68" fill="url(#goldTopGrad)" />
-                  <polygon points="68,60 90,68 90,85 68,76" fill="url(#goldFrontGrad)" />
-                  <polygon points="90,68 114,54 114,71 90,85" fill="url(#goldSideGrad)" />
-
-                  <!-- Main Angled Foreground Bar -->
-                  <!-- Top face -->
-                  <polygon points="12,65 52,22 88,32 46,77" fill="url(#goldTopGrad)" stroke="#DFB54A" stroke-width="0.5"/>
-                  <!-- Highlight glint -->
-                  <polygon points="17,63 50,26 62,29 25,65" fill="url(#shineGrad)"/>
-                  <!-- Front face -->
-                  <polygon points="12,65 46,77 46,88 12,75" fill="url(#goldFrontGrad)" />
-                  <!-- Right face -->
-                  <polygon points="46,77 88,32 88,44 46,88" fill="url(#goldSideGrad)" />
-
-                  <!-- 999.9 Fine Gold stamping -->
-                  <text x="46" y="52" fill="#885E0E" font-size="6" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" transform="rotate(13 46 52)" opacity="0.65" letter-spacing="1">999.9</text>
-                  <text x="36" y="60" fill="#75500A" font-size="4.5" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" transform="rotate(13 36 60)" opacity="0.55">GOLD</text>
-                </svg>
-              </div>
-
-              <!-- Price & Header Info -->
-              <div>
-                <div class="flex items-center space-x-1">
-                  <span id="goldRateHeaderTitle" class="text-[13.5px] font-semibold text-[#1C1A18]">Gold Rate (24K)</span>
-                  <button onclick="toggleTooltip('goldTooltip')" class="text-[#A29E93] hover:text-black">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                  </button>
-                </div>
-                <div class="text-[25px] font-extrabold text-[#111] leading-none mt-1 tracking-tight">
-                  <span id="goldDisplayPrice">₹6,842</span>
-                </div>
-                <div class="text-[11.5px] text-[#868277] font-medium mt-0.5">per gram</div>
-              </div>
-            </div>
-
-            <!-- 24K Dropdown Picker -->
+      <!-- Two-Column Interactive Inputs & Result Card -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-3.5 items-stretch">
+        
+        <!-- Left Side Inputs: Purity & Weight -->
+        <div class="space-y-3">
+          <!-- Purity Selector -->
+          <div>
+            <label id="calcPurityLabel" for="calcPurity" class="block text-[11.5px] font-semibold text-[#504C44] mb-1">Purity</label>
             <div class="relative">
-              <select id="goldRateCardPurity" onchange="updateGoldCardPurity(this.value)" class="appearance-none bg-[#F7F5F0] hover:bg-[#EFECE3] font-semibold text-[12px] text-[#2F2C27] py-1 pl-2.5 pr-6 rounded-lg border border-[#E9E4D8] cursor-pointer outline-none transition-colors">
-                <option value="24K" selected>24K</option>
-                <option value="22K">22K</option>
-                <option value="18K">18K</option>
+              <select id="calcPurity" onchange="runCalculation()" class="w-full bg-white appearance-none border border-[#E3DDD1] rounded-xl py-2.5 px-3 text-[13.5px] font-semibold text-[#1F1D19] cursor-pointer transition-colors pr-9">
+                <option value="24K" selected>24K (999)</option>
+                <option value="22K">22K (916)</option>
+                <option value="18K">18K (750)</option>
               </select>
-              <svg class="w-3.5 h-3.5 absolute right-1.5 top-2 text-[#46433C] pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 absolute right-3 top-3 text-[#646056] pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </div>
 
-          <!-- Bottom row: Today badge and Sparkline Area Chart -->
-          <div class="mt-2.5 pt-1 flex items-end justify-between">
-            <!-- Positive change tag -->
-            <div class="inline-flex items-center space-x-1 bg-badgeGreen text-badgeGreenText px-2 py-1 rounded-md text-[11.5px] font-semibold tracking-tight">
-              <span class="text-[10px]">▲</span>
-              <span id="goldChangeText">+ ₹32 (0.47%) Today</span>
-            </div>
+          <!-- Weight Input + Unit Toggle (g vs kg) -->
+          <div>
+            <label for="calcWeight" class="block text-[11.5px] font-semibold text-[#504C44] mb-1">Weight</label>
+            <div class="flex items-center space-x-1.5">
+              <input id="calcWeight" type="number" min="0.001" step="any" value="10" oninput="runCalculation()" class="w-full bg-white border border-[#E3DDD1] rounded-xl py-2 px-3 text-[14px] font-semibold text-[#1F1D19] transition-colors" />
 
-            <!-- Sparkline Chart Container -->
-            <div class="w-[145px] h-[45px] relative">
-              <svg id="goldSparkline" viewBox="0 0 160 50" class="w-full h-full overflow-visible">
-                <defs>
-                  <linearGradient id="goldChartGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#E5C158" stop-opacity="0.45"/>
-                    <stop offset="100%" stop-color="#FFF8E0" stop-opacity="0.0"/>
-                  </linearGradient>
-                </defs>
-                <path id="goldChartArea" d="M 0,42 Q 25,37 45,26 T 90,30 T 130,16 T 160,10 L 160,50 L 0,50 Z" fill="url(#goldChartGradient)" />
-                <path id="goldChartLine" d="M 0,42 Q 25,37 45,26 T 90,30 T 130,16 T 160,10" fill="none" stroke="#DDA833" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+              <!-- Unit Pills -->
+              <div class="bg-[#F0ECE3] p-0.5 rounded-xl flex items-center flex-shrink-0">
+                <button id="unitG" onclick="setCalcUnit('g')" class="w-9 py-2 rounded-lg text-xs font-bold bg-[#083E32] text-white shadow-xs transition-colors">g</button>
+                <button id="unitKg" onclick="setCalcUnit('kg')" class="w-9 py-2 rounded-lg text-xs font-bold text-[#635E54] hover:text-black transition-colors">kg</button>
+              </div>
             </div>
-          </div>
-
-          <!-- Chart timeframe selector -->
-          <div class="mt-2 flex justify-end items-center space-x-1.5 text-[11px] font-semibold text-[#7E7A6F]">
-            <button onclick="setTimeframe('gold', '1D', this)" class="tf-btn-gold px-2 py-0.5 rounded bg-[#083E32] text-white">1D</button>
-            <button onclick="setTimeframe('gold', '1W', this)" class="tf-btn-gold px-2 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1W</button>
-            <button onclick="setTimeframe('gold', '1M', this)" class="tf-btn-gold px-2 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1M</button>
-            <button onclick="setTimeframe('gold', '1Y', this)" class="tf-btn-gold px-2 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1Y</button>
           </div>
         </div>
 
-        <div id="silverCard" class="bg-white rounded-3xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-[#F4EFE6] transition-transform duration-200 hover:shadow-md">
-          <div class="flex items-start justify-between">
-            <div class="flex space-x-3 items-center">
-              <!-- Metallic Silver 3D Bars SVG Artwork -->
-              <div class="w-[84px] h-[78px] flex-shrink-0 relative">
-                <svg viewBox="0 0 120 100" class="w-full h-full drop-shadow-md">
-                  <defs>
-                    <linearGradient id="silverTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#FFFFFF" />
-                      <stop offset="50%" stop-color="#D9DEE3" />
-                      <stop offset="100%" stop-color="#A5ACB2" />
-                    </linearGradient>
-                    <linearGradient id="silverFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stop-color="#E2E6E9" />
-                      <stop offset="50%" stop-color="#A9B1B7" />
-                      <stop offset="100%" stop-color="#73797E" />
-                    </linearGradient>
-                    <linearGradient id="silverSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#8F969C" />
-                      <stop offset="100%" stop-color="#55595D" />
-                    </linearGradient>
-                  </defs>
-
-                  <!-- Rear Silver Bar -->
-                  <polygon points="62,40 85,28 107,35 84,48" fill="url(#silverTopGrad)" />
-                  <polygon points="62,40 84,48 84,65 62,56" fill="url(#silverFrontGrad)" />
-                  <polygon points="84,48 107,35 107,52 84,65" fill="url(#silverSideGrad)" />
-
-                  <!-- Bottom Right Silver Bar -->
-                  <polygon points="68,60 92,47 114,54 90,68" fill="url(#silverTopGrad)" />
-                  <polygon points="68,60 90,68 90,85 68,76" fill="url(#silverFrontGrad)" />
-                  <polygon points="90,68 114,54 114,71 90,85" fill="url(#silverSideGrad)" />
-
-                  <!-- Main Angled Silver Bar -->
-                  <polygon points="12,65 52,22 88,32 46,77" fill="url(#silverTopGrad)" stroke="#CAD1D6" stroke-width="0.5"/>
-                  <polygon points="17,63 50,26 62,29 25,65" fill="url(#shineGrad)"/>
-                  <polygon points="12,65 46,77 46,88 12,75" fill="url(#silverFrontGrad)" />
-                  <polygon points="46,77 88,32 88,44 46,88" fill="url(#silverSideGrad)" />
-
-                  <!-- 999 Fine Silver stamping -->
-                  <text x="46" y="52" fill="#5A6166" font-size="6" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" transform="rotate(13 46 52)" opacity="0.65" letter-spacing="1">999.0</text>
-                  <text x="35" y="60" fill="#4B5156" font-size="4.5" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" transform="rotate(13 35 60)" opacity="0.55">SILVER</text>
-                </svg>
-              </div>
-
-              <!-- Price & Header Info -->
-              <div>
-                <div class="flex items-center space-x-1">
-                  <span class="text-[13.5px] font-semibold text-[#1C1A18]">Silver Rate</span>
-                  <button onclick="toggleTooltip('silverTooltip')" class="text-[#A29E93] hover:text-black">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                  </button>
-                </div>
-                <div class="text-[25px] font-extrabold text-[#111] leading-none mt-1 tracking-tight">
-                  <span id="silverDisplayPrice">₹82.40</span>
-                </div>
-                <div class="text-[11.5px] text-[#868277] font-medium mt-0.5">per gram</div>
-              </div>
-            </div>
+        <!-- Right Side: Estimated Value Card -->
+        <div class="bg-[#EBF3ED] rounded-2xl p-4 flex flex-col justify-center border border-[#D5E6D9]">
+          <span class="text-[12px] font-semibold text-[#30664B]">Estimated Value</span>
+          <div class="text-[24px] sm:text-[26px] font-extrabold text-[#0D382A] tracking-tight mt-1 leading-none">
+            <span id="estimatedTotal">₹68,420</span>
           </div>
-
-          <!-- Bottom row: Today badge and Sparkline Area Chart -->
-          <div class="mt-2.5 pt-1 flex items-end justify-between">
-            <div class="inline-flex items-center space-x-1 bg-badgeGreen text-badgeGreenText px-2 py-1 rounded-md text-[11.5px] font-semibold tracking-tight">
-              <span class="text-[10px]">▲</span>
-              <span id="silverChangeText">+ ₹0.60 (0.73%) Today</span>
-            </div>
-
-            <!-- Sparkline Chart Container -->
-            <div class="w-[145px] h-[45px] relative">
-              <svg id="silverSparkline" viewBox="0 0 160 50" class="w-full h-full overflow-visible">
-                <defs>
-                  <linearGradient id="silverChartGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#9CA3AF" stop-opacity="0.38"/>
-                    <stop offset="100%" stop-color="#F3F4F6" stop-opacity="0.0"/>
-                  </linearGradient>
-                </defs>
-                <path id="silverChartArea" d="M 0,44 Q 28,38 50,30 T 95,24 T 132,18 T 160,8 L 160,50 L 0,50 Z" fill="url(#silverChartGradient)" />
-                <path id="silverChartLine" d="M 0,44 Q 28,38 50,30 T 95,24 T 132,18 T 160,8" fill="none" stroke="#8E959E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
+          <div class="text-[11.5px] text-[#557F6C] font-semibold mt-2">
+            <span id="calcBreakdown">(₹6,842 × 10 g)</span>
           </div>
-
-          <!-- Chart timeframe selector -->
-          <div class="mt-2 flex justify-end items-center space-x-1.5 text-[11px] font-semibold text-[#7E7A6F]">
-            <button onclick="setTimeframe('silver', '1D', this)" class="tf-btn-silver px-2 py-0.5 rounded bg-[#083E32] text-white">1D</button>
-            <button onclick="setTimeframe('silver', '1W', this)" class="tf-btn-silver px-2 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1W</button>
-            <button onclick="setTimeframe('silver', '1M', this)" class="tf-btn-silver px-2 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1M</button>
-            <button onclick="setTimeframe('silver', '1Y', this)" class="tf-btn-silver px-2 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors">1Y</button>
-          </div>
-        </div>
-
-        <div class="pt-2">
-          <h2 class="font-serif text-[21px] font-bold text-[#141210] tracking-tight">Metal Value Calculator</h2>
-          <p class="text-[12.8px] text-[#78746B] mt-0.5 font-medium">Calculate the value of your gold or silver easily.</p>
-
-          <!-- Calculator Mode Toggle -->
-          <div class="bg-[#F0ECE3] p-1 rounded-2xl flex items-center justify-between text-[13px] font-semibold mt-3">
-            <button id="calcToggleGold" onclick="setCalcMetal('gold')" class="flex-1 py-2 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200">
-              Gold
-            </button>
-            <button id="calcToggleSilver" onclick="setCalcMetal('silver')" class="flex-1 py-2 rounded-xl text-[#6B665C] transition-all duration-200">
-              Silver
-            </button>
-          </div>
-
-          <!-- Two-Column Calculator Fields -->
-          <div class="grid grid-cols-2 gap-3.5 mt-3.5 items-stretch">
-            <!-- Left Inputs -->
-            <div class="space-y-3">
-              <!-- Purity -->
-              <div>
-                <label id="purityLabel" class="block text-[11.5px] font-medium text-[#504C44] mb-1">Purity</label>
-                <div class="relative">
-                  <select id="calcPurity" onchange="runCalculation()" class="w-full bg-white appearance-none border border-[#E3DDD1] rounded-xl py-2.5 px-3 text-[13.5px] font-semibold text-[#1F1D19] outline-none hover:border-[#C4BCAB] focus:border-[#083E32] transition-colors">
-                    <option value="24K" selected>24K (999)</option>
-                    <option value="22K">22K (916)</option>
-                    <option value="18K">18K (750)</option>
-                  </select>
-                  <svg class="w-4 h-4 absolute right-3 top-3 text-[#646056] pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Weight with Unit Selector -->
-              <div>
-                <label class="block text-[11.5px] font-medium text-[#504C44] mb-1">Weight</label>
-                <div class="flex items-center space-x-1.5">
-                  <input id="calcWeight" type="number" min="0.01" step="any" value="10" oninput="runCalculation()" class="w-full bg-white border border-[#E3DDD1] rounded-xl py-2 px-3 text-[14px] font-semibold text-[#1F1D19] outline-none hover:border-[#C4BCAB] focus:border-[#083E32] transition-colors" />
-
-                  <!-- Unit Toggle Pills: 'g' and 'kg' -->
-                  <div class="bg-[#F0ECE3] p-0.5 rounded-xl flex items-center">
-                    <button id="unitG" onclick="setCalcUnit('g')" class="w-8 py-2 rounded-lg text-xs font-bold bg-[#083E32] text-white shadow-xs transition-colors">g</button>
-                    <button id="unitKg" onclick="setCalcUnit('kg')" class="w-8 py-2 rounded-lg text-xs font-bold text-[#635E54] hover:text-black transition-colors">kg</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Estimated Value Card -->
-            <div class="bg-[#EBF3ED] rounded-2xl p-3.5 flex flex-col justify-center border border-[#D5E6D9]">
-              <span class="text-[12px] font-semibold text-[#30664B]">Estimated Value</span>
-              <div class="text-[22px] font-extrabold text-[#0D382A] tracking-tight mt-1 leading-none">
-                <span id="estimatedTotal">₹68,420</span>
-              </div>
-              <div class="text-[11px] text-[#557F6C] font-semibold mt-1.5">
-                <span id="calcBreakdown">(₹6,842 × 10 g)</span>
-              </div>
-            </div>
-          </div>
-
-          <button id="calcActionBtn" onclick="triggerCalculateAnimation()" class="w-full mt-3.5 bg-[#083E32] hover:bg-[#062F26] active:scale-[0.99] text-white font-semibold py-3.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-[14px] shadow-sm transition-all duration-150">
-            <!-- Calculator Icon -->
-            <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <rect x="4" y="2" width="16" height="20" rx="2"/>
-              <line x1="8" y1="6" x2="16" y2="6"/>
-              <line x1="16" y1="14" x2="16" y2="18"/>
-              <path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/>
-            </svg>
-            <span>Calculate</span>
-          </button>
-        </div>
-
-        <div class="bg-[#F3EFE7] rounded-2xl p-3.5 flex items-start space-x-2.5 text-[11px] text-[#716C62] leading-relaxed border border-[#E9E3D6]">
-          <div class="mt-0.5 flex-shrink-0 text-[#8E887B]">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M12 16v-4M12 8h.01"/>
-            </svg>
-          </div>
-          <p>
-            Rates are updated in real time and may vary by location, making charges and taxes. Please confirm the final rate at the time of purchase in our showroom.
-          </p>
         </div>
 
       </div>
 
-      <div class="py-2.5 flex justify-center bg-[#FAF7F2] select-none">
-        <div class="w-32 h-1 bg-black rounded-full opacity-80"></div>
+      <!-- Action Button -->
+      <button id="calcActionBtn" onclick="triggerCalculateAnimation()" class="w-full mt-3.5 bg-[#083E32] hover:bg-[#062F26] active:scale-[0.99] text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 text-[14px] shadow-sm transition-all duration-150">
+        <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="16" y1="14" x2="16" y2="18"/>
+          <path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/>
+        </svg>
+        <span>Calculate</span>
+      </button>
+    </section>
+
+    <footer class="mt-5 bg-[#F3EFE7] rounded-2xl p-3.5 flex items-start space-x-2.5 text-[11px] sm:text-[11.5px] text-[#716C62] leading-relaxed border border-[#E9E3D6]">
+      <div class="mt-0.5 flex-shrink-0 text-[#8E887B]">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4M12 8h.01"/>
+        </svg>
       </div>
-    </div>
-  </div>
+      <p>
+        Rates are updated in real time and may vary by location, making charges and taxes. Please confirm the final rate at the time of purchase in our showroom.
+      </p>
+    </footer>
+
+  </main>
 
   <script>
     // State management
-    const state = {
+    const appState = {
       baseGold24K: 6842,
-      baseSilver: 82.40,
-      activeTopTab: 'gold',
-      calcMetal: 'gold',
-      calcUnit: 'g',
+      baseSilver999: 82.40,
+      activeRateView: 'gold', // 'gold' | 'silver'
+      calcMetal: 'gold',      // 'gold' | 'silver'
+      calcUnit: 'g',          // 'g' | 'kg'
       goldPurityCard: '24K',
-      purityMultipliers: {
+      goldMultipliers: {
         '24K': 1.0,
-        '22K': 22 / 24, // ~0.9166
-        '18K': 18 / 24  // ~0.7500
+        '22K': 22 / 24, // ~0.91666
+        '18K': 18 / 24  // 0.75
       },
-      chartCurves: {
+      silverMultipliers: {
+        '999': 1.0,     // Fine Silver (99.9%)
+        '925': 0.925    // Sterling Silver (92.5%)
+      },
+      chartData: {
         gold: {
           '1D': {
             line: 'M 0,42 Q 25,37 45,26 T 90,30 T 130,16 T 160,10',
@@ -471,83 +464,87 @@
       }
     };
 
-    // Number formatter for Indian Rupee
-    function formatINR(number, decimals = 0) {
-      if (isNaN(number)) return '₹0';
-      return '₹' + number.toLocaleString('en-IN', {
+    // Helper: INR Currency Formatter
+    function formatINR(amount, decimals = 0) {
+      if (isNaN(amount) || amount === null) return '₹0';
+      return '₹' + amount.toLocaleString('en-IN', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals
       });
     }
 
-    // Top toggle tabs (Gold / Silver focus)
-    function handleTopToggle(metal) {
-      state.activeTopTab = metal;
-      const goldBtn = document.getElementById('topToggleGold');
-      const silverBtn = document.getElementById('topToggleSilver');
-      const goldCard = document.getElementById('goldCard');
-      const silverCard = document.getElementById('silverCard');
+    // Top Rate View Switcher: Exclusive Gold vs Silver display
+    function switchRateView(metal) {
+      appState.activeRateView = metal;
+      const goldTabBtn = document.getElementById('topToggleGold');
+      const silverTabBtn = document.getElementById('topToggleSilver');
+      const goldCard = document.getElementById('goldRateCard');
+      const silverCard = document.getElementById('silverRateCard');
 
       if (metal === 'gold') {
-        goldBtn.className = 'flex-1 py-2.5 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
-        silverBtn.className = 'flex-1 py-2.5 rounded-xl text-[#6B665C] transition-all duration-200';
-        goldCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        goldTabBtn.className = 'flex-1 py-2.5 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
+        silverTabBtn.className = 'flex-1 py-2.5 rounded-xl text-[#6B665C] hover:text-[#1E1B18] transition-all duration-200';
+        
+        goldCard.classList.remove('hidden');
+        silverCard.classList.add('hidden');
       } else {
-        silverBtn.className = 'flex-1 py-2.5 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
-        goldBtn.className = 'flex-1 py-2.5 rounded-xl text-[#6B665C] transition-all duration-200';
-        silverCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        silverTabBtn.className = 'flex-1 py-2.5 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
+        goldTabBtn.className = 'flex-1 py-2.5 rounded-xl text-[#6B665C] hover:text-[#1E1B18] transition-all duration-200';
+
+        silverCard.classList.remove('hidden');
+        goldCard.classList.add('hidden');
       }
     }
 
-    // Switch Purity in the Gold Rate Card
+    // Gold Card Purity Selector
     function updateGoldCardPurity(purity) {
-      state.goldPurityCard = purity;
+      appState.goldPurityCard = purity;
       const headerTitle = document.getElementById('goldRateHeaderTitle');
-      const priceElem = document.getElementById('goldDisplayPrice');
+      const priceElement = document.getElementById('goldDisplayPrice');
 
       headerTitle.textContent = `Gold Rate (${purity})`;
-      const adjustedRate = Math.round(state.baseGold24K * state.purityMultipliers[purity]);
-      priceElem.textContent = formatINR(adjustedRate);
+      const multiplier = appState.goldMultipliers[purity] || 1.0;
+      const currentRate = Math.round(appState.baseGold24K * multiplier);
+      priceElement.textContent = formatINR(currentRate);
 
-      // If calculator is currently on gold, sync purity
-      if (state.calcMetal === 'gold') {
+      // If calculator is currently on gold, keep in sync
+      if (appState.calcMetal === 'gold') {
         document.getElementById('calcPurity').value = purity;
         runCalculation();
       }
     }
 
-    // Change Chart Timeframe (1D, 1W, 1M, 1Y)
-    function setTimeframe(metal, tf, btn) {
-      const parent = btn.parentElement;
-      const buttons = parent.querySelectorAll('button');
-      buttons.forEach(b => {
-        b.className = `tf-btn-${metal} px-2 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors`;
+    // Chart Timeframe Switcher
+    function setTimeframe(metal, tf, clickedBtn) {
+      const container = clickedBtn.parentElement;
+      container.querySelectorAll('button').forEach(btn => {
+        btn.className = `tf-btn-${metal} px-2.5 py-0.5 rounded hover:bg-[#F0ECE3] transition-colors`;
       });
-      btn.className = `tf-btn-${metal} px-2 py-0.5 rounded bg-[#083E32] text-white`;
+      clickedBtn.className = `tf-btn-${metal} px-2.5 py-0.5 rounded bg-[#083E32] text-white`;
 
-      const curve = state.chartCurves[metal][tf];
+      const data = appState.chartData[metal][tf];
       if (metal === 'gold') {
-        document.getElementById('goldChartLine').setAttribute('d', curve.line);
-        document.getElementById('goldChartArea').setAttribute('d', curve.area);
-        document.getElementById('goldChangeText').textContent = curve.change;
+        document.getElementById('goldChartLine').setAttribute('d', data.line);
+        document.getElementById('goldChartArea').setAttribute('d', data.area);
+        document.getElementById('goldChangeText').textContent = data.change;
       } else {
-        document.getElementById('silverChartLine').setAttribute('d', curve.line);
-        document.getElementById('silverChartArea').setAttribute('d', curve.area);
-        document.getElementById('silverChangeText').textContent = curve.change;
+        document.getElementById('silverChartLine').setAttribute('d', data.line);
+        document.getElementById('silverChartArea').setAttribute('d', data.area);
+        document.getElementById('silverChangeText').textContent = data.change;
       }
     }
 
-    // Toggle Calculator Metal: Gold vs Silver
+    // Metal Value Calculator Switcher: Gold vs Silver
     function setCalcMetal(metal) {
-      state.calcMetal = metal;
-      const btnGold = document.getElementById('calcToggleGold');
-      const btnSilver = document.getElementById('calcToggleSilver');
+      appState.calcMetal = metal;
+      const goldBtn = document.getElementById('calcToggleGold');
+      const silverBtn = document.getElementById('calcToggleSilver');
       const puritySelect = document.getElementById('calcPurity');
-      const purityLabel = document.getElementById('purityLabel');
+      const purityLabel = document.getElementById('calcPurityLabel');
 
       if (metal === 'gold') {
-        btnGold.className = 'flex-1 py-2 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
-        btnSilver.className = 'flex-1 py-2 rounded-xl text-[#6B665C] transition-all duration-200';
+        goldBtn.className = 'flex-1 py-2 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
+        silverBtn.className = 'flex-1 py-2 rounded-xl text-[#6B665C] hover:text-[#1E1B18] transition-all duration-200';
         purityLabel.textContent = 'Purity';
         puritySelect.innerHTML = `
           <option value="24K" selected>24K (999)</option>
@@ -555,103 +552,94 @@
           <option value="18K">18K (750)</option>
         `;
       } else {
-        btnSilver.className = 'flex-1 py-2 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
-        btnGold.className = 'flex-1 py-2 rounded-xl text-[#6B665C] transition-all duration-200';
+        silverBtn.className = 'flex-1 py-2 rounded-xl bg-[#083E32] text-white shadow-sm transition-all duration-200';
+        goldBtn.className = 'flex-1 py-2 rounded-xl text-[#6B665C] hover:text-[#1E1B18] transition-all duration-200';
         purityLabel.textContent = 'Grade';
         puritySelect.innerHTML = `
-          <option value="999" selected>Fine (999)</option>
-          <option value="925">Sterling (925)</option>
+          <option value="999" selected>Fine Silver (99.9%)</option>
+          <option value="925">Sterling Silver (92.5%)</option>
         `;
       }
+
       runCalculation();
     }
 
-    // Calculator Unit Toggle (g vs kg)
+    // Calculator Unit Switcher (g vs kg)
     function setCalcUnit(unit) {
-      state.calcUnit = unit;
+      appState.calcUnit = unit;
       const unitG = document.getElementById('unitG');
       const unitKg = document.getElementById('unitKg');
 
       if (unit === 'g') {
-        unitG.className = 'w-8 py-2 rounded-lg text-xs font-bold bg-[#083E32] text-white shadow-xs transition-colors';
-        unitKg.className = 'w-8 py-2 rounded-lg text-xs font-bold text-[#635E54] hover:text-black transition-colors';
+        unitG.className = 'w-9 py-2 rounded-lg text-xs font-bold bg-[#083E32] text-white shadow-xs transition-colors';
+        unitKg.className = 'w-9 py-2 rounded-lg text-xs font-bold text-[#635E54] hover:text-black transition-colors';
       } else {
-        unitKg.className = 'w-8 py-2 rounded-lg text-xs font-bold bg-[#083E32] text-white shadow-xs transition-colors';
-        unitG.className = 'w-8 py-2 rounded-lg text-xs font-bold text-[#635E54] hover:text-black transition-colors';
+        unitKg.className = 'w-9 py-2 rounded-lg text-xs font-bold bg-[#083E32] text-white shadow-xs transition-colors';
+        unitG.className = 'w-9 py-2 rounded-lg text-xs font-bold text-[#635E54] hover:text-black transition-colors';
       }
+
       runCalculation();
     }
 
-    // Dynamic Calculation Logic
+    // Dynamic Metal Calculator Calculation
     function runCalculation() {
-      const weightVal = parseFloat(document.getElementById('calcWeight').value) || 0;
-      const purityVal = document.getElementById('calcPurity').value;
+      const weightInput = parseFloat(document.getElementById('calcWeight').value) || 0;
+      const selectedPurity = document.getElementById('calcPurity').value;
 
-      let gramPrice = 0;
+      let effectiveGramRate = 0;
 
-      if (state.calcMetal === 'gold') {
-        const mult = state.purityMultipliers[purityVal] || 1.0;
-        gramPrice = state.baseGold24K * mult;
+      if (appState.calcMetal === 'gold') {
+        const mult = appState.goldMultipliers[selectedPurity] || 1.0;
+        effectiveGramRate = appState.baseGold24K * mult;
       } else {
-        // Silver calculation
-        const silverMult = purityVal === '925' ? 0.925 : 1.0;
-        gramPrice = state.baseSilver * silverMult;
+        const mult = appState.silverMultipliers[selectedPurity] || 1.0;
+        effectiveGramRate = appState.baseSilver999 * mult;
       }
 
-      // Convert units if kg is chosen
-      const totalWeightInGrams = state.calcUnit === 'kg' ? weightVal * 1000 : weightVal;
-      const totalEstimate = gramPrice * totalWeightInGrams;
+      // Convert kg to grams if needed
+      const totalGrams = appState.calcUnit === 'kg' ? weightInput * 1000 : weightInput;
+      const totalEstimatedValue = Math.round(effectiveGramRate * totalGrams);
 
-      // Update UI
-      const estTotalElem = document.getElementById('estimatedTotal');
-      const breakdownElem = document.getElementById('calcBreakdown');
-
-      estTotalElem.textContent = formatINR(Math.round(totalEstimate));
-
-      const formattedGramRate = formatINR(Math.round(gramPrice));
-      breakdownElem.textContent = `(${formattedGramRate} × ${weightVal} ${state.calcUnit})`;
+      // Update UI elements
+      document.getElementById('estimatedTotal').textContent = formatINR(totalEstimatedValue);
+      const displayRateFormatted = formatINR(Math.round(effectiveGramRate));
+      document.getElementById('calcBreakdown').textContent = `(${displayRateFormatted} × ${weightInput} ${appState.calcUnit})`;
     }
 
-    // Button Click feedback with gentle ripple/scale
+    // Button animation feedback
     function triggerCalculateAnimation() {
       runCalculation();
       const btn = document.getElementById('calcActionBtn');
       btn.classList.add('scale-95');
-      setTimeout(() => btn.classList.remove('scale-95'), 150);
+      setTimeout(() => btn.classList.remove('scale-95'), 140);
     }
 
-    // Refresh button rotation simulation
+    // Refresh button rotation and market tick simulation
     const refreshBtn = document.getElementById('refreshBtn');
     const refreshIcon = document.getElementById('refreshIcon');
     refreshBtn.addEventListener('click', () => {
       refreshIcon.classList.add('spin-active');
-      
-      // Add slight randomized live drift to simulate live market tick
+
       setTimeout(() => {
-        const deltaGold = (Math.random() * 8 - 4);
-        const deltaSilver = (Math.random() * 0.4 - 0.2);
-        
-        state.baseGold24K = Math.round(state.baseGold24K + deltaGold);
-        state.baseSilver = parseFloat((state.baseSilver + deltaSilver).toFixed(2));
-        
-        updateGoldCardPurity(state.goldPurityCard);
-        document.getElementById('silverDisplayPrice').textContent = '₹' + state.baseSilver.toFixed(2);
+        // Micro market variation
+        const goldDrift = Math.round(Math.random() * 12 - 6);
+        const silverDrift = parseFloat((Math.random() * 0.5 - 0.25).toFixed(2));
+
+        appState.baseGold24K = Math.max(5000, appState.baseGold24K + goldDrift);
+        appState.baseSilver999 = Math.max(50, parseFloat((appState.baseSilver999 + silverDrift).toFixed(2)));
+
+        updateGoldCardPurity(appState.goldPurityCard);
+        document.getElementById('silverDisplayPrice').textContent = '₹' + appState.baseSilver999.toFixed(2);
+
         runCalculation();
         refreshIcon.classList.remove('spin-active');
-      }, 750);
+      }, 650);
     });
 
-    // Tooltip trigger placeholder
-    function toggleTooltip(id) {
-      // Gentle feedback on information icon tap
-      const msg = id.includes('gold') 
-        ? "Gold rate calculated from benchmark MCX bullion rates."
-        : "Silver rates reflect 99.9% purity unworked silver bars.";
-      console.log(msg);
-    }
-
-    // Initial render call
-    runCalculation();
+    document.addEventListener('DOMContentLoaded', () => {
+      switchRateView('gold');
+      runCalculation();
+    });
   </script>
 </body>
 </html>
