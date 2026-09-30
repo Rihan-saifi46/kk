@@ -85,32 +85,8 @@
     <main
         class="w-full sm:w-[412px] h-screen sm:h-[884px] bg-[#FAF7F0] sm:rounded-[48px] relative flex flex-col overflow-hidden sm:phone-mockup-frame">
 
-        <!-- TOP HEADER & STATUS BAR (Sticky) -->
-        <header class="w-full px-6 pt-3 pb-3 bg-[#FAF7F0] z-20 shrink-0">
-
-            <!-- iOS Status Bar -->
-            <div class="w-full flex justify-between items-center text-stone-900 text-xs font-semibold pb-3">
-                <span class="tracking-tight text-[15px] font-sans font-bold">9:41</span>
-                <div class="flex items-center space-x-2">
-                    <!-- Cellular Signal -->
-                    <svg class="w-4 h-3.5 fill-current text-stone-900" viewBox="0 0 24 24">
-                        <rect x="1" y="16" width="3" height="6" rx="1" />
-                        <rect x="7" y="12" width="3" height="10" rx="1" />
-                        <rect x="13" y="7" width="3" height="15" rx="1" />
-                        <rect x="19" y="3" width="3" height="19" rx="1" />
-                    </svg>
-                    <!-- Wi-Fi -->
-                    <svg class="w-4 h-3.5 fill-current text-stone-900" viewBox="0 0 24 24">
-                        <path
-                            d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.2c3.78 0 7.21 1.5 9.74 3.96L12 19.4 2.26 11.16C4.79 8.7 8.22 7.2 12 7.2z" />
-                    </svg>
-                    <!-- Battery Icon -->
-                    <div class="w-6 h-3 border border-stone-800 rounded-[4px] p-0.5 flex items-center relative">
-                        <div class="h-full w-full bg-stone-900 rounded-[2px]"></div>
-                        <div class="w-0.5 h-1.5 bg-stone-800 absolute -right-1 rounded-r-sm"></div>
-                    </div>
-                </div>
-            </div>
+        <!-- TOP HEADER (Sticky) -->
+        <header class="w-full px-6 pt-5 pb-3 bg-[#FAF7F0] z-20 shrink-0">
 
             <!-- Navigation Bar: Back Arrow + Make Payment Title -->
             <div class="relative flex items-center justify-center pt-1 pb-1">
