@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'scheme.html';
         return;
       }
+      if (item.id === 'navLiveRate') {
+        window.location.href = 'liverate.html';
+        return;
+      }
       navItems.forEach(nav => {
         nav.classList.remove('active');
         nav.setAttribute('aria-selected', 'false');
@@ -63,6 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (item.id === 'actionPayInstallment') {
         window.location.href = 'payment.html';
+        return;
+      }
+      if (item.id === 'actionGoldPrice') {
+        window.location.href = 'liverate.html';
         return;
       }
       const label = item.querySelector('.action-label')?.innerText.replace(/\n/g, ' ') || 'Action';
