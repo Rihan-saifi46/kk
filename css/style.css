@@ -137,6 +137,8 @@ html, body {
 }
 
 .wave-emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", "Segoe UI Symbol", sans-serif;
+  font-style: normal;
   font-size: 17px;
   display: inline-block;
   transform-origin: 70% 70%;
