@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Details - 11 Month Gold Plan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display (Serif) & Plus Jakarta Sans (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        appBg: '#FAF7F2',
+                        cardBg: '#FFFFFF',
+                        emeraldDark: '#083329',
+                        emeraldHover: '#062820',
+                        goldBorder: '#E6D7BD',
+                        goldAccent: '#DFCCA5',
+                        mutedText: '#878783',
+                        activeGreen: '#237844',
+                        activeGreenBg: '#E9F7EF'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar hiding for clean app container */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Circular SVG Gauge Styling */
+        .gauge-bg {
+            stroke: #E3D2BA;
+            stroke-linecap: round;
+        }
+
+        .gauge-progress {
+            stroke: #0A372F;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+
+        /* Subtly elevated device frame */
+        .phone-shadow {
+            box-shadow: 0 25px 60px -15px rgba(28, 25, 23, 0.25), 0 0 0 10px #222222, 0 0 0 12px #d4b886;
+        }
+    </style>
+</head>
+
+<body class="bg-[#ECE6DC] min-h-screen flex items-center justify-center p-0 sm:p-6 font-sans select-none antialiased">
+
+    <!-- Mobile Device Outer Container -->
+    <main
+        class="w-full sm:w-[410px] h-screen sm:h-[870px] bg-[#FAF7F2] sm:rounded-[46px] relative flex flex-col overflow-hidden sm:phone-shadow">
+
+        <!-- Top Status Bar (iOS style) -->
+        <header
+            class="w-full pt-3 px-7 pb-2 flex justify-between items-center z-20 text-stone-800 text-xs font-semibold shrink-0">
+            <span class="tracking-tight text-[15px]">9:41</span>
+            <div class="flex items-center space-x-2">
+                <!-- Cellular Signal Icon -->
+                <svg class="w-4 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <rect x="1" y="16" width="3" height="6" rx="1" />
+                    <rect x="7" y="12" width="3" height="10" rx="1" />
+                    <rect x="13" y="7" width="3" height="15" rx="1" />
+                    <rect x="19" y="3" width="3" height="19" rx="1" />
+                </svg>
+                <!-- Wi-Fi Icon -->
+                <svg class="w-4 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path
+                        d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.2c3.78 0 7.21 1.5 9.74 3.96L12 19.4 2.26 11.16C4.79 8.7 8.22 7.2 12 7.2z" />
+                </svg>
+                <!-- Battery Icon -->
+                <div class="w-6 h-3 border border-stone-800 rounded-[4px] p-0.5 flex items-center relative">
+                    <div class="h-full w-full bg-stone-900 rounded-[2px]"></div>
+                    <div class="w-0.5 h-1.5 bg-stone-800 absolute -right-1 rounded-r-sm"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- App Top Bar (Back button & Page Title) -->
+        <div class="px-6 py-2 flex items-center justify-between shrink-0">
+            <button id="backBtn" class="p-1 -ml-1 text-stone-800 hover:opacity-70 transition active:scale-95"
+                aria-label="Go back">
+                <!-- Exact Left Arrow Icon -->
+                <svg class="w-6 h-6 stroke-[2.2] stroke-current fill-none" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            <h1 class="font-serif text-[22px] font-bold tracking-tight text-[#161616] -ml-5">Plan Details</h1>
+            <div class="w-6"></div> <!-- Spacer for exact center alignment -->
+        </div>
+
+        <div class="flex-1 overflow-y-auto no-scrollbar px-5 pb-24 space-y-4">
+
+            <!-- Circular Progress Ring Section -->
+            <section class="flex justify-center items-center pt-2 pb-1">
+                <div class="relative w-56 h-56 flex items-center justify-center">
+                    <svg class="w-full h-full -rotate-90" viewBox="0 0 160 160">
+                        <!-- Background base circle (Golden / Champagne) -->
+                        <circle cx="80" cy="80" r="62" fill="none" stroke-width="14" class="gauge-bg" />
+                        <!-- Progress Arc (Dark Emerald Green 45%) -->
+                        <circle id="progressRing" cx="80" cy="80" r="62" fill="none" stroke-width="14"
+                            stroke-dasharray="389.5" stroke-dashoffset="214.2" class="gauge-progress" />
+                    </svg>
+
+                    <!-- Centered Inner Metrics -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                        <span class="text-2xl font-bold font-serif tracking-tight text-stone-900 leading-tight">45<span
+                                class="text-lg font-normal font-sans">%</span></span>
+                        <span class="text-[20px] font-bold font-sans text-stone-900 mt-0.5">₹55,000</span>
+                        <span class="text-[10.5px] font-medium text-stone-500 mt-0.5">Paid of ₹1,20,000</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="flex items-center justify-between pt-1">
+                <div>
+                    <h2 class="font-serif text-[21px] font-bold text-stone-900 leading-snug">11 Month Gold Plan</h2>
+                    <p class="text-xs font-semibold text-stone-500 tracking-wide mt-0.5">Plan ID: <span
+                            class="font-medium text-stone-600">SJG00123</span></p>
+                </div>
+                <span class="bg-[#E5F5EC] text-[#227749] text-[12px] font-semibold px-3 py-1 rounded-full">
+                    Active
+                </span>
+            </section>
+
+            <section
+                class="bg-white/90 backdrop-blur-sm rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center justify-between text-center divide-x divide-stone-100">
+                <!-- Start Date -->
+                <div class="flex-1 px-1 flex flex-col items-center">
+                    <div class="text-stone-700 mb-1">
+                        <!-- Calendar Icon -->
+                        <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] text-stone-500 font-medium whitespace-nowrap">Start Date</span>
+                    <span class="text-xs font-bold text-stone-800 mt-0.5 whitespace-nowrap">5 Jan 2026</span>
+                </div>
+
+                <!-- Next Installment -->
+                <div class="flex-1 px-1 flex flex-col items-center">
+                    <div class="text-stone-700 mb-1">
+                        <!-- Paper Plane Icon -->
+                        <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none rotate-45 -mt-0.5"
+                            viewBox="0 0 24 24">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] text-stone-500 font-medium whitespace-nowrap">Next Installment</span>
+                    <span class="text-xs font-bold text-stone-800 mt-0.5 whitespace-nowrap">5 Oct 2026</span>
+                </div>
+
+                <!-- Months Left -->
+                <div class="flex-1 px-1 flex flex-col items-center">
+                    <div class="text-stone-700 mb-1">
+                        <!-- Calendar Check Icon -->
+                        <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                            <path d="m9 16 2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] text-stone-500 font-medium whitespace-nowrap">Months Left</span>
+                    <span class="text-xs font-bold text-stone-800 mt-0.5 whitespace-nowrap">6</span>
+                </div>
+            </section>
+
+            <section class="space-y-1.5 pt-1">
+                <h3 class="font-serif text-[16px] font-bold text-stone-900">Installment Details</h3>
+
+                <div
+                    class="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-stone-200/70 shadow-sm flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] text-stone-500 font-medium block">Monthly Amount</span>
+                        <span class="text-[17px] font-bold text-stone-900 tracking-tight">₹5,000</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[11px] text-stone-500 font-medium block">Total Contributions</span>
+                        <span class="text-[17px] font-bold text-stone-900 tracking-tight">₹1,20,000</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-2 pt-1">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-serif text-[16px] font-bold text-stone-900">Payment History</h3>
+                    <button id="viewAllBtn" class="text-xs font-semibold text-[#093D33] hover:underline cursor-pointer">
+                        View All
+                    </button>
+                </div>
+
+                <!-- History Records Table/Cards -->
+                <div class="space-y-2.5">
+                    <!-- Item 1: 5 Sep 2026 -->
+                    <div class="flex items-center justify-between bg-transparent py-1">
+                        <div class="flex items-center space-x-2.5">
+                            <span
+                                class="w-5 h-5 rounded-full bg-[#1F8255] flex items-center justify-center text-white shrink-0 shadow-sm">
+                                <svg class="w-3.5 h-3.5 stroke-[3] stroke-current fill-none" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium text-stone-700">5 Sep 2026</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-bold text-stone-900">₹5,000</span>
+                            <span
+                                class="bg-[#E5F5EC] text-[#227749] text-[11px] font-medium px-2.5 py-0.5 rounded-full">Paid</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: 5 Aug 2026 -->
+                    <div class="flex items-center justify-between bg-transparent py-1">
+                        <div class="flex items-center space-x-2.5">
+                            <span
+                                class="w-5 h-5 rounded-full bg-[#1F8255] flex items-center justify-center text-white shrink-0 shadow-sm">
+                                <svg class="w-3.5 h-3.5 stroke-[3] stroke-current fill-none" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium text-stone-700">5 Aug 2026</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-bold text-stone-900">₹5,000</span>
+                            <span
+                                class="bg-[#E5F5EC] text-[#227749] text-[11px] font-medium px-2.5 py-0.5 rounded-full">Paid</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: 5 Jul 2026 -->
+                    <div class="flex items-center justify-between bg-transparent py-1">
+                        <div class="flex items-center space-x-2.5">
+                            <span
+                                class="w-5 h-5 rounded-full bg-[#1F8255] flex items-center justify-center text-white shrink-0 shadow-sm">
+                                <svg class="w-3.5 h-3.5 stroke-[3] stroke-current fill-none" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium text-stone-700">5 Jul 2026</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-bold text-stone-900">₹5,000</span>
+                            <span
+                                class="bg-[#E5F5EC] text-[#227749] text-[11px] font-medium px-2.5 py-0.5 rounded-full">Paid</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: 5 Jun 2026 -->
+                    <div class="flex items-center justify-between bg-transparent py-1">
+                        <div class="flex items-center space-x-2.5">
+                            <span
+                                class="w-5 h-5 rounded-full bg-[#1F8255] flex items-center justify-center text-white shrink-0 shadow-sm">
+                                <svg class="w-3.5 h-3.5 stroke-[3] stroke-current fill-none" viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span class="text-xs font-medium text-stone-700">5 Jun 2026</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-bold text-stone-900">₹5,000</span>
+                            <span
+                                class="bg-[#E5F5EC] text-[#227749] text-[11px] font-medium px-2.5 py-0.5 rounded-full">Paid</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <div
+            class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/95 to-transparent pt-4 pb-3 px-5 flex flex-col items-center z-30">
+            <button id="payNowBtn"
+                class="w-full bg-[#083329] hover:bg-[#06261f] active:scale-[0.98] transition-all duration-200 text-white font-medium text-[15px] py-3.5 px-6 rounded-full shadow-lg shadow-emerald-950/20 flex items-center justify-center space-x-2">
+                <span>Pay Now - ₹5,000</span>
+            </button>
+
+            <!-- Home Indicator bar (iOS bar) -->
+            <div class="w-32 h-1 bg-stone-900/80 rounded-full mt-3"></div>
+        </div>
+
+        <!-- In-App Notification Toast Modal -->
+        <div id="toastNotification"
+            class="fixed top-8 inset-x-4 max-w-xs mx-auto bg-stone-900 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+            <div
+                class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4 stroke-[2.5] stroke-current fill-none" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div>
+                <p class="text-xs font-bold">Payment Initiated</p>
+                <p class="text-[11px] text-stone-300">Processing ₹5,000 for October installment.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const payNowBtn = document.getElementById('payNowBtn');
+        const toast = document.getElementById('toastNotification');
+        const backBtn = document.getElementById('backBtn');
+        const viewAllBtn = document.getElementById('viewAllBtn');
+
+        // Trigger feedback notification on "Pay Now"
+        payNowBtn.addEventListener('click', () => {
+            window.location.href = 'payment.html';
+        });
+
+        backBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        viewAllBtn.addEventListener('click', () => {
+            showToast('All Transactions', 'Full ledger of 11 installments loaded.');
+        });
+
+        function showToast(title, subtitle) {
+            if (!toast) return;
+            toast.querySelector('p:nth-child(1)').textContent = title;
+            toast.querySelector('p:nth-child(2)').textContent = subtitle;
+
+            toast.classList.remove('-translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('-translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 2600);
+        }
+    </script>
+</body>
+
+</html>

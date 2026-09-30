@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Payment - Gold Plan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        appBg: '#FAF7F0',
+                        emeraldDeep: '#06342B',
+                        emeraldHover: '#042720',
+                        emeraldActive: '#084035',
+                        emeraldLight: '#187A64',
+                        emeraldSoft: '#E6F4F0',
+                        goldBorder: '#EFE7DA',
+                        goldBezel: '#D4B886'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Prevent default text selection for native app feel */
+        body {
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+        }
+
+        /* Hide scrollbars while enabling scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Luxury smartphone gold frame styling */
+        .phone-mockup-frame {
+            box-shadow: 0 25px 65px -15px rgba(25, 20, 15, 0.35),
+                0 0 0 10px #1c1c1c,
+                0 0 0 12px #d4b886,
+                0 0 0 14px #a68b56;
+        }
+
+        /* Tap feedback */
+        .press-feedback {
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .press-feedback:active {
+            transform: scale(0.985);
+            opacity: 0.92;
+        }
+
+        /* Selection animation */
+        .payment-option-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-[#E7DFC6] min-h-screen flex items-center justify-center p-0 sm:p-5 font-sans text-stone-900">
+
+    <!-- Mobile Chassis Device Container -->
+    <main
+        class="w-full sm:w-[412px] h-screen sm:h-[884px] bg-[#FAF7F0] sm:rounded-[48px] relative flex flex-col overflow-hidden sm:phone-mockup-frame">
+
+        <!-- TOP HEADER & STATUS BAR (Sticky) -->
+        <header class="w-full px-6 pt-3 pb-3 bg-[#FAF7F0] z-20 shrink-0">
+
+            <!-- iOS Status Bar -->
+            <div class="w-full flex justify-between items-center text-stone-900 text-xs font-semibold pb-3">
+                <span class="tracking-tight text-[15px] font-sans font-bold">9:41</span>
+                <div class="flex items-center space-x-2">
+                    <!-- Cellular Signal -->
+                    <svg class="w-4 h-3.5 fill-current text-stone-900" viewBox="0 0 24 24">
+                        <rect x="1" y="16" width="3" height="6" rx="1" />
+                        <rect x="7" y="12" width="3" height="10" rx="1" />
+                        <rect x="13" y="7" width="3" height="15" rx="1" />
+                        <rect x="19" y="3" width="3" height="19" rx="1" />
+                    </svg>
+                    <!-- Wi-Fi -->
+                    <svg class="w-4 h-3.5 fill-current text-stone-900" viewBox="0 0 24 24">
+                        <path
+                            d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.2c3.78 0 7.21 1.5 9.74 3.96L12 19.4 2.26 11.16C4.79 8.7 8.22 7.2 12 7.2z" />
+                    </svg>
+                    <!-- Battery Icon -->
+                    <div class="w-6 h-3 border border-stone-800 rounded-[4px] p-0.5 flex items-center relative">
+                        <div class="h-full w-full bg-stone-900 rounded-[2px]"></div>
+                        <div class="w-0.5 h-1.5 bg-stone-800 absolute -right-1 rounded-r-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Bar: Back Arrow + Make Payment Title -->
+            <div class="relative flex items-center justify-center pt-1 pb-1">
+                <button id="backBtn" onclick="handleBackClick()"
+                    class="absolute left-0 p-1 text-stone-900 hover:text-stone-600 active:scale-90 transition rounded-full focus:outline-none"
+                    aria-label="Go Back">
+                    <!-- Exact Back Arrow SVG -->
+                    <svg class="w-6 h-6 stroke-[2.2] stroke-current fill-none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                    </svg>
+                </button>
+                <h1 class="font-serif text-[21px] font-bold text-stone-900 tracking-tight text-center">
+                    Make Payment
+                </h1>
+            </div>
+        </header>
+
+        <!-- SCROLLABLE PAGE BODY -->
+        <div id="scrollContainer" class="flex-1 overflow-y-auto no-scrollbar px-6 pt-2 pb-6 space-y-5">
+
+            <!-- Plan Summary Card -->
+            <section
+                class="bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-[0_3px_12px_rgba(0,0,0,0.02)] space-y-4">
+
+                <!-- Top Half: 3D Gold Coin Badge + Title & ID -->
+                <div class="flex items-center space-x-3.5">
+                    <!-- 3D Gold Coin Stack Illustration Thumbnail -->
+                    <div
+                        class="w-[62px] h-[62px] rounded-2xl bg-gradient-to-br from-[#F6EDE0] to-[#E7D6BA] p-2 flex items-center justify-center shrink-0 border border-[#EBDCC5] shadow-xs">
+                        <svg class="w-11 h-11 drop-shadow" viewBox="0 0 64 64" fill="none">
+                            <!-- Shadow base -->
+                            <ellipse cx="32" cy="54" rx="20" ry="5.5" fill="#8C6627" fill-opacity="0.32" />
+                            <!-- Coin 1 (Bottom Right) -->
+                            <ellipse cx="35" cy="46" rx="15" ry="5.5" fill="#ECC875" stroke="#BA8C30"
+                                stroke-width="0.9" />
+                            <path d="M20 46v5.5c0 3 6.7 5.5 15 5.5s15-2.5 15-5.5v-5.5" fill="#D3A746" stroke="#9E7322"
+                                stroke-width="0.9" />
+                            <!-- Coin 2 (Middle) -->
+                            <ellipse cx="33" cy="38.5" rx="15" ry="5.5" fill="#F8DE93" stroke="#BA8C30"
+                                stroke-width="0.9" />
+                            <path d="M18 38.5v5.5c0 3 6.7 5.5 15 5.5s15-2.5 15-5.5v-5.5" fill="#DDAE4B" stroke="#9E7322"
+                                stroke-width="0.9" />
+                            <!-- Coin 3 (Top) -->
+                            <ellipse cx="33" cy="31" rx="15" ry="5.5" fill="#FFF2BC" stroke="#C49B3E"
+                                stroke-width="0.9" />
+                            <path d="M18 31v5.5c0 3 6.7 5.5 15 5.5s15-2.5 15-5.5v-5.5" fill="#E6BA54" stroke="#A77A23"
+                                stroke-width="0.9" />
+                            <ellipse cx="33" cy="31" rx="11" ry="3.8" stroke="#B88A2D" stroke-dasharray="2 2"
+                                stroke-width="0.75" fill="none" />
+                            <!-- Smaller stacked coins on left behind -->
+                            <ellipse cx="23" cy="23" rx="8.5" ry="3.3" fill="#FFE59E" stroke="#BA8C30"
+                                stroke-width="0.75" />
+                            <path d="M14.5 23v3.8c0 1.8 3.8 3.3 8.5 3.3s8.5-1.5 8.5-3.3v-3.8" fill="#E1B34C"
+                                stroke="#A77A23" stroke-width="0.75" />
+                        </svg>
+                    </div>
+
+                    <!-- Plan Details Info -->
+                    <div>
+                        <h2 class="font-serif text-[17px] font-bold text-stone-900 leading-snug">
+                            11 Month Gold Plan
+                        </h2>
+                        <p class="text-[12.5px] font-medium text-stone-500 mt-0.5 tracking-wide">
+                            Plan ID: <span class="font-semibold text-stone-600">SJG00123</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Subtle Card Divider -->
+                <hr class="border-stone-100">
+
+                <!-- Bottom Half: Installment Amount & Due Date -->
+                <div class="grid grid-cols-2 pt-0.5">
+                    <div>
+                        <span class="text-[11.5px] font-medium text-stone-400 block">Installment Amount</span>
+                        <span class="text-[20px] font-bold text-stone-900 tracking-tight block mt-0.5">₹5,000</span>
+                    </div>
+                    <div>
+                        <span class="text-[11.5px] font-medium text-stone-400 block">Due Date</span>
+                        <span class="text-[14.5px] font-semibold text-stone-800 tracking-tight block mt-1">5 Oct
+                            2026</span>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Section Title: Choose Payment Method -->
+            <div class="pt-1">
+                <h2 class="font-serif text-[18px] font-bold text-stone-900 tracking-tight">
+                    Choose Payment Method
+                </h2>
+            </div>
+
+            <!-- Payment Methods List -->
+            <div class="space-y-3" role="radiogroup" aria-label="Choose Payment Method">
+
+                <!-- Option 1: UPI (Recommended) - SELECTED BY DEFAULT -->
+                <div id="option-upi" onclick="selectPaymentMethod('upi')"
+                    class="payment-option-card press-feedback cursor-pointer bg-white rounded-2xl p-4 border-2 border-[#06342B] shadow-xs flex items-center justify-between"
+                    role="radio" aria-checked="true" tabindex="0">
+                    <div class="flex items-center space-x-3.5">
+                        <!-- UPI Abstract Chevron Tri-Color Logo -->
+                        <div class="w-10 h-10 flex items-center justify-center shrink-0">
+                            <svg class="w-9 h-9" viewBox="0 0 36 36" fill="none">
+                                <!-- Saffron Chevron -->
+                                <path d="M7 23.5L13.5 18L7 12.5L9.5 7.5L18.5 15.5L18.5 20.5L9.5 28.5L7 23.5Z"
+                                    fill="#F47B20" />
+                                <!-- Sky Blue Chevron -->
+                                <path d="M14 23.5L20.5 18L14 12.5L16.5 7.5L25.5 15.5L25.5 20.5L16.5 28.5L14 23.5Z"
+                                    fill="#0E86D4" />
+                                <!-- Green Chevron -->
+                                <path d="M21 23.5L27.5 18L21 12.5L23.5 7.5L32.5 15.5L32.5 20.5L23.5 28.5L21 23.5Z"
+                                    fill="#0A7C38" />
+                            </svg>
+                        </div>
+
+                        <!-- Title & Logos Row -->
+                        <div>
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="text-[14px] font-bold text-stone-900">UPI</span>
+                                <span class="text-[12px] font-bold text-[#197561]">(Recommended)</span>
+                            </div>
+
+                            <!-- Mini Provider Logos: GPay, PhonePe, Paytm, BHIM -->
+                            <div class="flex items-center space-x-2 mt-1.5">
+                                <!-- GPay Pill -->
+                                <div
+                                    class="flex items-center space-x-0.5 bg-stone-50 px-1 py-0.5 rounded border border-stone-100">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24">
+                                        <path fill="#4285F4"
+                                            d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                                        <path fill="#34A853"
+                                            d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.24v3.15C3.26 21.36 7.33 24 12 24z" />
+                                        <path fill="#FBBC05"
+                                            d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.24C.45 8.16 0 9.97 0 12s.45 3.84 1.24 5.42l4.04-3.15z" />
+                                        <path fill="#EA4335"
+                                            d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.24 6.58l4.04 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                                    </svg>
+                                    <span class="text-[9.5px] font-bold text-stone-600 leading-none">Pay</span>
+                                </div>
+
+                                <!-- PhonePe Pill -->
+                                <div
+                                    class="flex items-center space-x-1 bg-[#6739B7]/10 px-1.5 py-0.5 rounded border border-[#6739B7]/20">
+                                    <div
+                                        class="w-2.5 h-2.5 rounded-full bg-[#6739B7] text-white text-[7px] font-extrabold flex items-center justify-center">
+                                        पे</div>
+                                    <span class="text-[9.5px] font-bold text-[#6739B7] leading-none">PhonePe</span>
+                                </div>
+
+                                <!-- Paytm Pill -->
+                                <div
+                                    class="flex items-center bg-[#002E6E]/10 px-1.5 py-0.5 rounded border border-[#002E6E]/20">
+                                    <span
+                                        class="text-[9.5px] font-black text-[#002E6E] tracking-tight leading-none">Pay<span
+                                            class="text-[#00BAF2]">tm</span></span>
+                                </div>
+
+                                <!-- BHIM Pill -->
+                                <div
+                                    class="flex items-center bg-[#005A9C]/10 px-1 py-0.5 rounded border border-[#005A9C]/20">
+                                    <span class="text-[9px] font-black text-[#005A9C] italic leading-none">BHIM</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Radio Indicator (Selected) -->
+                    <div id="radio-upi"
+                        class="w-6 h-6 rounded-full border-2 border-[#06342B] flex items-center justify-center shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-[#06342B]"></div>
+                    </div>
+                </div>
+
+                <!-- Option 2: Debit / Credit Card -->
+                <div id="option-card" onclick="selectPaymentMethod('card')"
+                    class="payment-option-card press-feedback cursor-pointer bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-xs flex items-center justify-between"
+                    role="radio" aria-checked="false" tabindex="0">
+                    <div class="flex items-center space-x-3.5">
+                        <!-- Credit Card Outline Icon Box -->
+                        <div
+                            class="w-10 h-10 rounded-xl bg-stone-50 border border-stone-200/60 flex items-center justify-center shrink-0 text-stone-700">
+                            <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none" viewBox="0 0 24 24">
+                                <rect x="2" y="5" width="20" height="14" rx="3"></rect>
+                                <line x1="2" y1="10" x2="22" y2="10"></line>
+                                <line x1="6" y1="15" x2="10" y2="15"></line>
+                            </svg>
+                        </div>
+
+                        <!-- Title & Brand Logos -->
+                        <div>
+                            <span class="text-[14px] font-bold text-stone-900 block">Debit / Credit Card</span>
+
+                            <!-- Mini Card Logos: VISA, Mastercard, RuPay -->
+                            <div class="flex items-center space-x-2.5 mt-1.5">
+                                <!-- VISA -->
+                                <span
+                                    class="text-[11px] font-extrabold text-[#1A1F71] italic tracking-wider leading-none">VISA</span>
+
+                                <!-- Mastercard Interlocking Circles -->
+                                <div class="flex items-center -space-x-1.5">
+                                    <div class="w-3.5 h-3.5 rounded-full bg-[#EB001B] opacity-95"></div>
+                                    <div class="w-3.5 h-3.5 rounded-full bg-[#F79E1B] opacity-90 mix-blend-multiply">
+                                    </div>
+                                </div>
+
+                                <!-- RuPay -->
+                                <div
+                                    class="flex items-center text-[10px] font-black italic tracking-tight leading-none text-[#18398B]">
+                                    RuPay<span class="text-[#FF6600]">❯</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Radio Indicator (Unchecked) -->
+                    <div id="radio-card"
+                        class="w-6 h-6 rounded-full border-2 border-stone-300 flex items-center justify-center shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-[#06342B] hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Option 3: Net Banking -->
+                <div id="option-netbanking" onclick="selectPaymentMethod('netbanking')"
+                    class="payment-option-card press-feedback cursor-pointer bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-xs flex items-center justify-between"
+                    role="radio" aria-checked="false" tabindex="0">
+                    <div class="flex items-center space-x-3.5">
+                        <!-- Bank Building / Pillars Icon Box -->
+                        <div
+                            class="w-10 h-10 rounded-xl bg-stone-50 border border-stone-200/60 flex items-center justify-center shrink-0 text-stone-700">
+                            <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none" viewBox="0 0 24 24">
+                                <path d="M3 21h18"></path>
+                                <path d="M3 10h18"></path>
+                                <path d="M5 6l7-3 7 3"></path>
+                                <path d="M4 10v11"></path>
+                                <path d="M20 10v11"></path>
+                                <path d="M8 14v4"></path>
+                                <path d="M12 14v4"></path>
+                                <path d="M16 14v4"></path>
+                            </svg>
+                        </div>
+
+                        <!-- Title & Subtitle -->
+                        <div>
+                            <span class="text-[14px] font-bold text-stone-900 block leading-tight">Net Banking</span>
+                            <span class="text-[12px] font-medium text-stone-500 block mt-0.5">All major banks</span>
+                        </div>
+                    </div>
+
+                    <!-- Radio Indicator (Unchecked) -->
+                    <div id="radio-netbanking"
+                        class="w-6 h-6 rounded-full border-2 border-stone-300 flex items-center justify-center shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-[#06342B] hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Option 4: Wallets -->
+                <div id="option-wallets" onclick="selectPaymentMethod('wallets')"
+                    class="payment-option-card press-feedback cursor-pointer bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-xs flex items-center justify-between"
+                    role="radio" aria-checked="false" tabindex="0">
+                    <div class="flex items-center space-x-3.5">
+                        <!-- Wallet Icon Box -->
+                        <div
+                            class="w-10 h-10 rounded-xl bg-stone-50 border border-stone-200/60 flex items-center justify-center shrink-0 text-stone-700">
+                            <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1">
+                                </path>
+                                <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
+                                <circle cx="17.5" cy="14" r="0.8" fill="currentColor"></circle>
+                            </svg>
+                        </div>
+
+                        <!-- Title & Subtitle -->
+                        <div>
+                            <span class="text-[14px] font-bold text-stone-900 block leading-tight">Wallets</span>
+                            <span class="text-[12px] font-medium text-stone-500 block mt-0.5">Amazon Pay, Mobikwik
+                                etc.</span>
+                        </div>
+                    </div>
+
+                    <!-- Radio Indicator (Unchecked) -->
+                    <div id="radio-wallets"
+                        class="w-6 h-6 rounded-full border-2 border-stone-300 flex items-center justify-center shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-[#06342B] hidden"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Trust & Security Badge -->
+            <div class="pt-2 flex items-start space-x-2.5 text-[#145344]">
+                <!-- Shield Checkmark Icon -->
+                <div class="shrink-0 mt-0.5 text-[#17725D]">
+                    <svg class="w-5 h-5 stroke-[2] stroke-current fill-none" viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-[12.5px] font-bold text-[#145344] leading-snug">100% Secure Payment</h3>
+                    <p class="text-[11.5px] text-stone-500 leading-tight mt-0.5">
+                        Your payment information is always safe with us.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FIXED BOTTOM BAR WITH CTA BUTTON -->
+        <footer
+            class="w-full px-6 pt-2 pb-4 bg-[#FAF7F0] border-t border-stone-200/50 z-20 shrink-0 flex flex-col items-center">
+
+            <!-- Primary Pay Button -->
+            <button id="payBtn" onclick="initiatePayment()"
+                class="press-feedback w-full bg-[#06342B] hover:bg-[#042720] text-white py-3.5 px-6 rounded-full font-bold text-[15.5px] tracking-wide shadow-md shadow-[#06342B]/20 flex items-center justify-center space-x-2 transition cursor-pointer">
+                <span>Pay ₹5,000</span>
+            </button>
+
+            <!-- iOS Bottom Home Indicator Bar -->
+            <div class="w-32 h-1 bg-stone-900/80 rounded-full mt-3"></div>
+        </footer>
+
+        <!-- TOAST NOTIFICATION -->
+        <div id="actionToast"
+            class="absolute top-14 inset-x-6 bg-stone-900/95 backdrop-blur text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+            <div
+                class="w-7 h-7 rounded-full bg-[#185343] text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-400/30">
+                <svg class="w-3.5 h-3.5 stroke-[2.5] stroke-current fill-none" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div>
+                <p id="toastTitle" class="text-xs font-bold leading-tight">Notification</p>
+                <p id="toastDesc" class="text-[11px] text-stone-300 leading-snug">Action executed successfully.</p>
+            </div>
+        </div>
+
+        <!-- PAYMENT PROCESSING & SUCCESS OVERLAY MODAL -->
+        <div id="paymentModal"
+            class="absolute inset-0 bg-stone-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+            <div
+                class="w-full bg-white rounded-3xl p-6 shadow-2xl flex flex-col items-center text-center transform scale-95 transition-transform duration-300">
+
+                <!-- Processing State (Initial) -->
+                <div id="modalLoadingState" class="flex flex-col items-center py-4 space-y-4">
+                    <div class="relative w-16 h-16 flex items-center justify-center">
+                        <!-- Spinner -->
+                        <div
+                            class="w-14 h-14 rounded-full border-4 border-[#06342B]/20 border-t-[#06342B] animate-spin">
+                        </div>
+                        <!-- Locked Shield Center -->
+                        <svg class="w-6 h-6 stroke-[#06342B] stroke-[2] fill-none absolute" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-[19px] font-bold text-stone-900">Connecting to Bank</h4>
+                        <p id="modalMethodText" class="text-xs text-stone-500 mt-1">Authenticating UPI transaction for
+                            ₹5,000...</p>
+                    </div>
+                </div>
+
+                <!-- Success State (Triggered after 1.8s) -->
+                <div id="modalSuccessState" class="hidden flex-col items-center py-2 space-y-4">
+                    <div
+                        class="w-16 h-16 rounded-full bg-emerald-50 text-[#06342B] flex items-center justify-center border-2 border-emerald-500/30">
+                        <svg class="w-9 h-9 stroke-[2.8] stroke-current fill-none" viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-[20px] font-bold text-stone-900">Payment Successful!</h4>
+                        <p class="text-xs text-stone-500 mt-1">₹5,000 paid for 11 Month Gold Plan (SJG00123)</p>
+                        <div
+                            class="bg-stone-50 border border-stone-100 rounded-xl px-3 py-2 mt-3 text-[11px] text-stone-600">
+                            Transaction ID: <span class="font-mono font-bold text-stone-800">TXN9382103948</span>
+                        </div>
+                    </div>
+                    <button onclick="closePaymentModal()"
+                        class="w-full bg-[#06342B] hover:bg-[#042720] text-white py-3 rounded-full font-bold text-sm transition">
+                        Done
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        let selectedMethod = 'upi';
+        const methodNames = {
+            upi: 'UPI (Recommended)',
+            card: 'Debit / Credit Card',
+            netbanking: 'Net Banking',
+            wallets: 'Wallets'
+        };
+
+        // Switch Payment Method Radio selection
+        function selectPaymentMethod(methodKey) {
+            selectedMethod = methodKey;
+            const methods = ['upi', 'card', 'netbanking', 'wallets'];
+
+            methods.forEach(id => {
+                const cardEl = document.getElementById('option-' + id);
+                const radioEl = document.getElementById('radio-' + id);
+                const dotEl = radioEl.querySelector('div');
+
+                if (id === methodKey) {
+                    // Active selected styles
+                    cardEl.classList.remove('border-[#EFE8DD]', 'border');
+                    cardEl.classList.add('border-[#06342B]', 'border-2');
+                    cardEl.setAttribute('aria-checked', 'true');
+
+                    radioEl.classList.remove('border-stone-300');
+                    radioEl.classList.add('border-[#06342B]');
+                    dotEl.classList.remove('hidden');
+                } else {
+                    // Unselected styles
+                    cardEl.classList.remove('border-[#06342B]', 'border-2');
+                    cardEl.classList.add('border-[#EFE8DD]', 'border');
+                    cardEl.setAttribute('aria-checked', 'false');
+
+                    radioEl.classList.remove('border-[#06342B]');
+                    radioEl.classList.add('border-stone-300');
+                    dotEl.classList.add('hidden');
+                }
+            });
+        }
+
+        // Toast alert helper
+        let toastTimeout;
+        function showToast(title, description) {
+            const toast = document.getElementById('actionToast');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastDesc = document.getElementById('toastDesc');
+            if (!toast) return;
+
+            clearTimeout(toastTimeout);
+            toastTitle.textContent = title;
+            toastDesc.textContent = description;
+
+            toast.classList.remove('-translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('-translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 2500);
+        }
+
+        // Back button handler
+        function handleBackClick() {
+            window.location.href = 'index.html';
+        }
+
+        // Initiate Payment
+        function initiatePayment() {
+            const modal = document.getElementById('paymentModal');
+            const loadingState = document.getElementById('modalLoadingState');
+            const successState = document.getElementById('modalSuccessState');
+            const methodText = document.getElementById('modalMethodText');
+
+            methodText.textContent = `Authenticating ${methodNames[selectedMethod]} for ₹5,000...`;
+
+            // Show Modal with loading spinner
+            loadingState.classList.remove('hidden');
+            loadingState.classList.add('flex');
+            successState.classList.add('hidden');
+            successState.classList.remove('flex');
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+
+            modal.classList.add('opacity-100');
+
+            // Simulate network confirmation after 1.8s
+            setTimeout(() => {
+                loadingState.classList.add('hidden');
+                loadingState.classList.remove('flex');
+                successState.classList.remove('hidden');
+                successState.classList.add('flex');
+            }, 1800);
+        }
+
+        // Close Modal
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

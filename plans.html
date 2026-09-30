@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gold Savings Plans | Mahak Jewellers</title>
+  <meta name="description" content="Start your gold journey with flexible plans and secure your tomorrow.">
+
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/plans.css">
+</head>
+<body>
+
+  <!-- Mobile Viewport Shell (375x812 Target) -->
+  <div class="mobile-viewport">
+
+    <!-- iOS Native Status Bar -->
+    <div class="status-bar" id="statusBar" aria-hidden="true">
+      <div class="status-time">9:41</div>
+      <div class="status-icons">
+        <!-- Cellular Signal -->
+        <svg class="status-icon" viewBox="0 0 17 11" fill="currentColor">
+          <rect x="0" y="8" width="3" height="3" rx="0.8" />
+          <rect x="4.6" y="5.5" width="3" height="5.5" rx="0.8" />
+          <rect x="9.3" y="3" width="3" height="8" rx="0.8" />
+          <rect x="14" y="0" width="3" height="11" rx="0.8" />
+        </svg>
+        <!-- Wifi -->
+        <svg class="status-icon" viewBox="0 0 16 12" fill="currentColor">
+          <path d="M8 9.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM4.9 7.4a4.4 4.4 0 016.2 0 .8.8 0 001.1-1.1 5.9 5.9 0 00-8.4 0 .8.8 0 101.1 1.1zm-3-3a8.6 8.6 0 0112.2 0 .8.8 0 101.1-1.1 10.1 10.1 0 00-14.4 0 .8.8 0 101.1 1.1z" />
+        </svg>
+        <!-- Battery -->
+        <svg class="status-icon battery" viewBox="0 0 25 12" fill="currentColor">
+          <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="currentColor" stroke-width="1" />
+          <rect x="2" y="2" width="18" height="8" rx="2" fill="currentColor" />
+          <path d="M23 4v4c.6-.3 1-1 1-2s-.4-1.7-1-2z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Compact Page Header -->
+    <header class="page-header">
+      <div class="header-nav-row">
+        <button type="button" class="header-back-btn" id="headerBackBtn" aria-label="Go back">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <h1 class="header-title">Gold Savings Plans</h1>
+      </div>
+      <p class="header-subtitle">Start your gold journey with flexible plans<br>and secure your tomorrow.</p>
+    </header>
+
+    <!-- Filter / Tab Pill Buttons -->
+    <div class="tabs-container" role="tablist">
+      <button type="button" class="tab-pill active" id="tabPopular" role="tab" aria-selected="true" aria-controls="panePopular">
+        Popular Plans
+      </button>
+      <button type="button" class="tab-pill inactive" id="tabHow" role="tab" aria-selected="false" aria-controls="paneHow">
+        How it Works
+      </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- Tab Pane 1: Popular Plans (Active by Default) -->
+      <section id="panePopular" class="tab-pane active" role="tabpanel" aria-labelledby="tabPopular">
+        <div class="plans-stack">
+
+          <!-- Card 1: 6 Month Plan (Most Popular) -->
+          <article class="plan-card" data-plan="6 Month Plan" data-monthly="₹5,000" data-total="₹30,000">
+            <div class="card-header-row">
+              <!-- Left: 3D Gold Coin Stack -->
+              <div class="coin-box" aria-hidden="true">
+                <img src="assets/images/gold-coins.jpg" alt="Gold Coins" />
+              </div>
+              <!-- Right: Plan Details -->
+              <div class="card-details-col">
+                <div class="card-title-row">
+                  <h2 class="plan-heading">6 Month Plan</h2>
+                  <span class="badge-popular">Most Popular</span>
+                </div>
+                <div class="amounts-row">
+                  <div class="amount-item">
+                    <span class="amount-label">Monthly Installment</span>
+                    <span class="amount-num">₹5,000</span>
+                  </div>
+                  <div class="amount-item">
+                    <span class="amount-label">Total Contribution</span>
+                    <span class="amount-num">₹30,000</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bullet Points -->
+            <div class="bullets-box">
+              <div class="bullets-group">
+                <span class="bullet-entry"><span class="dot-icon"></span>Flexible payments</span>
+                <span class="bullet-entry"><span class="dot-icon"></span>Easy booking</span>
+              </div>
+              <div class="bullets-group">
+                <span class="bullet-entry"><span class="dot-icon"></span>Hedge against gold price rise</span>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <button type="button" class="btn-plan-action" aria-label="Start 6 Month Plan">
+              Start Plan
+            </button>
+          </article>
+
+          <!-- Card 2: 9 Month Plan -->
+          <article class="plan-card" data-plan="9 Month Plan" data-monthly="₹5,000" data-total="₹45,000">
+            <div class="card-header-row">
+              <!-- Left: 3D Gold Coin Stack -->
+              <div class="coin-box" aria-hidden="true">
+                <img src="assets/images/gold-coins.jpg" alt="Gold Coins" />
+              </div>
+              <!-- Right: Plan Details -->
+              <div class="card-details-col">
+                <div class="card-title-row">
+                  <h2 class="plan-heading">9 Month Plan</h2>
+                </div>
+                <div class="amounts-row">
+                  <div class="amount-item">
+                    <span class="amount-label">Monthly Installment</span>
+                    <span class="amount-num">₹5,000</span>
+                  </div>
+                  <div class="amount-item">
+                    <span class="amount-label">Total Contribution</span>
+                    <span class="amount-num">₹45,000</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bullet Points -->
+            <div class="bullets-box">
+              <div class="bullets-group">
+                <span class="bullet-entry"><span class="dot-icon"></span>More time, more savings</span>
+              </div>
+              <div class="bullets-group">
+                <span class="bullet-entry"><span class="dot-icon"></span>Ideal for festive &amp; wedding purchases</span>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <button type="button" class="btn-plan-action" aria-label="Start 9 Month Plan">
+              Start Plan
+            </button>
+          </article>
+
+          <!-- Card 3: 11 Month Plan -->
+          <article class="plan-card" data-plan="11 Month Plan" data-monthly="₹5,000" data-total="₹55,000">
+            <div class="card-header-row">
+              <!-- Left: 3D Gold Coin Stack -->
+              <div class="coin-box" aria-hidden="true">
+                <img src="assets/images/gold-coins.jpg" alt="Gold Coins" />
+              </div>
+              <!-- Right: Plan Details -->
+              <div class="card-details-col">
+                <div class="card-title-row">
+                  <h2 class="plan-heading">11 Month Plan</h2>
+                </div>
+                <div class="amounts-row">
+                  <div class="amount-item">
+                    <span class="amount-label">Monthly Installment</span>
+                    <span class="amount-num">₹5,000</span>
+                  </div>
+                  <div class="amount-item">
+                    <span class="amount-label">Total Contribution</span>
+                    <span class="amount-num">₹55,000</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bullet Points -->
+            <div class="bullets-box">
+              <div class="bullets-group">
+                <span class="bullet-entry"><span class="dot-icon"></span>Longer savings period</span>
+              </div>
+              <div class="bullets-group">
+                <span class="bullet-entry"><span class="dot-icon"></span>Plan your dream jewellery with ease</span>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <button type="button" class="btn-plan-action" aria-label="Start 11 Month Plan">
+              Start Plan
+            </button>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Tab Pane 2: How It Works -->
+      <section id="paneHow" class="tab-pane" role="tabpanel" aria-labelledby="tabHow">
+        <div class="how-container">
+          <h3>How Swastik Gold Savings Works</h3>
+
+          <div class="how-step">
+            <div class="step-badge">1</div>
+            <div class="step-details">
+              <h4>Select Your Savings Plan</h4>
+              <p>Choose between 6, 9, or 11 months flexible tenures tailored for your upcoming jewellery purchase.</p>
+            </div>
+          </div>
+
+          <div class="how-step">
+            <div class="step-badge">2</div>
+            <div class="step-details">
+              <h4>Pay Monthly Installments</h4>
+              <p>Automate or pay monthly installments easily with zero convenience fees using UPI, Cards or Net Banking.</p>
+            </div>
+          </div>
+
+          <div class="how-step">
+            <div class="step-badge">3</div>
+            <div class="step-details">
+              <h4>Redeem Hallmark Gold &amp; Jewellery</h4>
+              <p>At maturity, pick your favourite pure 24K gold coins or hallmarked 22K/18K jewellery with exclusive bonuses.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Reusing Kitty App Standard) -->
+    <nav class="bottom-nav" id="bottomNav" aria-label="Main Navigation">
+      <div class="nav-items-wrapper">
+        <a href="index.html" class="nav-item" id="navHome" aria-selected="false">
+          <div class="nav-icon-container">
+            <img src="assets/icons/home-nav.svg" alt="Home" width="22" height="22">
+          </div>
+          <span class="nav-label">Home</span>
+        </a>
+
+        <button class="nav-item active" id="navPlans" type="button" aria-selected="true">
+          <div class="nav-icon-container">
+            <img src="assets/icons/plans-active.svg" alt="Plans" width="22" height="22">
+          </div>
+          <span class="nav-label">Plans</span>
+        </button>
+
+        <button class="nav-item" id="navJewellery" type="button" aria-selected="false">
+          <div class="nav-icon-container">
+            <img src="assets/icons/jewellery-nav.svg" alt="Jewellery" width="22" height="22">
+          </div>
+          <span class="nav-label">Jewellery</span>
+        </button>
+
+        <button class="nav-item" id="navMyPlan" type="button" aria-selected="false" onclick="window.location.href='scheme.html'">
+          <div class="nav-icon-container">
+            <img src="assets/icons/my-plan-nav.svg" alt="My Plan" width="22" height="22">
+          </div>
+          <span class="nav-label">My Plan</span>
+        </button>
+
+        <button class="nav-item" id="navProfile" type="button" aria-selected="false">
+          <div class="nav-icon-container">
+            <img src="assets/icons/profile-nav.svg" alt="Profile" width="22" height="22">
+          </div>
+          <span class="nav-label">Profile</span>
+        </button>
+      </div>
+
+      <!-- iOS Home Bar Indicator -->
+      <div class="home-indicator"></div>
+    </nav>
+
+  </div>
+
+  <!-- Plan Enrollment Confirmation Modal -->
+  <div class="modal-overlay" id="enrollModal" role="dialog" aria-modal="true" aria-labelledby="modalPlanTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalPlanTitle">6 Month Plan</h3>
+        <button type="button" class="btn-close-modal" id="modalCloseBtn" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="modal-summary-box">
+        <div class="modal-summary-row">
+          <span>Monthly Installment</span>
+          <strong id="modalMonthly">₹5,000</strong>
+        </div>
+        <div class="modal-summary-row">
+          <span>Total Contribution</span>
+          <strong id="modalTotal">₹30,000</strong>
+        </div>
+        <div class="modal-summary-row">
+          <span>Gold Purity</span>
+          <strong>24 Karat (999 Pure)</strong>
+        </div>
+        <div class="modal-summary-row">
+          <span>Special Bonus</span>
+          <strong>Hedge Protection</strong>
+        </div>
+      </div>
+
+      <button type="button" class="btn-confirm-action" id="btnConfirmEnroll">
+        Proceed with Initial Installment
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive Toast Notification -->
+  <div class="app-toast" id="appToast" role="status" aria-live="polite"></div>
+
+  <!-- Vanilla Interaction Script -->
+  <script src="js/plans.js"></script>
+</body>
+</html>

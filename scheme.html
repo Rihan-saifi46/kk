@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Your Active Plan - Gold Savings</title>
+    <!-- Google Fonts: Playfair Display for headers & Plus Jakarta Sans for UI numbers and labels -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBg: '#FAF6F0',
+                        cardBg: '#FFFFFF',
+                        cardBorder: '#F0EAE1',
+                        deepEmerald: '#073B2C',
+                        deepEmeraldHover: '#042A1F',
+                        goldSand: '#D9B98A',
+                        goldSandLight: '#EAD7BD',
+                        goldSandSubtle: '#F9F1E5',
+                        statMintBg: '#EEF6F2',
+                        statAmberBg: '#FDF6ED',
+                        textCharcoal: '#151D1A',
+                        textMuted: '#68726E',
+                        textLightMuted: '#8E9692'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 20px -2px rgba(180, 150, 110, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.03)',
+                        'phone': '0 25px 50px -12px rgba(45, 30, 10, 0.25), 0 0 0 12px #26211C, 0 0 0 14px #4D4439'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #E7E2DA;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .btn-press:active {
+            transform: scale(0.97);
+        }
+
+        /* Circular Progress Animation */
+        .circle-progress-bar {
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-6 text-textCharcoal antialiased">
+
+    <!-- iPhone Frame Mockup Wrapper -->
+    <div
+        class="w-full sm:max-w-[428px] h-screen sm:h-[915px] sm:max-h-[92vh] bg-[#FAF6F0] sm:rounded-[52px] sm:shadow-phone overflow-hidden relative flex flex-col sm:border-[5px] sm:border-[#ECE4D8]">
+
+        <!-- Status Bar (iOS standard) -->
+        <header class="pt-3.5 px-8 pb-1 flex items-center justify-between z-20 shrink-0 select-none">
+            <span class="text-[15px] font-bold tracking-tight text-neutral-900 ml-0.5">9:41</span>
+
+            <!-- Status Icons -->
+            <div class="flex items-center space-x-2 text-neutral-900">
+                <!-- Cellular Signal -->
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <rect x="2" y="16" width="3" height="5" rx="0.75" />
+                    <rect x="7" y="12" width="3" height="9" rx="0.75" />
+                    <rect x="12" y="8" width="3" height="13" rx="0.75" />
+                    <rect x="17" y="4" width="3" height="17" rx="0.75" />
+                </svg>
+
+                <!-- WiFi -->
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path
+                        d="M12 4c-4.4 0-8.4 1.7-11.4 4.5l1.4 1.5C4.6 7.6 8.1 6.1 12 6.1s7.4 1.5 10 3.9l1.4-1.5C20.4 5.7 16.4 4 12 4zm0 4.5c-3.1 0-6 1.2-8.1 3.2l1.4 1.4c1.7-1.6 4-2.6 6.7-2.6s5 1 6.7 2.6l1.4-1.4C18 9.7 15.1 8.5 12 8.5zm0 4.5c-1.8 0-3.5.7-4.7 1.9l4.7 5.1 4.7-5.1C15.5 13.7 13.8 13 12 13z" />
+                </svg>
+
+                <!-- Battery -->
+                <div class="flex items-center">
+                    <div
+                        class="w-[23px] h-[11.8px] border-[1.8px] border-neutral-900 rounded-[4px] p-[1.5px] flex items-center">
+                        <div class="bg-neutral-900 h-full w-[78%] rounded-[1.5px]"></div>
+                    </div>
+                    <div class="w-[1.6px] h-[4.2px] bg-neutral-900 rounded-r-sm -ml-[0.5px]"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Top Navigation Header -->
+        <div class="px-5 pt-1.5 pb-3 shrink-0 flex items-center relative">
+            <button onclick="handleBackAction()"
+                class="w-10 h-10 rounded-full flex items-center justify-center text-neutral-800 hover:bg-neutral-200/50 active:scale-95 transition-all"
+                aria-label="Back">
+                <svg class="w-6 h-6 stroke-current" fill="none" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1
+                class="absolute left-1/2 -translate-x-1/2 font-serif text-[22px] font-bold text-[#0D241C] tracking-tight pointer-events-none">
+                Your Active Plan
+            </h1>
+        </div>
+
+        <!-- Scrollable Body Content -->
+        <main class="flex-1 overflow-y-auto px-4 pb-6 pt-1 no-scrollbar space-y-4">
+
+            <!-- TOP SUMMARY CARD -->
+            <section class="bg-white rounded-[26px] border border-[#EFE8DE] shadow-card overflow-hidden">
+                <div class="p-4 sm:p-5 pb-4">
+                    <div class="flex items-center justify-between">
+                        <!-- Left: Icon & Plan ID -->
+                        <div class="flex items-center gap-3.5">
+                            <!-- Golden Coins Illustration Box -->
+                            <div
+                                class="w-[74px] h-[74px] rounded-[20px] bg-[#FAF2E5] flex items-center justify-center shrink-0 shadow-inner">
+                                <svg class="w-[60px] h-[60px]" viewBox="0 0 100 100" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="goldTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FFEFA8" />
+                                            <stop offset="45%" stop-color="#E2A62C" />
+                                            <stop offset="100%" stop-color="#BD790B" />
+                                        </linearGradient>
+                                        <linearGradient id="goldSideGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#D7971C" />
+                                            <stop offset="30%" stop-color="#FDE18B" />
+                                            <stop offset="65%" stop-color="#9C5E02" />
+                                            <stop offset="100%" stop-color="#543201" />
+                                        </linearGradient>
+                                        <filter id="stackShadow" x="-10%" y="-10%" width="130%" height="140%">
+                                            <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-opacity="0.28"
+                                                flood-color="#462402" />
+                                        </filter>
+                                    </defs>
+                                    <!-- Bottom Stack Coin -->
+                                    <g filter="url(#stackShadow)">
+                                        <path
+                                            d="M50 78 C30 78 22 72 22 68 L22 73 C22 77 30 83 50 83 C70 83 78 77 78 73 L78 68 C78 72 70 78 50 78 Z"
+                                            fill="url(#goldSideGrad)" />
+                                        <ellipse cx="50" cy="68" rx="28" ry="8" fill="url(#goldTopGrad)"
+                                            stroke="#B47910" stroke-width="0.75" />
+                                    </g>
+                                    <!-- Middle Stack Coin -->
+                                    <g filter="url(#stackShadow)">
+                                        <path
+                                            d="M50 63 C30 63 22 57 22 53 L22 59 C22 63 30 69 50 69 C70 69 78 63 78 59 L78 53 C78 57 70 63 50 63 Z"
+                                            fill="url(#goldSideGrad)" />
+                                        <ellipse cx="50" cy="53" rx="28" ry="8" fill="url(#goldTopGrad)"
+                                            stroke="#B47910" stroke-width="0.75" />
+                                    </g>
+                                    <!-- Top Left Coin -->
+                                    <g filter="url(#stackShadow)">
+                                        <path
+                                            d="M50 48 C30 48 22 42 22 38 L22 44 C22 48 30 54 50 54 C70 54 78 48 78 44 L78 38 C78 42 70 48 50 48 Z"
+                                            fill="url(#goldSideGrad)" />
+                                        <ellipse cx="50" cy="38" rx="28" ry="8" fill="url(#goldTopGrad)"
+                                            stroke="#B47910" stroke-width="0.75" />
+                                    </g>
+                                    <!-- Elevated Front Coin -->
+                                    <g filter="url(#stackShadow)">
+                                        <path
+                                            d="M48 33 C29 33 22 28 22 24 L22 30 C22 34 30 39 48 39 C66 39 74 34 74 30 L74 24 C74 28 66 33 48 33 Z"
+                                            fill="url(#goldSideGrad)" />
+                                        <ellipse cx="48" cy="24" rx="26" ry="7.5" fill="url(#goldTopGrad)"
+                                            stroke="#B47910" stroke-width="0.75" />
+                                        <ellipse cx="48" cy="24" rx="21" ry="5.8" fill="none" stroke="#FFF2B8"
+                                            stroke-width="0.7" stroke-dasharray="2,2" />
+                                    </g>
+                                    <circle cx="63" cy="22" r="1.4" fill="#FFFFFF" opacity="0.9" />
+                                </svg>
+                            </div>
+
+                            <!-- Plan Header Labels -->
+                            <div>
+                                <h2 class="font-serif text-[18px] sm:text-[19px] font-bold text-[#11261F] leading-snug">
+                                    11 Month Gold Plan
+                                </h2>
+                                <p class="text-[12.5px] font-medium text-[#767E7A] mt-0.5 tracking-tight">
+                                    Plan ID: SJ360123
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Right: Circular Progress Gauge (45%) -->
+                        <div class="relative w-[78px] h-[78px] flex items-center justify-center shrink-0">
+                            <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
+                                <!-- Background track (sand gold) -->
+                                <circle cx="50" cy="50" r="41" stroke="#E6CFA5" stroke-width="7.5" fill="transparent" />
+                                <!-- Active Progress Arc (45% -> 257.6 * 0.45 = 115.9 dash, 257.6 circumference) -->
+                                <circle class="circle-progress-bar" cx="50" cy="50" r="41" stroke="#073B2C"
+                                    stroke-width="7.5" stroke-linecap="round" fill="transparent"
+                                    stroke-dasharray="257.6" stroke-dashoffset="141.68" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-[17px] font-bold text-[#14231E]">45%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Financial Split: Paid vs Total Plan -->
+                    <div class="grid grid-cols-2 gap-4 mt-5 pt-1">
+                        <div>
+                            <p class="text-[13px] text-[#69726E] font-medium leading-none">Paid</p>
+                            <p class="text-[20px] font-bold text-[#0E1A16] mt-1.5 tracking-tight">₹55,000</p>
+                        </div>
+                        <div>
+                            <p class="text-[13px] text-[#69726E] font-medium leading-none">Total Plan</p>
+                            <p class="text-[20px] font-bold text-[#0E1A16] mt-1.5 tracking-tight">₹1,20,000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inner Highlight Row: Next Instalment Banner -->
+                <div
+                    class="bg-[#FAF5EC] border-t border-[#F1E9DC] px-4 sm:px-5 py-3.5 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11.5px] text-[#555E5A] font-medium leading-tight">Next Instalment</p>
+                        <div class="flex items-baseline gap-2 mt-0.5">
+                            <span class="text-[18px] font-bold text-[#101F1A] leading-tight">₹5,000</span>
+                            <span class="text-[11.5px] text-[#6E7773]">Due on 5 Oct 2026</span>
+                        </div>
+                    </div>
+                    <button onclick="triggerPayment('₹5,000', 'October Instalment')"
+                        class="btn-press bg-[#073B2C] hover:bg-[#042A1F] active:bg-[#031F17] text-white px-5 py-2.5 rounded-full text-[13.5px] font-semibold transition-all shadow-sm">
+                        Pay Now
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Your Plan Details -->
+            <section class="bg-white rounded-[26px] border border-[#EFE8DE] p-4 sm:p-5 shadow-card">
+                <h3 class="font-serif text-[18px] font-bold text-[#0E241D] mb-3">
+                    Your Plan Details
+                </h3>
+
+                <div class="space-y-0 text-[13px] divide-y divide-[#F4ECE2]">
+                    <!-- Row 1: Start Date -->
+                    <div class="py-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <!-- Calendar outline icon in warm amber -->
+                            <svg class="w-[18px] h-[18px] text-[#B78440]" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                                <rect x="8" y="14" width="3" height="3" fill="currentColor" />
+                            </svg>
+                            <span class="text-[#555E5A] font-medium">Start Date</span>
+                        </div>
+                        <span class="text-[#101F1A] font-semibold">5 Jan 2026</span>
+                    </div>
+
+                    <!-- Row 2: End Date -->
+                    <div class="py-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <!-- Calendar outline icon -->
+                            <svg class="w-[18px] h-[18px] text-[#B78440]" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                                <path d="M12 14h.01" />
+                            </svg>
+                            <span class="text-[#555E5A] font-medium">End Date</span>
+                        </div>
+                        <span class="text-[#101F1A] font-semibold">5 Dec 2026</span>
+                    </div>
+
+                    <!-- Row 3: Monthly Instalment -->
+                    <div class="py-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <!-- Coin stack outline icon -->
+                            <svg class="w-[18px] h-[18px] text-[#B78440]" fill="none" stroke="currentColor"
+                                stroke-width="1.8" viewBox="0 0 24 24">
+                                <ellipse cx="12" cy="7" rx="8" ry="3" />
+                                <path d="M4 7v6c0 1.66 3.58 3 8 3s8-1.34 8-3V7" />
+                                <path d="M4 13v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" />
+                            </svg>
+                            <span class="text-[#555E5A] font-medium">Monthly Instalment</span>
+                        </div>
+                        <span class="text-[#101F1A] font-semibold">₹5,000</span>
+                    </div>
+
+                    <!-- Row 4: Total Plan Amount -->
+                    <div class="pt-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <!-- Target / Bullseye icon -->
+                            <svg class="w-[18px] h-[18px] text-[#B78440]" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" />
+                                <circle cx="12" cy="12" r="5" />
+                                <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                            </svg>
+                            <span class="text-[#555E5A] font-medium">Total Plan Amount</span>
+                        </div>
+                        <span class="text-[#101F1A] font-bold">₹1,20,000</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Your Progress with 11-month timeline -->
+            <section class="bg-white rounded-[26px] border border-[#EFE8DE] p-4 sm:p-5 shadow-card">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-serif text-[18px] font-bold text-[#0E241D]">
+                        Your Progress
+                    </h3>
+                    <button onclick="toggleAllInstalments()"
+                        class="text-[13px] font-semibold text-[#073B2C] hover:underline">
+                        View All
+                    </button>
+                </div>
+
+                <!-- 11-Month Step Timeline -->
+                <div class="relative w-full overflow-x-auto no-scrollbar py-2">
+                    <!-- Step Connector Lines -->
+                    <div class="relative min-w-[325px] flex items-center justify-between px-1">
+                        <!-- Connecting continuous background line -->
+                        <div class="absolute left-2.5 right-2.5 top-[10px] h-[2px] bg-[#E3D8C8] -z-0"></div>
+                        <!-- Completed green progress line (covers first 5 nodes ~ 40%) -->
+                        <div class="absolute left-2.5 w-[39%] top-[10px] h-[2px] bg-[#073B2C] -z-0"></div>
+
+                        <!-- Month 1: Jan (Completed) -->
+                        <div class="flex flex-col items-center z-10">
+                            <div class="w-5 h-5 rounded-full bg-[#073B2C] flex items-center justify-center shadow-xs">
+                                <svg class="w-3 h-3 text-white stroke-current" fill="none" stroke-width="2.5"
+                                    viewBox="0 0 24 24">
+                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <span class="text-[10px] font-medium text-[#464E4A] mt-1.5">Jan</span>
+                        </div>
+
+                        <!-- Month 2: Feb (Completed) -->
+                        <div class="flex flex-col items-center z-10">
+                            <div class="w-5 h-5 rounded-full bg-[#073B2C] flex items-center justify-center shadow-xs">
+                                <svg class="w-3 h-3 text-white stroke-current" fill="none" stroke-width="2.5"
+                                    viewBox="0 0 24 24">
+                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <span class="text-[10px] font-medium text-[#464E4A] mt-1.5">Feb</span>
+                        </div>
+
+                        <!-- Month 3: Mar (Completed) -->
+                        <div class="flex flex-col items-center z-10">
+                            <div class="w-5 h-5 rounded-full bg-[#073B2C] flex items-center justify-center shadow-xs">
+                                <svg class="w-3 h-3 text-white stroke-current" fill="none" stroke-width="2.5"
+                                    viewBox="0 0 24 24">
+                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <span class="text-[10px] font-medium text-[#464E4A] mt-1.5">Mar</span>
+                        </div>
+
+                        <!-- Month 4: Apr (Completed) -->
+                        <div class="flex flex-col items-center z-10">
+                            <div class="w-5 h-5 rounded-full bg-[#073B2C] flex items-center justify-center shadow-xs">
+                                <svg class="w-3 h-3 text-white stroke-current" fill="none" stroke-width="2.5"
+                                    viewBox="0 0 24 24">
+                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <span class="text-[10px] font-medium text-[#464E4A] mt-1.5">Apr</span>
+                        </div>
+
+                        <!-- Month 5: May (Completed) -->
+                        <div class="flex flex-col items-center z-10">
+                            <div class="w-5 h-5 rounded-full bg-[#073B2C] flex items-center justify-center shadow-xs">
+                                <svg class="w-3 h-3 text-white stroke-current" fill="none" stroke-width="2.5"
+                                    viewBox="0 0 24 24">
+                                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <span class="text-[10px] font-medium text-[#464E4A] mt-1.5">May</span>
+                        </div>
+
+                        <!-- Month 6: Jun (Upcoming/Inactive) -->
+                        <div class="flex flex-col items-center z-10">
+                            <div
+                                class="w-5 h-5 rounded-full bg-[#FAF6F0] border-2 border-[#D8C9B5] flex items-center justify-center">
+                            </div>
+                            <span class="text-[10px] font-medium text-[#7D8581] mt-1.5">Jun</span>
+                        </div>
+
+                        <!-- Month 7: Jul -->
+                        <div class="flex flex-col items-center z-10">
+                            <div
+                                class="w-5 h-5 rounded-full bg-[#FAF6F0] border-2 border-[#D8C9B5] flex items-center justify-center">
+                            </div>
+                            <span class="text-[10px] font-medium text-[#7D8581] mt-1.5">Jul</span>
+                        </div>
+
+                        <!-- Month 8: Aug -->
+                        <div class="flex flex-col items-center z-10">
+                            <div
+                                class="w-5 h-5 rounded-full bg-[#FAF6F0] border-2 border-[#D8C9B5] flex items-center justify-center">
+                            </div>
+                            <span class="text-[10px] font-medium text-[#7D8581] mt-1.5">Aug</span>
+                        </div>
+
+                        <!-- Month 9: Sep -->
+                        <div class="flex flex-col items-center z-10">
+                            <div
+                                class="w-5 h-5 rounded-full bg-[#FAF6F0] border-2 border-[#D8C9B5] flex items-center justify-center">
+                            </div>
+                            <span class="text-[10px] font-medium text-[#7D8581] mt-1.5">Sep</span>
+                        </div>
+
+                        <!-- Month 10: Oct -->
+                        <div class="flex flex-col items-center z-10">
+                            <div
+                                class="w-5 h-5 rounded-full bg-[#FAF6F0] border-2 border-[#D8C9B5] flex items-center justify-center">
+                            </div>
+                            <span class="text-[10px] font-medium text-[#7D8581] mt-1.5">Oct</span>
+                        </div>
+
+                        <!-- Month 11: Nov -->
+                        <div class="flex flex-col items-center z-10">
+                            <div
+                                class="w-5 h-5 rounded-full bg-[#FAF6F0] border-2 border-[#D8C9B5] flex items-center justify-center">
+                            </div>
+                            <span class="text-[10px] font-medium text-[#7D8581] mt-1.5">Nov</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Summary Mini Cards -->
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <!-- Card 1: Paid -->
+                    <div class="bg-[#F0F6F2] rounded-[18px] p-3.5 border border-[#DFECE4]">
+                        <p class="text-[16px] font-bold text-[#083528]">5 / 11</p>
+                        <p class="text-[11.5px] text-[#4F685F] mt-0.5 font-medium leading-tight">Instalments Paid</p>
+                    </div>
+
+                    <!-- Card 2: Remaining -->
+                    <div class="bg-[#FBF5ED] rounded-[18px] p-3.5 border border-[#EFE5D6]">
+                        <p class="text-[16px] font-bold text-[#A86414]">6</p>
+                        <p class="text-[11.5px] text-[#786650] mt-0.5 font-medium leading-tight">Instalments Remaining
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Upcoming Payment -->
+            <section class="bg-white rounded-[26px] border border-[#EFE8DE] p-4 sm:p-5 shadow-card">
+                <h3 class="font-serif text-[18px] font-bold text-[#0E241D] mb-3">
+                    Upcoming Payment
+                </h3>
+
+                <!-- Content Card -->
+                <div
+                    class="bg-[#EDF5F1] rounded-[20px] p-3.5 sm:p-4 flex items-center justify-between border border-[#DFECE4]">
+                    <div class="flex items-center gap-3">
+                        <!-- Green tinted calendar icon tile -->
+                        <div
+                            class="w-12 h-12 rounded-[16px] bg-white flex items-center justify-center text-[#073B2C] shadow-sm shrink-0 border border-[#DAE8E0]">
+                            <svg class="w-6 h-6 stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                                <!-- Clock / payment arrow indicator -->
+                                <path d="M8 14h8M12 14v4" stroke-linecap="round" />
+                            </svg>
+                        </div>
+
+                        <!-- Price & date info -->
+                        <div>
+                            <p class="text-[11px] font-medium text-[#46655B] leading-none">Next Instalment</p>
+                            <p class="text-[18px] font-bold text-[#082E22] mt-1 leading-tight">₹5,000</p>
+                            <p class="text-[11px] text-[#55786D] mt-0.5">Due on 5 Oct 2026</p>
+                        </div>
+                    </div>
+
+                    <!-- Pay Now Action Button -->
+                    <button onclick="triggerPayment('₹5,000', 'October Instalment')"
+                        class="btn-press bg-[#073B2C] hover:bg-[#042A1F] active:bg-[#031F17] text-white px-5 py-2.5 rounded-full text-[13.5px] font-semibold transition-all shadow-sm shrink-0">
+                        Pay Now
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom Home Indicator Bar (iOS style) -->
+        <div class="py-2.5 flex justify-center shrink-0">
+            <div class="w-36 h-1.5 bg-[#171E1B]/25 rounded-full"></div>
+        </div>
+
+        <!-- Quick Pay Bottom Sheet / Modal -->
+        <div id="paymentModal"
+            class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/45 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300">
+            <div id="paymentSheet"
+                class="w-full sm:max-w-[390px] bg-[#FAF6F0] rounded-t-[32px] sm:rounded-[32px] p-6 shadow-2xl border border-[#E7DFD4] transform translate-y-full transition-transform duration-300">
+
+                <!-- Grabber handle -->
+                <div class="w-12 h-1.5 bg-neutral-300 rounded-full mx-auto mb-4 sm:hidden"></div>
+
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">💳</span>
+                        <h4 class="font-serif text-[20px] font-bold text-[#073B2C]">Complete Instalment</h4>
+                    </div>
+                    <button onclick="closePaymentModal()"
+                        class="w-8 h-8 rounded-full bg-[#EAE3D6] flex items-center justify-center text-neutral-700 hover:text-black">
+                        ✕
+                    </button>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-[#EBE3D7] space-y-2 mb-4">
+                    <div class="flex justify-between text-xs text-neutral-500">
+                        <span>Payment Item</span>
+                        <span id="modalPaymentItem" class="font-semibold text-neutral-800">October Instalment</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-neutral-500">
+                        <span>Gold Allocation</span>
+                        <span class="font-semibold text-[#A86414]">~0.697 g (24K Pure)</span>
+                    </div>
+                    <div class="border-t border-neutral-100 pt-2 flex justify-between items-baseline">
+                        <span class="text-sm font-medium text-neutral-700">Amount Payable</span>
+                        <span id="modalPaymentAmount" class="text-xl font-bold text-[#073B2C]">₹5,000</span>
+                    </div>
+                </div>
+
+                <!-- Payment Method Options -->
+                <div class="space-y-2 mb-4">
+                    <label
+                        class="flex items-center justify-between p-3 rounded-xl bg-white border border-[#D9DFDC] cursor-pointer hover:border-[#073B2C]">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-base">⚡</span>
+                            <span class="text-xs font-semibold text-neutral-800">UPI Instant (GPay / PhonePe)</span>
+                        </div>
+                        <input type="radio" name="payMethod" checked class="accent-[#073B2C]">
+                    </label>
+                    <label
+                        class="flex items-center justify-between p-3 rounded-xl bg-white border border-[#D9DFDC] cursor-pointer hover:border-[#073B2C]">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-base">🏦</span>
+                            <span class="text-xs font-semibold text-neutral-800">Net Banking / Debit Card</span>
+                        </div>
+                        <input type="radio" name="payMethod" class="accent-[#073B2C]">
+                    </label>
+                </div>
+
+                <!-- Confirm CTA -->
+                <button onclick="completePaymentSimulation()"
+                    class="btn-press w-full bg-[#073B2C] hover:bg-[#042A1F] text-white py-3.5 rounded-full font-semibold text-sm shadow-md transition-all">
+                    Authorize &amp; Pay ₹5,000
+                </button>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="toastNotification"
+            class="fixed top-8 left-1/2 -translate-x-1/2 bg-[#073B2C] text-white px-5 py-2.5 rounded-full shadow-lg text-xs font-semibold tracking-wide opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center space-x-2">
+            <span class="text-amber-300">✓</span>
+            <span id="toastMsg">Payment Successful</span>
+        </div>
+
+    </div>
+
+    <script>
+        function triggerPayment(amount, description) {
+            document.getElementById('modalPaymentAmount').innerText = amount;
+            document.getElementById('modalPaymentItem').innerText = description;
+
+            const modal = document.getElementById('paymentModal');
+            const sheet = document.getElementById('paymentSheet');
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            sheet.classList.remove('translate-y-full');
+        }
+
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            const sheet = document.getElementById('paymentSheet');
+
+            sheet.classList.add('translate-y-full');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+            }, 300);
+        }
+
+        function completePaymentSimulation() {
+            closePaymentModal();
+            setTimeout(() => {
+                showToast('Instalment of ₹5,000 paid! Vault updated.');
+            }, 350);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = msg;
+
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-2');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+                toast.classList.remove('translate-y-2');
+            }, 3000);
+        }
+
+        function handleBackAction() {
+            window.location.href = 'index.html';
+        }
+
+        function toggleAllInstalments() {
+            showToast('Opening full 11-month ledger view...');
+        }
+
+        // Dismiss modal on backdrop tap
+        document.getElementById('paymentModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closePaymentModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

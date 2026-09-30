@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Numbers</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display, Plus Jakarta Sans, Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        parchment: '#FBF8F2',
+                        cardBg: '#FAF6EE',
+                        emeraldDeep: '#09362C',
+                        emeraldHover: '#062820',
+                        emeraldMint: '#E9F5EF',
+                        emeraldMintBorder: '#A7D9C4',
+                        bronzeGold: '#8F5824',
+                        bookedGray: '#BFBAB0',
+                        availableCream: '#F6F1E8',
+                        goldBezel: '#D4B886'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+            background-color: #E8E2D5;
+        }
+
+        /* Hide scrollbars */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Luxury smartphone gold frame styling */
+        .phone-mockup-frame {
+            box-shadow: 0 25px 65px -15px rgba(25, 20, 15, 0.38),
+                0 0 0 10px #1c1c1c,
+                0 0 0 12px #d4b886,
+                0 0 0 14px #a68b56;
+        }
+
+        /* Tap feedback */
+        .press-feedback {
+            transition: transform 0.12s ease, filter 0.12s ease;
+        }
+
+        .press-feedback:active {
+            transform: scale(0.96);
+            filter: brightness(0.95);
+        }
+
+        /* Number tiles transitions */
+        .num-tile {
+            transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-5 font-sans text-stone-900">
+
+    <!-- Mobile Chassis Device Container -->
+    <main
+        class="w-full sm:w-[412px] h-screen sm:h-[890px] bg-[#FAF8F3] sm:rounded-[48px] relative flex flex-col overflow-hidden sm:phone-mockup-frame">
+
+        <!-- TOP STATUS BAR & HEADER -->
+        <header class="w-full px-6 pt-3 pb-2.5 bg-[#FAF8F3] z-20 shrink-0">
+
+            <!-- iOS Status Bar -->
+            <div class="w-full flex justify-between items-center text-stone-900 text-xs font-semibold pb-2.5">
+                <span class="tracking-tight text-[15px] font-sans font-bold">9:41</span>
+                <div class="flex items-center space-x-1.5">
+                    <!-- Cellular Signal -->
+                    <svg class="w-4 h-3.5 fill-current text-stone-900" viewBox="0 0 24 24">
+                        <rect x="1" y="16" width="3" height="6" rx="1" />
+                        <rect x="7" y="12" width="3" height="10" rx="1" />
+                        <rect x="13" y="7" width="3" height="15" rx="1" />
+                        <rect x="19" y="3" width="3" height="19" rx="1" />
+                    </svg>
+                    <!-- Wi-Fi -->
+                    <svg class="w-4 h-3.5 fill-current text-stone-900" viewBox="0 0 24 24">
+                        <path
+                            d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.2c3.78 0 7.21 1.5 9.74 3.96L12 19.4 2.26 11.16C4.79 8.7 8.22 7.2 12 7.2z" />
+                    </svg>
+                    <!-- Battery Icon -->
+                    <div class="w-6 h-3 border border-stone-800 rounded-[4px] p-0.5 flex items-center relative">
+                        <div class="h-full w-full bg-stone-900 rounded-[2px]"></div>
+                        <div class="w-0.5 h-1.5 bg-stone-800 absolute -right-1 rounded-r-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Header: Back Arrow & Centered Title -->
+            <div class="relative flex items-center justify-center pt-1 pb-1">
+                <button onclick="handleBackClick()"
+                    class="absolute left-0 p-1 text-stone-900 hover:opacity-70 active:scale-90 transition rounded-full focus:outline-none"
+                    aria-label="Back">
+                    <svg class="w-6 h-6 stroke-[2.2] stroke-current fill-none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                    </svg>
+                </button>
+                <h1 class="font-serif text-[22px] font-bold text-stone-900 tracking-tight text-center">
+                    Select Your Numbers
+                </h1>
+            </div>
+        </header>
+
+        <!-- SCROLLABLE CONTENT BODY -->
+        <div id="scrollContainer" class="flex-1 overflow-y-auto no-scrollbar px-5 pt-1 pb-8 space-y-4">
+
+            <!-- Draw Info & Price Pill Box -->
+            <section
+                class="bg-white/70 border border-[#EFE5D8] rounded-2xl p-2.5 px-4 flex items-center justify-between shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+                <!-- Draw #25 Badge -->
+                <div
+                    class="bg-[#FBE9CE] text-stone-900 px-4 py-1.5 rounded-full font-bold text-[14.5px] font-serif shadow-xs">
+                    Draw #25
+                </div>
+
+                <!-- Vertical subtle line -->
+                <div class="h-6 w-[1px] bg-stone-200"></div>
+
+                <!-- Price -->
+                <div class="text-right">
+                    <span class="font-bold text-[15px] text-stone-900 font-sans">₹1,000</span>
+                    <span class="text-stone-600 text-[12.5px] font-normal">per number</span>
+                </div>
+            </section>
+
+            <!-- Legend Row -->
+            <div class="flex items-center justify-between px-1 text-[11.5px] text-stone-700 font-medium">
+                <!-- Available -->
+                <div class="flex items-center space-x-1.5">
+                    <span
+                        class="w-3 h-3 rounded-full bg-[#E5DDCF] inline-block shrink-0 border border-stone-300/40"></span>
+                    <span>Available</span>
+                </div>
+
+                <!-- Already Booked -->
+                <div class="flex items-center space-x-1.5">
+                    <span class="w-3 h-3 rounded-full bg-[#BFBAB0] inline-block shrink-0"></span>
+                    <span>Already Booked</span>
+                </div>
+
+                <!-- Your Selection -->
+                <div class="flex items-center space-x-1.5">
+                    <span class="w-3 h-3 rounded-full bg-[#09362C] inline-block shrink-0"></span>
+                    <span>Your Selection</span>
+                </div>
+            </div>
+
+            <!-- 30-Numbers Grid (5 cols x 6 rows) -->
+            <div id="numberGrid" class="grid grid-cols-5 gap-2.5 pt-0.5" role="group" aria-label="30 Number Grid">
+                <!-- Generated dynamically via JS with exact initial states -->
+            </div>
+
+            <!-- Selected Numbers Bar -->
+            <div class="pt-1 space-y-2">
+                <div class="flex items-center justify-between">
+                    <h2 id="selectedCountTitle" class="text-[13.5px] font-semibold text-stone-900 font-sans">
+                        Selected Numbers (3)
+                    </h2>
+                    <button onclick="clearAllSelections()"
+                        class="flex items-center space-x-1 text-[#E03B24] hover:text-red-700 active:scale-95 transition text-[12.5px] font-medium">
+                        <svg class="w-3.5 h-3.5 stroke-[2] stroke-current fill-none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>
+                        <span>Clear All</span>
+                    </button>
+                </div>
+
+                <!-- Selected Numbers Tag Chips -->
+                <div id="chipsContainer" class="flex flex-wrap gap-2 min-h-[34px] items-center">
+                    <!-- Dynamically populated chips -->
+                </div>
+            </div>
+
+            <!-- FREE Booking Promotion Card -->
+            <section class="bg-[#ECF7F2] border border-[#CDEBDD] rounded-2xl p-4 shadow-xs space-y-3.5">
+                <div class="flex items-center space-x-3.5">
+                    <!-- Gift Icon Badge -->
+                    <div
+                        class="w-12 h-12 rounded-xl bg-white/90 border border-[#BCE4D1] flex items-center justify-center shrink-0 text-[#09362C]">
+                        <svg class="w-6 h-6 stroke-[1.9] stroke-current fill-none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H4.5a1.5 1.5 0 0 1-1.5-1.5v-8.25M3.75 7.5h16.5a1.5 1.5 0 0 1 1.5 1.5v2.25H2.25V9a1.5 1.5 0 0 1 1.5-1.5Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5v13.5" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 7.5A3 3 0 0 0 9 4.5c-2.25 0-3 2.25-.75 3H12Zm0 0A3 3 0 0 1 15 4.5c2.25 0 3 2.25.75 3H12Z" />
+                        </svg>
+                    </div>
+
+                    <!-- Description and FREE headline -->
+                    <div class="flex-1">
+                        <span class="text-[12px] text-stone-800 font-medium block leading-tight">Book these numbers for
+                            this draw</span>
+                        <span
+                            class="font-serif text-[24px] font-bold text-[#09362C] leading-none block my-0.5 tracking-tight">FREE</span>
+                        <span class="text-[11.5px] text-stone-500 block leading-tight">No payment needed</span>
+                    </div>
+                </div>
+
+                <!-- Book for FREE CTA Button -->
+                <button id="bookBtn" onclick="handleBookFree()"
+                    class="press-feedback w-full bg-[#09362C] hover:bg-[#062820] text-white py-3.5 px-4 rounded-xl font-medium text-[14.5px] tracking-wide shadow-md shadow-[#09362C]/15 flex items-center justify-center transition cursor-pointer">
+                    Book for FREE
+                </button>
+            </section>
+
+            <!-- Reserve for Future Draws Card -->
+            <section class="bg-white/80 border border-[#EFE7D8] rounded-2xl p-4 shadow-xs space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <!-- Calendar / clock Icon Box -->
+                        <div
+                            class="w-11 h-11 rounded-2xl bg-[#FCF6EC] border border-[#F3E3CA] flex items-center justify-center shrink-0 text-[#9C682A]">
+                            <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="3" stroke-width="1.8" />
+                                <line x1="3" y1="9" x2="21" y2="9" stroke-width="1.8" />
+                                <line x1="8" y1="2" x2="8" y2="5" stroke-linecap="round" stroke-width="2" />
+                                <line x1="16" y1="2" x2="16" y2="5" stroke-linecap="round" stroke-width="2" />
+                                <line x1="8" y1="13" x2="11" y2="13" stroke-linecap="round" stroke-width="2" />
+                                <line x1="8" y1="16" x2="13" y2="16" stroke-linecap="round" stroke-width="2" />
+                            </svg>
+                        </div>
+
+                        <!-- Future text -->
+                        <div>
+                            <h3 class="text-[12.5px] font-bold text-stone-900 leading-snug">
+                                Want to keep these numbers for future draws?
+                            </h3>
+                            <p class="text-[11.5px] text-stone-500 leading-tight mt-0.5">
+                                Pay an advance amount to reserve them.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Chevron Right -->
+                    <svg class="w-4 h-4 text-stone-400 stroke-[2.2] stroke-current fill-none shrink-0"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </div>
+
+                <!-- Warm Beige Button -->
+                <button onclick="handleReserveFuture()"
+                    class="press-feedback w-full bg-[#FAF3E7] hover:bg-[#F3E7D3] border border-[#E9D9C3] py-2.5 px-4 rounded-full font-serif font-bold text-[#8A5722] text-[14px] tracking-wide transition cursor-pointer">
+                    Reserve for Future Draws
+                </button>
+            </section>
+
+            <!-- Bottom Home bar spacing -->
+            <div class="w-full flex justify-center pt-2">
+                <div class="w-32 h-1 bg-stone-900/75 rounded-full"></div>
+            </div>
+
+        </div>
+
+        <!-- TOAST NOTIFICATION -->
+        <div id="toast"
+            class="absolute top-14 inset-x-5 bg-stone-900/95 backdrop-blur text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none z-50">
+            <div id="toastIconBox"
+                class="w-7 h-7 rounded-full bg-[#09362C] text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-400/30">
+                <svg class="w-4 h-4 stroke-[2.5] stroke-current fill-none" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div>
+                <p id="toastTitle" class="text-xs font-bold leading-tight">Success</p>
+                <p id="toastMsg" class="text-[11px] text-stone-300 leading-snug">Action executed successfully.</p>
+            </div>
+        </div>
+
+        <!-- BOOKING CONFIRMATION MODAL -->
+        <div id="bookingModal"
+            class="absolute inset-0 bg-stone-950/65 backdrop-blur-[2px] z-50 flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+            <div
+                class="w-full bg-[#FAF8F3] border border-[#E9DFCE] rounded-3xl p-6 shadow-2xl flex flex-col items-center text-center transform scale-95 transition-transform duration-300">
+                <div
+                    class="w-16 h-16 rounded-full bg-[#EBF7F2] text-[#09362C] flex items-center justify-center border border-[#BDE3D0] mb-3">
+                    <svg class="w-8 h-8 stroke-[2.5] stroke-current fill-none" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h4 class="font-serif text-[20px] font-bold text-stone-900">Numbers Booked!</h4>
+                <p class="text-xs text-stone-600 mt-1">Your free entry for Draw #25 has been registered.</p>
+
+                <div class="w-full bg-white rounded-xl p-3 border border-stone-200 mt-3 text-left">
+                    <div class="text-[11px] text-stone-400 font-medium">Reserved Lucky Numbers:</div>
+                    <div id="modalNumbersRow" class="flex flex-wrap gap-1.5 mt-1.5">
+                        <!-- inserted via JS -->
+                    </div>
+                </div>
+
+                <button onclick="closeModal()"
+                    class="w-full bg-[#09362C] hover:bg-[#062820] text-white py-3 rounded-xl font-semibold text-xs tracking-wider uppercase mt-4 transition cursor-pointer">
+                    Great, Continue
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Numbers configuration according to the provided screen image
+        // Total: 30 numbers (01 to 30)
+        // Booked (already taken/disabled): 03, 09, 13, 16, 17, 22, 25
+        // Initial Selected: 07, 14, 18
+        const bookedNumbers = new Set(['03', '09', '13', '16', '17', '22', '25']);
+        let selectedNumbers = new Set(['07', '14', '18']);
+
+        const numberGrid = document.getElementById('numberGrid');
+        const chipsContainer = document.getElementById('chipsContainer');
+        const selectedCountTitle = document.getElementById('selectedCountTitle');
+        const bookBtn = document.getElementById('bookBtn');
+
+        // Format single digit with leading zero
+        function padNum(n) {
+            return n < 10 ? '0' + n : '' + n;
+        }
+
+        // Render the 30 grid buttons
+        function renderGrid() {
+            numberGrid.innerHTML = '';
+
+            for (let i = 1; i <= 30; i++) {
+                const numStr = padNum(i);
+                const isBooked = bookedNumbers.has(numStr);
+                const isSelected = selectedNumbers.has(numStr);
+
+                const btn = document.createElement('button');
+                btn.id = 'num-' + numStr;
+                btn.textContent = numStr;
+                btn.setAttribute('aria-label', `Number ${numStr}`);
+
+                // Base styles matching the mockup
+                btn.className = 'num-tile h-12 rounded-xl text-[15px] font-sans font-semibold flex items-center justify-center select-none ';
+
+                if (isBooked) {
+                    // Already Booked style
+                    btn.className += 'bg-[#BFBAB0] text-white cursor-not-allowed shadow-none';
+                    btn.disabled = true;
+                } else if (isSelected) {
+                    // Your Selection style (Deep Emerald Green)
+                    btn.className += 'bg-[#09362C] text-white shadow-xs font-bold cursor-pointer';
+                    btn.onclick = () => toggleNumber(numStr);
+                } else {
+                    // Available style (Warm cream/ivory)
+                    btn.className += 'bg-[#FAF4EB] text-stone-900 border border-[#EBDCCB] hover:bg-[#F3ECE1] cursor-pointer shadow-xs active:scale-95';
+                    btn.onclick = () => toggleNumber(numStr);
+                }
+
+                numberGrid.appendChild(btn);
+            }
+
+            renderChips();
+        }
+
+        // Toggle number selection
+        function toggleNumber(numStr) {
+            if (bookedNumbers.has(numStr)) return;
+
+            if (selectedNumbers.has(numStr)) {
+                selectedNumbers.delete(numStr);
+            } else {
+                selectedNumbers.add(numStr);
+            }
+
+            renderGrid();
+        }
+
+        // Remove single number from chips
+        function removeNumber(numStr) {
+            selectedNumbers.delete(numStr);
+            renderGrid();
+        }
+
+        // Clear all selections
+        function clearAllSelections() {
+            if (selectedNumbers.size === 0) {
+                showToast('Empty', 'No numbers currently selected', false);
+                return;
+            }
+            selectedNumbers.clear();
+            renderGrid();
+            showToast('Cleared', 'All selected numbers removed', true);
+        }
+
+        // Render chips container
+        function renderChips() {
+            const count = selectedNumbers.size;
+            selectedCountTitle.textContent = `Selected Numbers (${count})`;
+
+            // Enable/disable Book button
+            if (count === 0) {
+                bookBtn.disabled = true;
+                bookBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                bookBtn.disabled = false;
+                bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+
+            chipsContainer.innerHTML = '';
+
+            if (count === 0) {
+                const emptyMsg = document.createElement('span');
+                emptyMsg.className = 'text-stone-400 text-xs italic';
+                emptyMsg.textContent = 'Tap available numbers above to select';
+                chipsContainer.appendChild(emptyMsg);
+                return;
+            }
+
+            // Sort numbers numerically for display
+            const sortedNums = Array.from(selectedNumbers).sort((a, b) => parseInt(a) - parseInt(b));
+
+            sortedNums.forEach(numStr => {
+                const chip = document.createElement('div');
+                chip.className = 'flex items-center space-x-1.5 bg-[#EAF5EF] border border-[#BFDFD0] text-[#09362C] px-3 py-1 rounded-lg text-xs font-bold select-none transition';
+                chip.innerHTML = `
+          <span>${numStr}</span>
+          <button onclick="removeNumber('${numStr}')" class="text-stone-400 hover:text-stone-700 ml-0.5 active:scale-90 transition focus:outline-none" aria-label="Remove ${numStr}">
+            ✕
+          </button>
+        `;
+                chipsContainer.appendChild(chip);
+            });
+        }
+
+        // Book for FREE button handler
+        function handleBookFree() {
+            if (selectedNumbers.size === 0) {
+                showToast('Selection Required', 'Please select at least one number', false);
+                return;
+            }
+
+            window.location.href = 'details.html';
+        }
+
+        function closeModal() {
+            window.location.href = 'details.html';
+        }
+
+        function handleReserveFuture() {
+            window.location.href = 'details.html';
+        }
+
+        function handleBackClick() {
+            window.location.href = 'goldPlan.html';
+        }
+
+        // Toast notification function
+        let toastTimer;
+        function showToast(title, msg, success = true) {
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIconBox = document.getElementById('toastIconBox');
+
+            clearTimeout(toastTimer);
+            toastTitle.textContent = title;
+            toastMsg.textContent = msg;
+
+            if (!success) {
+                toastIconBox.className = 'w-7 h-7 rounded-full bg-red-900/60 text-red-300 flex items-center justify-center shrink-0 border border-red-500/30';
+            } else {
+                toastIconBox.className = 'w-7 h-7 rounded-full bg-[#09362C] text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-400/30';
+            }
+
+            toast.classList.remove('-translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            toastTimer = setTimeout(() => {
+                toast.classList.add('-translate-y-24', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 2400);
+        }
+
+        // Initialize initial view
+        window.onload = function () {
+            renderGrid();
+        };
+    </script>
+</body>
+
+</html>

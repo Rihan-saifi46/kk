@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gold Savings Plans</title>
+    <!-- Google Fonts: Playfair Display for editorial serif & Plus Jakarta Sans for crisp UI numerals/labels -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti for simulated plan enrollment -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandCreamBg: '#FAF7F2',
+                        brandDarkGreen: '#063B2C',
+                        brandDarkGreenHover: '#042D22',
+                        textHeading: '#0A221C',
+                        textMuted: '#68726E',
+                        textDark: '#121A16',
+                        cardBorder: '#EFE6DB',
+                        dotGold: '#C88A35',
+                        tabInactiveBg: '#F3EDE4'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'phone': '0 25px 65px -15px rgba(25, 20, 10, 0.35), 0 0 0 10px #2D2821, 0 0 0 12px #D8C7B0',
+                        'cardSoft': '0 3px 14px -2px rgba(120, 95, 60, 0.05)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: #E5DED5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .btn-press:active {
+            transform: scale(0.975);
+        }
+
+        .modal-backdrop {
+            transition: opacity 0.25s ease-out;
+        }
+
+        .modal-content {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+
+<body
+    class="min-h-screen flex items-center justify-center p-0 sm:p-5 text-textDark antialiased selection:bg-[#063B2C] selection:text-white">
+
+    <!-- ================= PHONE CONTAINER ================= -->
+    <div
+        class="w-full sm:max-w-[420px] h-screen sm:h-[915px] sm:max-h-[92vh] bg-brandCreamBg sm:rounded-[52px] sm:shadow-phone overflow-hidden relative flex flex-col sm:border-[4.5px] sm:border-[#ECE4D8]">
+
+        <!-- iOS Status Bar -->
+        <header class="pt-3 px-7 pb-1 flex items-center justify-between z-20 select-none text-neutral-900 shrink-0">
+            <span class="text-[15px] font-bold tracking-tight">9:41</span>
+
+            <div class="flex items-center space-x-2">
+                <!-- Cellular (4 bars) -->
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <rect x="2" y="16" width="3" height="5" rx="0.75" />
+                    <rect x="7" y="12" width="3" height="9" rx="0.75" />
+                    <rect x="12" y="8" width="3" height="13" rx="0.75" />
+                    <rect x="17" y="4" width="3" height="17" rx="0.75" />
+                </svg>
+                <!-- WiFi -->
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path
+                        d="M12 4c-4.4 0-8.4 1.7-11.4 4.5l1.4 1.5C4.6 7.6 8.1 6.1 12 6.1s7.4 1.5 10 3.9l1.4-1.5C20.4 5.7 16.4 4 12 4zm0 4.5c-3.1 0-6 1.2-8.1 3.2l1.4 1.4c1.7-1.6 4-2.6 6.7-2.6s5 1 6.7 2.6l1.4-1.4C18 9.7 15.1 8.5 12 8.5zm0 4.5c-1.8 0-3.5.7-4.7 1.9l4.7 5.1 4.7-5.1C15.5 13.7 13.8 13 12 13z" />
+                </svg>
+                <!-- Battery -->
+                <div class="flex items-center">
+                    <div
+                        class="w-[22px] h-[11.5px] border-[1.75px] border-neutral-900 rounded-[4px] p-[1.5px] flex items-center">
+                        <div class="bg-neutral-900 h-full w-[82%] rounded-[1.5px]"></div>
+                    </div>
+                    <div class="w-[1.5px] h-[4px] bg-neutral-900 rounded-r-xs -ml-[0.5px]"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Top Navigation with Back Arrow & Header -->
+        <div class="px-6 pt-2 pb-3 shrink-0">
+            <!-- Back Arrow -->
+            <button onclick="window.location.href='index.html'"
+                class="btn-press p-1 -ml-1 text-neutral-800 hover:text-black transition-transform" aria-label="Go back">
+                <svg class="w-6 h-6 stroke-current" fill="none" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+
+            <!-- Screen Title & Subtitle -->
+            <div class="text-center px-2 mt-1">
+                <h1
+                    class="font-serif text-[28px] sm:text-[30px] font-bold text-textHeading tracking-tight leading-tight">
+                    Gold Savings Plans
+                </h1>
+                <p class="text-[13.5px] leading-[1.35] text-[#55605C] mt-2 font-normal">
+                    Start your gold journey with flexible plans<br>and secure your tomorrow.
+                </p>
+            </div>
+
+            <!-- Segmented Pill Toggle Buttons -->
+            <div class="grid grid-cols-2 gap-3.5 mt-5">
+                <button id="tabPopular" onclick="switchTab('popular')"
+                    class="btn-press py-2.5 px-4 rounded-full text-[13.5px] font-semibold bg-brandDarkGreen text-white shadow-sm transition-all text-center">
+                    Popular Plans
+                </button>
+                <button id="tabHowItWorks" onclick="switchTab('how')"
+                    class="btn-press py-2.5 px-4 rounded-full text-[13.5px] font-medium bg-tabInactiveBg text-[#25332E] hover:bg-[#EBE3D7] transition-all text-center">
+                    How It Works
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= SCROLLABLE BODY CONTENT ================= -->
+        <main class="flex-1 overflow-y-auto px-5 pt-1.5 pb-6 no-scrollbar space-y-4">
+
+            <!-- ================= POPULAR PLANS VIEW ================= -->
+            <div id="plansView" class="space-y-4">
+
+                <!-- PLAN CARD 1: 6 Month Plan (Most Popular) -->
+                <div
+                    class="bg-white rounded-[22px] border border-cardBorder p-4 shadow-cardSoft relative overflow-hidden transition-all hover:border-[#DDCBB5]">
+                    <!-- Card Top Row: Thumbnail + Titles + Most Popular Badge -->
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <!-- Golden Coin Stack Thumbnail -->
+                            <div
+                                class="w-[66px] h-[66px] rounded-[16px] bg-[#FAF2E5] border border-[#EFE2CF] flex items-center justify-center shrink-0 shadow-inner">
+                                <svg class="w-[50px] h-[50px]" viewBox="0 0 100 100" fill="none">
+                                    <defs>
+                                        <linearGradient id="coinGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FFF2BB" />
+                                            <stop offset="45%" stop-color="#E1A527" />
+                                            <stop offset="100%" stop-color="#9C5F05" />
+                                        </linearGradient>
+                                        <linearGradient id="coinEdge1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#DC9F21" />
+                                            <stop offset="50%" stop-color="#A56507" />
+                                            <stop offset="100%" stop-color="#5B3602" />
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Bottom Coin Base -->
+                                    <path
+                                        d="M50 74 C32 74 24 69 24 65 L24 70 C24 74 32 79 50 79 C68 79 76 74 76 70 L76 65 C76 69 68 74 50 74 Z"
+                                        fill="url(#coinEdge1)" />
+                                    <ellipse cx="50" cy="65" rx="26" ry="7" fill="url(#coinGrad1)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <!-- Middle Coin -->
+                                    <path
+                                        d="M50 60 C32 60 24 55 24 51 L24 56 C24 60 32 65 50 65 C68 65 76 60 76 56 L76 51 C76 55 68 60 50 60 Z"
+                                        fill="url(#coinEdge1)" />
+                                    <ellipse cx="50" cy="51" rx="26" ry="7" fill="url(#coinGrad1)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <!-- Lower Upper Coin -->
+                                    <path
+                                        d="M50 46 C32 46 24 41 24 37 L24 42 C24 46 32 51 50 51 C68 51 76 46 76 42 L76 37 C76 41 68 46 50 46 Z"
+                                        fill="url(#coinEdge1)" />
+                                    <ellipse cx="50" cy="37" rx="26" ry="7" fill="url(#coinGrad1)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <!-- Top Coin Stack -->
+                                    <path
+                                        d="M48 32 C31 32 24 28 24 24 L24 29 C24 33 31 37 48 37 C65 37 72 33 72 29 L72 24 C72 28 65 32 48 32 Z"
+                                        fill="url(#coinEdge1)" />
+                                    <ellipse cx="48" cy="24" rx="24" ry="6.5" fill="url(#coinGrad1)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                </svg>
+                            </div>
+
+                            <!-- Plan Title & Figures -->
+                            <div>
+                                <h3 class="font-serif text-[18px] font-bold text-textHeading leading-tight">6 Month Plan
+                                </h3>
+
+                                <div class="grid grid-cols-2 gap-5 mt-2">
+                                    <div>
+                                        <p class="text-[12px] text-textMuted font-medium leading-none">Monthly
+                                            Investment</p>
+                                        <p class="text-[17px] font-bold text-textDark mt-1">₹5,000</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[12px] text-textMuted font-medium leading-none">Total
+                                            Contribution</p>
+                                        <p class="text-[17px] font-bold text-textDark mt-1">₹30,000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- "Most Popular" Pill Badge -->
+                        <span
+                            class="bg-brandDarkGreen text-white text-[11px] font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-xs">
+                            Most Popular
+                        </span>
+                    </div>
+
+                    <!-- Feature Bullets with Warm Gold Dots -->
+                    <div class="mt-3.5 space-y-1 pl-1">
+                        <div class="flex items-center flex-wrap gap-x-4 gap-y-1 text-[12.5px] text-[#33423D]">
+                            <span class="inline-flex items-center gap-1.5 font-medium">
+                                <span class="w-1.5 h-1.5 rounded-full bg-dotGold shrink-0"></span>
+                                Flexible payments
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 font-medium">
+                                <span class="w-1.5 h-1.5 rounded-full bg-dotGold shrink-0"></span>
+                                Easy booking
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-[12.5px] text-[#33423D] font-medium pt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-dotGold shrink-0"></span>
+                            Hedge against gold price rise
+                        </div>
+                    </div>
+
+                    <!-- CTA Pill Button -->
+                    <button onclick="selectPlan('6 Month Plan')"
+                        class="btn-press w-full mt-4 bg-brandDarkGreen hover:bg-brandDarkGreenHover text-white py-3 rounded-full text-[14px] font-semibold tracking-wide transition-all shadow-sm">
+                        Select a Plan
+                    </button>
+                </div>
+
+
+                <!-- PLAN CARD 2: 9 Month Plan -->
+                <div
+                    class="bg-white rounded-[22px] border border-cardBorder p-4 shadow-cardSoft relative overflow-hidden transition-all hover:border-[#DDCBB5]">
+                    <div class="flex items-start">
+                        <div class="flex items-center gap-3.5">
+                            <!-- Golden Coin Stack Thumbnail -->
+                            <div
+                                class="w-[66px] h-[66px] rounded-[16px] bg-[#FAF2E5] border border-[#EFE2CF] flex items-center justify-center shrink-0 shadow-inner">
+                                <svg class="w-[50px] h-[50px]" viewBox="0 0 100 100" fill="none">
+                                    <defs>
+                                        <linearGradient id="coinGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FFF2BB" />
+                                            <stop offset="45%" stop-color="#E1A527" />
+                                            <stop offset="100%" stop-color="#9C5F05" />
+                                        </linearGradient>
+                                        <linearGradient id="coinEdge2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#DC9F21" />
+                                            <stop offset="50%" stop-color="#A56507" />
+                                            <stop offset="100%" stop-color="#5B3602" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path
+                                        d="M50 74 C32 74 24 69 24 65 L24 70 C24 74 32 79 50 79 C68 79 76 74 76 70 L76 65 C76 69 68 74 50 74 Z"
+                                        fill="url(#coinEdge2)" />
+                                    <ellipse cx="50" cy="65" rx="26" ry="7" fill="url(#coinGrad2)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <path
+                                        d="M50 60 C32 60 24 55 24 51 L24 56 C24 60 32 65 50 65 C68 65 76 60 76 56 L76 51 C76 55 68 60 50 60 Z"
+                                        fill="url(#coinEdge2)" />
+                                    <ellipse cx="50" cy="51" rx="26" ry="7" fill="url(#coinGrad2)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <path
+                                        d="M50 46 C32 46 24 41 24 37 L24 42 C24 46 32 51 50 51 C68 51 76 46 76 42 L76 37 C76 41 68 46 50 46 Z"
+                                        fill="url(#coinEdge2)" />
+                                    <ellipse cx="50" cy="37" rx="26" ry="7" fill="url(#coinGrad2)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <path
+                                        d="M48 32 C31 32 24 28 24 24 L24 29 C24 33 31 37 48 37 C65 37 72 33 72 29 L72 24 C72 28 65 32 48 32 Z"
+                                        fill="url(#coinEdge2)" />
+                                    <ellipse cx="48" cy="24" rx="24" ry="6.5" fill="url(#coinGrad2)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                </svg>
+                            </div>
+
+                            <!-- Plan Title & Figures -->
+                            <div>
+                                <h3 class="font-serif text-[18px] font-bold text-textHeading leading-tight">9 Month Plan
+                                </h3>
+
+                                <div class="grid grid-cols-2 gap-5 mt-2">
+                                    <div>
+                                        <p class="text-[12px] text-textMuted font-medium leading-none">Monthly
+                                            Investment</p>
+                                        <p class="text-[17px] font-bold text-textDark mt-1">₹5,000</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[12px] text-textMuted font-medium leading-none">Total
+                                            Contribution</p>
+                                        <p class="text-[17px] font-bold text-textDark mt-1">₹45,000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature Bullets with Warm Gold Dots -->
+                    <div class="mt-3.5 space-y-1 pl-1">
+                        <div class="flex items-center gap-1.5 text-[12.5px] text-[#33423D] font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-dotGold shrink-0"></span>
+                            More time, more savings
+                        </div>
+                        <div class="flex items-center gap-1.5 text-[12.5px] text-[#33423D] font-medium pt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-dotGold shrink-0"></span>
+                            Ideal for festive &amp; wedding purchases
+                        </div>
+                    </div>
+
+                    <!-- CTA Pill Button -->
+                    <button onclick="selectPlan('9 Month Plan')"
+                        class="btn-press w-full mt-4 bg-brandDarkGreen hover:bg-brandDarkGreenHover text-white py-3 rounded-full text-[14px] font-semibold tracking-wide transition-all shadow-sm">
+                        Select a Plan
+                    </button>
+                </div>
+
+
+                <!-- PLAN CARD 3: 11 Month Plan -->
+                <div
+                    class="bg-white rounded-[22px] border border-cardBorder p-4 shadow-cardSoft relative overflow-hidden transition-all hover:border-[#DDCBB5]">
+                    <div class="flex items-start">
+                        <div class="flex items-center gap-3.5">
+                            <!-- Golden Coin Stack Thumbnail -->
+                            <div
+                                class="w-[66px] h-[66px] rounded-[16px] bg-[#FAF2E5] border border-[#EFE2CF] flex items-center justify-center shrink-0 shadow-inner">
+                                <svg class="w-[50px] h-[50px]" viewBox="0 0 100 100" fill="none">
+                                    <defs>
+                                        <linearGradient id="coinGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FFF2BB" />
+                                            <stop offset="45%" stop-color="#E1A527" />
+                                            <stop offset="100%" stop-color="#9C5F05" />
+                                        </linearGradient>
+                                        <linearGradient id="coinEdge3" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#DC9F21" />
+                                            <stop offset="50%" stop-color="#A56507" />
+                                            <stop offset="100%" stop-color="#5B3602" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path
+                                        d="M50 74 C32 74 24 69 24 65 L24 70 C24 74 32 79 50 79 C68 79 76 74 76 70 L76 65 C76 69 68 74 50 74 Z"
+                                        fill="url(#coinEdge3)" />
+                                    <ellipse cx="50" cy="65" rx="26" ry="7" fill="url(#coinGrad3)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <path
+                                        d="M50 60 C32 60 24 55 24 51 L24 56 C24 60 32 65 50 65 C68 65 76 60 76 56 L76 51 C76 55 68 60 50 60 Z"
+                                        fill="url(#coinEdge3)" />
+                                    <ellipse cx="50" cy="51" rx="26" ry="7" fill="url(#coinGrad3)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <path
+                                        d="M50 46 C32 46 24 41 24 37 L24 42 C24 46 32 51 50 51 C68 51 76 46 76 42 L76 37 C76 41 68 46 50 46 Z"
+                                        fill="url(#coinEdge3)" />
+                                    <ellipse cx="50" cy="37" rx="26" ry="7" fill="url(#coinGrad3)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                    <path
+                                        d="M48 32 C31 32 24 28 24 24 L24 29 C24 33 31 37 48 37 C65 37 72 33 72 29 L72 24 C72 28 65 32 48 32 Z"
+                                        fill="url(#coinEdge3)" />
+                                    <ellipse cx="48" cy="24" rx="24" ry="6.5" fill="url(#coinGrad3)" stroke="#B37913"
+                                        stroke-width="0.75" />
+                                </svg>
+                            </div>
+
+                            <!-- Plan Title & Figures -->
+                            <div>
+                                <h3 class="font-serif text-[18px] font-bold text-textHeading leading-tight">11 Month
+                                    Plan</h3>
+
+                                <div class="grid grid-cols-2 gap-5 mt-2">
+                                    <div>
+                                        <p class="text-[12px] text-textMuted font-medium leading-none">Monthly
+                                            Investment</p>
+                                        <p class="text-[17px] font-bold text-textDark mt-1">₹5,000</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[12px] text-textMuted font-medium leading-none">Total
+                                            Contribution</p>
+                                        <p class="text-[17px] font-bold text-textDark mt-1">₹55,000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature Bullets with Warm Gold Dots -->
+                    <div class="mt-3.5 space-y-1 pl-1">
+                        <div class="flex items-center gap-1.5 text-[12.5px] text-[#33423D] font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-dotGold shrink-0"></span>
+                            Longer savings period
+                        </div>
+                        <div class="flex items-center gap-1.5 text-[12.5px] text-[#33423D] font-medium pt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-dotGold shrink-0"></span>
+                            Plan your dream jewellery with ease
+                        </div>
+                    </div>
+
+                    <!-- CTA Pill Button -->
+                    <button onclick="selectPlan('11 Month Plan')"
+                        class="btn-press w-full mt-4 bg-brandDarkGreen hover:bg-brandDarkGreenHover text-white py-3 rounded-full text-[14px] font-semibold tracking-wide transition-all shadow-sm">
+                        Select a Plan
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- ================= "HOW IT WORKS" VIEW ================= -->
+            <div id="howItWorksView" class="hidden space-y-4">
+                <div class="bg-white rounded-[22px] border border-cardBorder p-5 shadow-cardSoft space-y-4">
+                    <h2 class="font-serif text-[20px] font-bold text-textHeading text-center">3 Simple Steps to Pure
+                        Gold</h2>
+
+                    <!-- Step 1 -->
+                    <div class="flex items-start gap-3.5 pb-3 border-b border-[#F4EFE6]">
+                        <div
+                            class="w-8 h-8 rounded-full bg-[#FAF0E1] text-[#A56B12] font-bold flex items-center justify-center shrink-0 text-sm">
+                            1</div>
+                        <div>
+                            <h3 class="text-sm font-bold text-textHeading">Choose Duration &amp; Amount</h3>
+                            <p class="text-xs text-textMuted mt-0.5 leading-relaxed">Select from 6, 9 or 11 month
+                                periods starting at just ₹5,000 per month.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex items-start gap-3.5 pb-3 border-b border-[#F4EFE6]">
+                        <div
+                            class="w-8 h-8 rounded-full bg-[#FAF0E1] text-[#A56B12] font-bold flex items-center justify-center shrink-0 text-sm">
+                            2</div>
+                        <div>
+                            <h3 class="text-sm font-bold text-textHeading">Lock In Live Rates</h3>
+                            <p class="text-xs text-textMuted mt-0.5 leading-relaxed">Each installment buys 22KT/24KT
+                                gold at current rates, insulating you from price spikes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex items-start gap-3.5">
+                        <div
+                            class="w-8 h-8 rounded-full bg-[#EAF5EF] text-brandDarkGreen font-bold flex items-center justify-center shrink-0 text-sm">
+                            3</div>
+                        <div>
+                            <h3 class="text-sm font-bold text-textHeading">Redeem for Exquisite Jewellery</h3>
+                            <p class="text-xs text-textMuted mt-0.5 leading-relaxed">Redeem your accumulated gold value
+                                across all collections with zero making charge discounts.</p>
+                        </div>
+                    </div>
+
+                    <button onclick="switchTab('popular')"
+                        class="btn-press w-full mt-2 bg-brandDarkGreen text-white py-3 rounded-full text-[13.5px] font-semibold tracking-wide">
+                        Browse Popular Plans
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- iPhone Home Bar Indicator -->
+        <div class="shrink-0 flex justify-center py-2 bg-brandCreamBg">
+            <div class="w-32 h-1 bg-black/20 rounded-full"></div>
+        </div>
+
+        <!-- ================= START PLAN MODAL DRAWER ================= -->
+        <div id="planModal"
+            class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs opacity-0 pointer-events-none modal-backdrop">
+            <div id="planDrawer"
+                class="w-full sm:max-w-[400px] bg-[#FAF7F2] rounded-t-[32px] sm:rounded-[32px] p-6 shadow-2xl border border-[#E9DFC8] transform translate-y-full modal-content">
+
+                <!-- Mobile sheet handle -->
+                <div class="w-12 h-1.5 bg-neutral-300 rounded-full mx-auto mb-4 sm:hidden"></div>
+
+                <div class="flex items-center justify-between pb-3 border-b border-[#EFE7D8]">
+                    <div>
+                        <h3 id="modalPlanTitle" class="font-serif text-[20px] font-bold text-textHeading">6 Month Plan
+                        </h3>
+                        <p class="text-[12px] text-textMuted">Gold Savings Subscription</p>
+                    </div>
+                    <button onclick="closeEnrollModal()"
+                        class="w-8 h-8 rounded-full bg-[#EAE2D5] flex items-center justify-center text-neutral-600 hover:text-black">
+                        ✕
+                    </button>
+                </div>
+
+                <!-- Breakdown Card -->
+                <div class="bg-white rounded-2xl p-4 my-4 border border-[#ECE2D2] space-y-2.5">
+                    <div class="flex justify-between text-xs text-textMuted">
+                        <span>First Month Instalment</span>
+                        <span id="modalMonthly" class="font-bold text-textDark text-[13px]">₹5,000</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-textMuted">
+                        <span>Total Maturity Value</span>
+                        <span id="modalTotal" class="font-bold text-textDark text-[13px]">₹30,000</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-textMuted">
+                        <span>Estimated Gold Accrual</span>
+                        <span class="font-bold text-dotGold text-[13px]">22KT Pure Gold Locked</span>
+                    </div>
+                    <div class="border-t border-[#F2ECE1] pt-2 mt-2 flex justify-between items-baseline">
+                        <span class="text-xs font-semibold text-[#253630]">Pay Today</span>
+                        <span id="modalPayToday" class="text-[20px] font-bold text-brandDarkGreen">₹5,000</span>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button onclick="confirmPlanEnrollment()"
+                    class="btn-press w-full bg-brandDarkGreen hover:bg-brandDarkGreenHover text-white py-3.5 rounded-full font-bold text-[14px] shadow-md flex items-center justify-center gap-2">
+                    <span>Confirm &amp; Pay First Instalment</span>
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= FLOATING TOAST ================= -->
+        <div id="toastNotification"
+            class="fixed top-8 left-1/2 -translate-x-1/2 bg-brandDarkGreen text-white px-5 py-2.5 rounded-full shadow-xl text-xs font-semibold tracking-wide opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center space-x-2 border border-white/20">
+            <span class="text-amber-300 text-sm">✨</span>
+            <span id="toastMessage">Plan selected</span>
+        </div>
+
+    </div>
+
+    <script>
+        let activePlanContext = {
+            title: '6 Month Plan',
+            monthly: '₹5,000',
+            total: '₹30,000',
+            months: 6
+        };
+
+        function switchTab(tab) {
+            const popularBtn = document.getElementById('tabPopular');
+            const howBtn = document.getElementById('tabHowItWorks');
+            const plansView = document.getElementById('plansView');
+            const howView = document.getElementById('howItWorksView');
+
+            if (tab === 'popular') {
+                popularBtn.className = 'btn-press py-2.5 px-4 rounded-full text-[13.5px] font-semibold bg-brandDarkGreen text-white shadow-sm transition-all text-center';
+                howBtn.className = 'btn-press py-2.5 px-4 rounded-full text-[13.5px] font-medium bg-tabInactiveBg text-[#25332E] hover:bg-[#EBE3D7] transition-all text-center';
+                plansView.classList.remove('hidden');
+                howView.classList.add('hidden');
+            } else {
+                howBtn.className = 'btn-press py-2.5 px-4 rounded-full text-[13.5px] font-semibold bg-brandDarkGreen text-white shadow-sm transition-all text-center';
+                popularBtn.className = 'btn-press py-2.5 px-4 rounded-full text-[13.5px] font-medium bg-tabInactiveBg text-[#25332E] hover:bg-[#EBE3D7] transition-all text-center';
+                plansView.classList.add('hidden');
+                howView.classList.remove('hidden');
+            }
+        }
+
+        function openEnrollModal(title, monthly, total, months) {
+            activePlanContext = { title, monthly, total, months };
+
+            document.getElementById('modalPlanTitle').innerText = title;
+            document.getElementById('modalMonthly').innerText = monthly;
+            document.getElementById('modalTotal').innerText = total;
+            document.getElementById('modalPayToday').innerText = monthly;
+
+            const modal = document.getElementById('planModal');
+            const drawer = document.getElementById('planDrawer');
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            drawer.classList.remove('translate-y-full');
+        }
+
+        function closeEnrollModal() {
+            const modal = document.getElementById('planModal');
+            const drawer = document.getElementById('planDrawer');
+
+            drawer.classList.add('translate-y-full');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+            }, 250);
+        }
+
+        function selectPlan(title) {
+            window.location.href = 'book.html';
+        }
+
+        function confirmPlanEnrollment() {
+            closeEnrollModal();
+
+            if (window.confetti) {
+                confetti({
+                    particleCount: 75,
+                    spread: 60,
+                    origin: { y: 0.65 },
+                    colors: ['#E1A527', '#063B2C', '#F3D282', '#219653']
+                });
+            }
+
+            showToast(`${activePlanContext.title} selected! Loading booking...`);
+            setTimeout(() => {
+                window.location.href = 'book.html';
+            }, 350);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.innerText = msg;
+
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-2');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+                toast.classList.remove('translate-y-2');
+            }, 2600);
+        }
+
+        // Dismiss drawer upon tapping backdrop
+        document.getElementById('planModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeEnrollModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

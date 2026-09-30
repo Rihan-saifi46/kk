@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Your Details - Gold Savings Plan</title>
+
+  <!-- Google Fonts: Playfair Display for headers & Plus Jakarta Sans for UI elements -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandCreamBg: '#FAF7F2',
+            brandEmerald: '#063B2C',
+            brandEmeraldHover: '#042C21',
+            inputBorder: '#EFE8DE',
+            inputBg: '#FFFFFF',
+            labelGrey: '#6C7571',
+            textHeading: '#0C1C17',
+            textBodyDark: '#121A16'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          boxShadow: {
+            phone: '0 25px 65px -15px rgba(25, 20, 10, 0.35), 0 0 0 10px #2D2821, 0 0 0 12px #D8C7B0',
+            cardSoft: '0 1px 3px 0 rgba(0, 0, 0, 0.02)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #E5DED5;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .btn-press:active {
+      transform: scale(0.98);
+    }
+    input:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-5 text-textBodyDark antialiased selection:bg-[#063B2C] selection:text-white">
+
+  <!-- ================= PHONE CONTAINER ================= -->
+  <div class="w-full sm:max-w-[420px] h-screen sm:h-[915px] sm:max-h-[92vh] bg-brandCreamBg sm:rounded-[52px] sm:shadow-phone overflow-hidden relative flex flex-col sm:border-[4.5px] sm:border-[#ECE4D8]">
+
+    <!-- iOS Status Bar -->
+    <header class="pt-3 px-7 pb-1 flex items-center justify-between z-20 select-none text-neutral-900 shrink-0">
+      <span class="text-[15px] font-bold tracking-tight">9:41</span>
+      
+      <div class="flex items-center space-x-2">
+        <!-- Cellular (4 bars) -->
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <rect x="2" y="16" width="3" height="5" rx="0.75" />
+          <rect x="7" y="12" width="3" height="9" rx="0.75" />
+          <rect x="12" y="8" width="3" height="13" rx="0.75" />
+          <rect x="17" y="4" width="3" height="17" rx="0.75" />
+        </svg>
+        <!-- WiFi -->
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <path d="M12 4c-4.4 0-8.4 1.7-11.4 4.5l1.4 1.5C4.6 7.6 8.1 6.1 12 6.1s7.4 1.5 10 3.9l1.4-1.5C20.4 5.7 16.4 4 12 4zm0 4.5c-3.1 0-6 1.2-8.1 3.2l1.4 1.4c1.7-1.6 4-2.6 6.7-2.6s5 1 6.7 2.6l1.4-1.4C18 9.7 15.1 8.5 12 8.5zm0 4.5c-1.8 0-3.5.7-4.7 1.9l4.7 5.1 4.7-5.1C15.5 13.7 13.8 13 12 13z"/>
+        </svg>
+        <!-- Battery -->
+        <div class="flex items-center">
+          <div class="w-[22px] h-[11.5px] border-[1.75px] border-neutral-900 rounded-[4px] p-[1.5px] flex items-center">
+            <div class="bg-neutral-900 h-full w-[82%] rounded-[1.5px]"></div>
+          </div>
+          <div class="w-[1.5px] h-[4px] bg-neutral-900 rounded-r-xs -ml-[0.5px]"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Top Navigation with Back Arrow & Header -->
+    <div class="px-6 pt-2 pb-2 shrink-0">
+      <!-- Back Arrow -->
+      <button onclick="window.location.href='book.html'" class="btn-press p-1 -ml-1 text-neutral-900 hover:opacity-80 transition-opacity" aria-label="Go back">
+        <svg class="w-6 h-6 stroke-current" fill="none" stroke-width="2.2" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- Screen Title & Subtitle -->
+      <div class="text-center px-4 mt-2">
+        <h1 class="font-serif text-[30px] font-bold text-textHeading tracking-tight leading-tight">
+          Your Details
+        </h1>
+        <p class="text-[14px] leading-relaxed text-[#5C6662] mt-2 font-normal max-w-[270px] mx-auto">
+          Create your account to start your gold savings plan.
+        </p>
+      </div>
+    </div>
+
+    <!-- ================= FORM BODY CONTENT ================= -->
+    <main class="flex-1 overflow-y-auto px-6 pt-5 pb-6 no-scrollbar space-y-4">
+
+      <!-- Field 1: Full Name Card -->
+      <div class="bg-white rounded-[20px] border border-inputBorder px-4 py-3.5 flex items-center gap-3.5 shadow-cardSoft focus-within:border-[#C4B7A5] transition-all">
+        <!-- User SVG Icon -->
+        <div class="w-7 h-7 flex items-center justify-center shrink-0 text-[#141B17]">
+          <svg class="w-[22px] h-[22px] stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.118a7.5 7.5 0 0115 0" />
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <label class="block text-[12px] font-medium text-labelGrey leading-tight">Full Name</label>
+          <input type="text" id="inputFullName" value="Mahak Garg" class="w-full bg-transparent text-[15.5px] font-bold text-textBodyDark leading-snug mt-0.5 tracking-tight border-none p-0 focus:ring-0">
+        </div>
+      </div>
+
+      <!-- Field 2: Mobile Number Card -->
+      <div class="bg-white rounded-[20px] border border-inputBorder px-4 py-3.5 flex items-center gap-3.5 shadow-cardSoft focus-within:border-[#C4B7A5] transition-all">
+        <!-- Phone SVG Icon -->
+        <div class="w-7 h-7 flex items-center justify-center shrink-0 text-[#141B17]">
+          <svg class="w-[22px] h-[22px] stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+            <rect x="6" y="2" width="12" height="20" rx="3" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="12" cy="18" r="0.75" fill="currentColor" />
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <label class="block text-[12px] font-medium text-labelGrey leading-tight">Mobile Number</label>
+          <input type="tel" id="inputMobile" value="+91 98765 43210" class="w-full bg-transparent text-[15.5px] font-bold text-textBodyDark leading-snug mt-0.5 tracking-tight border-none p-0 focus:ring-0">
+        </div>
+      </div>
+
+      <!-- Field 3: Email Address Card -->
+      <div class="bg-white rounded-[20px] border border-inputBorder px-4 py-3.5 flex items-center gap-3.5 shadow-cardSoft focus-within:border-[#C4B7A5] transition-all">
+        <!-- Mail SVG Icon -->
+        <div class="w-7 h-7 flex items-center justify-center shrink-0 text-[#141B17]">
+          <svg class="w-[22px] h-[22px] stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="14" rx="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7l9 6 9-6" />
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <label class="block text-[12px] font-medium text-labelGrey leading-tight">Email Address</label>
+          <input type="email" id="inputEmail" value="mahakgarg@email.com" class="w-full bg-transparent text-[15.5px] font-bold text-textBodyDark leading-snug mt-0.5 tracking-tight border-none p-0 focus:ring-0">
+        </div>
+      </div>
+
+      <!-- Field 4: Create Password Section -->
+      <div class="pt-1.5 space-y-2">
+        <label class="block text-[14.5px] font-bold text-[#101915] pl-0.5">Create Password</label>
+        
+        <div class="bg-white rounded-[20px] border border-inputBorder px-4 py-3.5 flex items-center justify-between shadow-cardSoft focus-within:border-[#C4B7A5] transition-all">
+          <input type="password" id="inputPassword" value="SecretPassword123" class="w-full bg-transparent text-[19px] font-medium tracking-[0.25em] text-textBodyDark border-none p-0 focus:ring-0 placeholder:tracking-normal">
+          
+          <!-- Eye Toggle Button -->
+          <button type="button" onclick="togglePasswordVisibility()" class="btn-press p-1.5 text-neutral-800 hover:text-black shrink-0" aria-label="Toggle password visibility">
+            <svg id="eyeOpenIcon" class="w-[22px] h-[22px] stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <svg id="eyeClosedIcon" class="w-[22px] h-[22px] stroke-current hidden" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Checkbox & Terms -->
+      <div class="pt-2 flex items-start gap-3 pl-1 select-none">
+        <label class="relative flex items-center cursor-pointer pt-0.5">
+          <input type="checkbox" id="termsCheckbox" checked onchange="handleCheckboxToggle(this)" class="sr-only peer">
+          <div class="w-5 h-5 rounded-[6px] border-2 border-brandEmerald bg-brandEmerald peer-checked:bg-brandEmerald flex items-center justify-center transition-colors">
+            <svg id="checkIcon" class="w-3.5 h-3.5 stroke-white fill-none stroke-[2.8]" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+            </svg>
+          </div>
+        </label>
+        <span class="text-[13px] leading-[1.38] text-[#25322D] font-normal cursor-pointer" onclick="toggleCheckboxFromText()">
+          I agree to the <a href="javascript:void(0)" onclick="triggerToast('Viewing Terms & Conditions'); event.stopPropagation();" class="text-brandEmerald font-medium hover:underline">Terms &amp; Conditions</a><br>
+          and <a href="javascript:void(0)" onclick="triggerToast('Viewing Privacy Policy'); event.stopPropagation();" class="text-brandEmerald font-medium hover:underline">Privacy Policy</a>
+        </span>
+      </div>
+
+      <!-- CTA & Footer -->
+      <div class="pt-4 space-y-4">
+        <!-- Main Create Account Button -->
+        <button onclick="handleCreateAccount()" class="btn-press w-full bg-brandEmerald hover:bg-brandEmeraldHover text-white py-3.5 rounded-full font-bold text-[15px] tracking-wide shadow-md transition-all">
+          Create Account
+        </button>
+
+        <!-- Login Footer Link -->
+        <div class="text-center text-[13.5px] text-[#4F5955] pt-1">
+          Already have an account? 
+          <button onclick="triggerToast('Navigating to Login...')" class="font-bold text-[#0A261E] hover:underline ml-1">
+            Login
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- iPhone Home Bar Indicator -->
+    <div class="shrink-0 flex justify-center py-2 bg-brandCreamBg">
+      <div class="w-32 h-1 bg-black/20 rounded-full"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="fixed top-8 left-1/2 -translate-x-1/2 bg-brandEmerald text-white px-5 py-2.5 rounded-full shadow-xl text-xs font-semibold tracking-wide opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center space-x-2 border border-white/20">
+      <span class="text-amber-300 text-sm">✨</span>
+      <span id="toastMessage">Account Created</span>
+    </div>
+
+  </div>
+
+  <script>
+    let isPasswordVisible = false;
+
+    // Toggle password visibility
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('inputPassword');
+      const eyeOpen = document.getElementById('eyeOpenIcon');
+      const eyeClosed = document.getElementById('eyeClosedIcon');
+
+      isPasswordVisible = !isPasswordVisible;
+
+      if (isPasswordVisible) {
+        passwordInput.type = 'text';
+        passwordInput.classList.remove('tracking-[0.25em]');
+        passwordInput.classList.add('tracking-normal');
+        eyeOpen.classList.add('hidden');
+        eyeClosed.classList.remove('hidden');
+      } else {
+        passwordInput.type = 'password';
+        passwordInput.classList.add('tracking-[0.25em]');
+        passwordInput.classList.remove('tracking-normal');
+        eyeOpen.classList.remove('hidden');
+        eyeClosed.classList.add('hidden');
+      }
+    }
+
+    // Toggle terms checkbox
+    function handleCheckboxToggle(checkbox) {
+      const checkIcon = document.getElementById('checkIcon');
+      const boxContainer = checkbox.nextElementSibling;
+      if (checkbox.checked) {
+        boxContainer.classList.add('bg-brandEmerald');
+        boxContainer.classList.remove('bg-white');
+        checkIcon.classList.remove('hidden');
+      } else {
+        boxContainer.classList.remove('bg-brandEmerald');
+        boxContainer.classList.add('bg-white');
+        checkIcon.classList.add('hidden');
+      }
+    }
+
+    function toggleCheckboxFromText() {
+      const checkbox = document.getElementById('termsCheckbox');
+      checkbox.checked = !checkbox.checked;
+      handleCheckboxToggle(checkbox);
+    }
+
+    // Handle Create Account CTA
+    function handleCreateAccount() {
+      const name = document.getElementById('inputFullName').value.trim();
+      const checkbox = document.getElementById('termsCheckbox');
+
+      if (!checkbox.checked) {
+        triggerToast('Please accept the Terms & Conditions');
+        return;
+      }
+
+      if (window.confetti) {
+        confetti({
+          particleCount: 65,
+          spread: 60,
+          origin: { y: 0.65 },
+          colors: ['#063B2C', '#C88A35', '#E1A527', '#F3D282']
+        });
+      }
+
+      triggerToast(`Welcome ${name}! Your account is ready.`);
+      setTimeout(() => {
+        window.location.href = 'review.html';
+      }, 350);
+    }
+
+    // Show floating toast
+    function triggerToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.innerText = message;
+
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-2');
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-2');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>

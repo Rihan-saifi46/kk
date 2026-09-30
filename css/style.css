@@ -1,0 +1,745 @@
+/* ==========================================================================
+   1. GLOBAL RESETS & DESIGN TOKENS
+   ========================================================================== */
+:root {
+  /* Luxury Emerald Theme */
+  --color-emerald-deep: #022318;
+  --color-emerald-base: #053826;
+  --color-emerald-light: #07432E;
+  --color-emerald-accent: #0A6B48;
+  --color-emerald-trend: #0E7B50;
+  
+  /* Luxury Gold & Warm Accents */
+  --color-gold-icon: #9A7342;
+  --color-gold-border: #EADBCA;
+  --color-gold-bg-circle: #F7EFE3;
+  --color-gold-badge: #E6A838;
+  
+  /* Cream, Ivory & Surfaces */
+  --color-bg-canvas: #121514;
+  --color-bg-mobile: #FAF7F2;
+  --color-card-white: #FFFFFF;
+  --color-border-subtle: #EFEAE0;
+  
+  /* Typography Colors */
+  --color-text-header: #FFFFFF;
+  --color-text-header-sub: #A3C5B5;
+  --color-text-primary: #1C2420;
+  --color-text-secondary: #7D786F;
+  --color-text-placeholder: #8E9591;
+  
+  /* Fonts */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --transition-fast: 0.15s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #EDE8E0;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   2. MOBILE VIEWPORT CONTAINER
+   ========================================================================== */
+.mobile-viewport {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--color-bg-mobile);
+  position: relative;
+  overflow-x: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   3. APP HEADER (EMERALD GREEN LUXURY SECTION)
+   ========================================================================== */
+.app-header {
+  background: radial-gradient(circle at 85% 20%, #0A4A34 0%, #053826 50%, #02261A 100%);
+  padding: 0 16px 20px 16px;
+  position: relative;
+}
+
+/* iOS Status Bar */
+.status-bar {
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px 0 4px;
+  color: #FFFFFF;
+}
+
+.status-time {
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-icon {
+  width: 15px;
+  height: 10px;
+}
+
+/* Greeting Row */
+.greeting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 2px 10px 2px;
+}
+
+.greeting-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting-sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-header-sub);
+  letter-spacing: 0.1px;
+}
+
+.greeting-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-header);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 1px;
+}
+
+.wave-emoji {
+  font-size: 17px;
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: subtleWave 2.5s infinite ease-in-out;
+}
+
+@keyframes subtleWave {
+  0%, 100% { transform: rotate(0deg); }
+  20%, 60% { transform: rotate(12deg); }
+  40%, 80% { transform: rotate(-8deg); }
+}
+
+.notification-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.notification-btn:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Search Bar */
+.search-container {
+  padding: 0 0 12px 0;
+}
+
+.search-box {
+  height: 40px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.search-icon {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  margin-left: 8px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+}
+
+.search-box input::placeholder {
+  color: var(--color-text-placeholder);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   4. GOLD RATE CARD
+   ========================================================================== */
+.gold-rate-card {
+  border-radius: 14px;
+  background: linear-gradient(115deg, #FAF4E9 0%, #F4E8D3 45%, #EBD5B6 100%);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  height: 98px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.gold-rate-card:active {
+  transform: scale(0.985);
+}
+
+.gold-card-details {
+  flex: 1;
+  padding: 12px 0 12px 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.gold-card-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #5C5549;
+  letter-spacing: 0.1px;
+}
+
+.gold-price-line {
+  display: flex;
+  align-items: baseline;
+  margin-top: 1px;
+}
+
+.gold-currency {
+  font-size: 19px;
+  font-weight: 700;
+  color: #141715;
+}
+
+.gold-price-amount {
+  font-size: 21px;
+  font-weight: 700;
+  color: #141715;
+  letter-spacing: -0.3px;
+}
+
+.gold-unit {
+  font-size: 12px;
+  font-weight: 500;
+  color: #58534B;
+  margin-left: 2px;
+}
+
+.gold-trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--color-emerald-trend);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.trend-arrow {
+  width: 7.5px;
+  height: 7.5px;
+  fill: currentColor;
+}
+
+.gold-card-visual {
+  width: 128px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.gold-bar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  mask-image: linear-gradient(to right, transparent 0%, black 22%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 22%);
+}
+
+/* ==========================================================================
+   5. APP BODY & QUICK ACTIONS
+   ========================================================================== */
+.app-body {
+  background-color: var(--color-bg-mobile);
+  border-radius: 20px 20px 0 0;
+  margin-top: -8px;
+  position: relative;
+  z-index: 5;
+  padding: 18px 14px 84px 14px;
+}
+
+.quick-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.action-item {
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.action-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-gold-bg-circle);
+  border: 1px solid var(--color-gold-border);
+  box-shadow: 0 2px 4px rgba(180, 150, 110, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.action-item:active .action-icon-circle {
+  transform: scale(0.92);
+  box-shadow: 0 1px 2px rgba(180, 150, 110, 0.12);
+}
+
+.action-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #38322B;
+  line-height: 1.2;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   6. SECTION HEADINGS
+   ========================================================================== */
+.section-container {
+  margin-top: 18px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1px;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.1px;
+}
+
+.view-all-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-emerald-accent);
+  cursor: pointer;
+  padding: 2px 2px;
+  transition: opacity var(--transition-fast);
+}
+
+.view-all-btn:active {
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   7. ACTIVE PLAN SECTION
+   ========================================================================== */
+.plan-card {
+  background-color: var(--color-card-white);
+  border-radius: 14px;
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  padding: 12px 12px 11px 12px;
+}
+
+.plan-card-top {
+  display: flex;
+  align-items: center;
+}
+
+.plan-thumb-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 9px;
+  background-color: #FAF4EB;
+  border: 1px solid #EDE2D0;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.08);
+}
+
+.plan-info {
+  flex: 1;
+  margin-left: 9px;
+}
+
+.plan-name {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.1px;
+}
+
+.plan-id {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-top: 1px;
+}
+
+/* Circular Progress Indicator */
+.progress-ring-container {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.progress-ring {
+  width: 44px;
+  height: 44px;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: #EFE2CF;
+  stroke-width: 4;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke: #084E37;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 138.2;
+  stroke-dashoffset: 76.0;
+  transition: stroke-dashoffset 0.8s ease-out;
+}
+
+.progress-text {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Plan Metrics Row */
+.plan-card-metrics {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid #F6F2E9;
+  display: flex;
+  justify-content: space-between;
+}
+
+.metric-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.metric-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-top: 1px;
+  letter-spacing: -0.2px;
+}
+
+/* Plan Bottom Row */
+.plan-card-bottom {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.installment-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.installment-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.installment-details {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: 1px;
+}
+
+.installment-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.installment-due {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.pay-now-btn {
+  background: linear-gradient(135deg, #053826 0%, #0A4E36 100%);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 17px;
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 2px 7px rgba(5, 56, 38, 0.25);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pay-now-btn:active {
+  transform: scale(0.94);
+  box-shadow: 0 1px 3px rgba(5, 56, 38, 0.3);
+}
+
+/* ==========================================================================
+   8. EXPLORE OUR COLLECTIONS
+   ========================================================================== */
+.collections-carousel {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 3px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.collections-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.collection-item {
+  flex-shrink: 0;
+  width: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.collection-image-wrapper {
+  width: 76px;
+  height: 76px;
+  border-radius: 11px;
+  background-color: #F8EFE3;
+  border: 1px solid #ECE1D1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  transition: transform var(--transition-fast);
+}
+
+.collection-item:active .collection-image-wrapper {
+  transform: scale(0.94);
+}
+
+.collection-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #3C3630;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* ==========================================================================
+   9. BOTTOM NAVIGATION
+   ========================================================================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 390px;
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--color-border-subtle);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
+  z-index: 100;
+}
+
+.nav-items-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 52px;
+  padding: 0 4px;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.nav-item:active {
+  transform: scale(0.92);
+}
+
+.nav-icon-container {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: #77726A;
+  margin-top: 2px;
+}
+
+.nav-item.active .nav-label {
+  color: var(--color-emerald-base);
+  font-weight: 700;
+}
+
+/* iOS Home Indicator Bar */
+.home-indicator {
+  width: 120px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #000000;
+  margin: 2px auto 4px auto;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   10. INTERACTION TOAST
+   ========================================================================== */
+.app-toast {
+  position: fixed;
+  bottom: 78px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(18, 25, 22, 0.92);
+  color: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 7px 15px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 200;
+  max-width: 85%;
+  text-align: center;
+}
+
+.app-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   11. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 380px) {
+  body {
+    background-color: var(--color-bg-mobile);
+  }
+  
+  .mobile-viewport {
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  .bottom-nav {
+    max-width: 100%;
+  }
+}
+

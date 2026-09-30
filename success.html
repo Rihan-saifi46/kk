@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Payment Successful - Gold Savings</title>
+
+  <!-- Google Fonts: Playfair Display for luxury serif & Plus Jakarta Sans for UI elements -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandCreamBg: '#FAF7F2',
+            brandDarkGreen: '#073B2C',
+            brandDarkGreenHover: '#04281E',
+            cardBg: '#FCF8F2',
+            cardBorder: '#EFE7DC',
+            dividerBorder: '#EFE7DC',
+            successGreen: '#16A34A',
+            labelGrey: '#636F7E',
+            textHeading: '#111827',
+            accentOrange: '#E67E38',
+            accentCyan: '#5BBCE4',
+            accentGold: '#F5B738',
+            accentMint: '#56C288'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          boxShadow: {
+            phoneBezel: '0 25px 65px -15px rgba(25, 20, 10, 0.35), 0 0 0 10px #2D2821, 0 0 0 12px #D8C7B0',
+            subtleCard: '0 1px 3px 0 rgba(0, 0, 0, 0.02)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #E6DFD6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn-press:active {
+      transform: scale(0.985);
+    }
+    .confetti-diamond {
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-4 text-neutral-900 antialiased selection:bg-[#073B2C] selection:text-white">
+
+  <!-- Main Phone Frame: Configured with max-h-[844px] and h-full to fit within any screen height perfectly -->
+  <div class="w-full sm:max-w-[400px] h-[100dvh] sm:h-[844px] sm:max-h-[96vh] bg-brandCreamBg sm:rounded-[48px] sm:shadow-phoneBezel overflow-hidden relative flex flex-col sm:border-[4.5px] sm:border-[#ECE4D8]">
+
+    <!-- iOS Status Bar -->
+    <header class="pt-3 px-6 pb-0 flex items-center justify-between z-20 select-none text-neutral-900 shrink-0">
+      <span class="text-[14px] font-bold tracking-tight">9:41</span>
+      
+      <div class="flex items-center space-x-1.5">
+        <!-- Cellular (4 bars) -->
+        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+          <rect x="2" y="16" width="3" height="5" rx="0.75" />
+          <rect x="7" y="12" width="3" height="9" rx="0.75" />
+          <rect x="12" y="8" width="3" height="13" rx="0.75" />
+          <rect x="17" y="4" width="3" height="17" rx="0.75" />
+        </svg>
+        <!-- WiFi -->
+        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+          <path d="M12 4c-4.4 0-8.4 1.7-11.4 4.5l1.4 1.5C4.6 7.6 8.1 6.1 12 6.1s7.4 1.5 10 3.9l1.4-1.5C20.4 5.7 16.4 4 12 4zm0 4.5c-3.1 0-6 1.2-8.1 3.2l1.4 1.4c1.7-1.6 4-2.6 6.7-2.6s5 1 6.7 2.6l1.4-1.4C18 9.7 15.1 8.5 12 8.5zm0 4.5c-1.8 0-3.5.7-4.7 1.9l4.7 5.1 4.7-5.1C15.5 13.7 13.8 13 12 13z"/>
+        </svg>
+        <!-- Battery -->
+        <div class="flex items-center">
+          <div class="w-[20px] h-[10.5px] border-[1.5px] border-neutral-900 rounded-[3.5px] p-[1px] flex items-center">
+            <div class="bg-neutral-900 h-full w-[80%] rounded-[1px]"></div>
+          </div>
+          <div class="w-[1.5px] h-[3.5px] bg-neutral-900 rounded-r-xs -ml-[0.5px]"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Top Navigation Header -->
+    <div class="px-5 pt-1.5 pb-1 flex items-center justify-between shrink-0">
+      <!-- Back Arrow -->
+      <button onclick="window.location.href='index.html'" class="btn-press p-1 -ml-1 text-neutral-900 hover:opacity-80 transition-opacity" aria-label="Go back">
+        <svg class="w-5 h-5 stroke-current" fill="none" stroke-width="2.3" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- Done Button -->
+      <button onclick="triggerDoneAction()" class="btn-press text-[16px] font-bold text-brandDarkGreen hover:opacity-80 transition-opacity">
+        Done
+      </button>
+    </div>
+
+    <!-- Main Content Area: Responsive flex layout that guarantees bottom buttons are fully visible -->
+    <main class="flex-1 px-5 pt-1 pb-3 flex flex-col justify-between overflow-y-auto sm:overflow-visible">
+      
+      <div class="space-y-3.5 sm:space-y-4">
+        
+        <!-- Central Celebration Illustration with Confetti Diamonds -->
+        <div class="relative w-36 h-36 mx-auto flex items-center justify-center cursor-pointer select-none" onclick="fireCelebrationConfetti()">
+          
+          <!-- Geometric Diamond Confetti Particles matched to screenshot -->
+          <div class="absolute top-1 left-7 w-2 h-2 bg-accentOrange confetti-diamond rounded-[0.5px]"></div>
+          <div class="absolute top-9 left-2 w-2 h-2 bg-accentGold confetti-diamond rounded-[0.5px]"></div>
+          <div class="absolute bottom-8 left-0 w-2 h-2 bg-accentMint confetti-diamond rounded-[0.5px]"></div>
+          <div class="absolute bottom-2 left-8 w-2 h-2 bg-accentCyan confetti-diamond rounded-[0.5px]"></div>
+
+          <div class="absolute top-3 right-8 w-2 h-2 bg-accentCyan confetti-diamond rounded-[0.5px]"></div>
+          <div class="absolute top-8 right-2 w-2 h-2 bg-accentGold confetti-diamond rounded-[0.5px]"></div>
+          <div class="absolute bottom-8 right-1 w-2 h-2 bg-accentOrange confetti-diamond rounded-[0.5px]"></div>
+
+          <!-- Large Outer Pastel Circle -->
+          <div class="w-32 h-32 rounded-full bg-[#E5F5EC] flex items-center justify-center shadow-sm">
+            <!-- Inner Mint Green Circle -->
+            <div class="w-24 h-24 rounded-full bg-[#7BD49D] flex items-center justify-center shadow-inner">
+              <!-- Thick Dark Green Checkmark -->
+              <svg class="w-12 h-12 text-brandDarkGreen stroke-current" fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heading & Subtitle -->
+        <div class="text-center px-1">
+          <h1 class="font-serif text-[26px] sm:text-[28px] font-bold text-textHeading tracking-tight leading-snug">
+            Payment Successful!
+          </h1>
+          <p class="text-[13.5px] leading-relaxed text-[#555F6D] mt-1.5 max-w-[290px] mx-auto font-normal">
+            Your 6 Month Gold Plan has been activated.<br>You’re one step closer to your dream jewellery.
+          </p>
+        </div>
+
+        <!-- Payment Breakdown Card -->
+        <div class="bg-cardBg rounded-[20px] border border-cardBorder p-4 shadow-subtleCard">
+          
+          <!-- Top Payment Status Header -->
+          <div class="flex items-center gap-3 pb-3 border-b border-dividerBorder">
+            <!-- Green Circle Check Badge -->
+            <div class="w-9 h-9 rounded-full bg-[#1EA64E] flex items-center justify-center shrink-0 shadow-sm">
+              <svg class="w-4.5 h-4.5 text-white stroke-current" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+
+            <!-- Amount & Label -->
+            <div>
+              <div class="text-[20px] font-extrabold text-textHeading tracking-tight leading-none mb-1">
+                ₹5,000
+              </div>
+              <div class="text-[13px] font-bold text-[#1EA64E] leading-none">
+                Paid Successfully
+              </div>
+            </div>
+          </div>
+
+          <!-- Transaction Breakdown Rows -->
+          <div class="pt-3 space-y-2.5 text-[13.5px]">
+            <!-- Plan Row -->
+            <div class="flex items-center justify-between">
+              <span class="text-labelGrey font-medium">Plan</span>
+              <span class="text-textHeading font-bold tracking-tight">6 Month Gold Plan</span>
+            </div>
+
+            <!-- Next Installment Row -->
+            <div class="flex items-center justify-between">
+              <span class="text-labelGrey font-medium">Next Installment</span>
+              <span class="text-textHeading font-bold tracking-tight">5 Oct 2026</span>
+            </div>
+
+            <!-- Installment Amount Row -->
+            <div class="flex items-center justify-between">
+              <span class="text-labelGrey font-medium">Installment Amount</span>
+              <span class="text-textHeading font-bold tracking-tight">₹5,000</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Action Buttons Footer: Guaranteed to be visible above the fold -->
+      <div class="pt-2 sm:pt-3 space-y-2.5 shrink-0">
+        <!-- View My Plan Button -->
+        <button onclick="handleViewPlan()" class="btn-press w-full bg-brandDarkGreen hover:bg-brandDarkGreenHover text-white py-3.5 rounded-full font-bold text-[15px] tracking-wide shadow-md transition-all cursor-pointer">
+          View My Plan
+        </button>
+
+        <!-- Explore Jewellery Button -->
+        <button onclick="handleExploreJewellery()" class="btn-press w-full bg-transparent hover:bg-black/[0.03] border border-brandDarkGreen text-brandDarkGreen py-3.5 rounded-full font-bold text-[15px] tracking-wide transition-all cursor-pointer">
+          Explore Jewellery
+        </button>
+
+        <!-- iPhone Home Bar Indicator -->
+        <div class="flex justify-center pt-1 pb-0.5">
+          <div class="w-32 h-1 bg-black/20 rounded-full"></div>
+        </div>
+      </div>
+
+    </main>
+
+    <div id="toastNotification" class="fixed top-8 left-1/2 -translate-x-1/2 bg-brandDarkGreen text-white px-5 py-2.5 rounded-full shadow-xl text-xs font-semibold tracking-wide opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center space-x-2 border border-white/20">
+      <span class="text-amber-300 text-sm">✨</span>
+      <span id="toastMessage">Action triggered</span>
+    </div>
+
+  </div>
+
+  <script>
+    function triggerToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.innerText = message;
+
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-2');
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-2');
+      }, 2200);
+    }
+
+    function fireCelebrationConfetti() {
+      if (window.confetti) {
+        confetti({
+          particleCount: 75,
+          spread: 80,
+          origin: { y: 0.35 },
+          colors: ['#073B2C', '#E67E38', '#5BBCE4', '#F5B738', '#7BD49D']
+        });
+      }
+    }
+
+    function triggerDoneAction() {
+      window.location.href = 'scheme.html';
+    }
+
+    function handleViewPlan() {
+      window.location.href = 'scheme.html';
+    }
+
+    function handleExploreJewellery() {
+      window.location.href = 'index.html';
+    }
+
+    // Auto-fire celebratory burst on load
+    window.onload = function() {
+      setTimeout(() => {
+        fireCelebrationConfetti();
+      }, 350);
+    };
+  </script>
+</body>
+</html>
