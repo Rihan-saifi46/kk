@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Doorstep Cash Pickup - Gold Savings</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        appBg: '#FAF7F0',
+                        emeraldDeep: '#06342B',
+                        emeraldHover: '#042720',
+                        emeraldActive: '#084035',
+                        emeraldLight: '#187A64',
+                        emeraldSoft: '#E6F4F0',
+                        goldBorder: '#EFE7DA',
+                        goldBezel: '#D4B886',
+                        goldAccent: '#C88A35',
+                        goldLight: '#FDF8F0'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            background-color: #E7DFC6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            user-select: none;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .phone-mockup-frame {
+            box-shadow: 0 25px 65px -15px rgba(25, 20, 15, 0.35),
+                0 0 0 10px #1c1c1c,
+                0 0 0 12px #d4b886,
+                0 0 0 14px #a68b56;
+        }
+
+        .press-feedback {
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .press-feedback:active {
+            transform: scale(0.98);
+            opacity: 0.92;
+        }
+
+        .slot-pill.active {
+            border-color: #06342B;
+            background-color: #06342B;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .otp-letter-box {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(6, 52, 43, 0.08);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(24, 122, 100, 0.35);
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(24, 122, 100, 0);
+            }
+        }
+
+        .pulse-otp {
+            animation: pulseGlow 2.5s infinite;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-5 text-stone-900">
+
+    <!-- Mobile Frame Container -->
+    <main
+        class="w-full sm:w-[412px] h-screen sm:h-[884px] bg-[#FAF7F0] sm:rounded-[48px] relative flex flex-col overflow-hidden sm:phone-mockup-frame">
+
+        <!-- TOP HEADER -->
+        <header class="w-full px-6 pt-5 pb-3 bg-[#FAF7F0] border-b border-[#EFE8DD]/70 z-20 shrink-0">
+            <div class="relative flex items-center justify-center">
+                <button id="backNavBtn" onclick="handleGoBack()"
+                    class="absolute left-0 p-1 text-stone-900 hover:text-stone-600 active:scale-90 transition rounded-full focus:outline-none"
+                    aria-label="Go Back">
+                    <svg class="w-6 h-6 stroke-[2.2] stroke-current fill-none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                    </svg>
+                </button>
+                <h1 id="headerTitle" class="font-serif text-[20px] font-bold text-stone-900 tracking-tight text-center">
+                    Doorstep Cash Pickup
+                </h1>
+            </div>
+        </header>
+
+        <!-- SCROLLABLE CONTENT BODY -->
+        <div id="mainScrollContainer" class="flex-1 overflow-y-auto no-scrollbar px-6 pt-3 pb-8">
+
+            <!-- ================= VIEW 1: PICKUP FORM VIEW ================= -->
+            <div id="pickupFormSection" class="space-y-4">
+
+                <!-- Plan & Amount Preview Card -->
+                <div class="bg-gradient-to-br from-[#FFFFFF] to-[#FAF5EC] rounded-2xl p-4 border border-[#EBE1D0] shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-11 h-11 rounded-xl bg-[#06342B] text-[#D4B886] flex items-center justify-center font-bold text-xl shadow-inner">
+                                💵
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-stone-400">Payment For</span>
+                                <h3 id="planNameDisplay" class="font-serif text-[15px] font-bold text-stone-900 leading-tight">11 Month Gold Plan</h3>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[11px] font-medium text-stone-400 block">Cash Amount</span>
+                            <span id="amountDisplay" class="text-[19px] font-extrabold text-[#06342B] tracking-tight block">₹5,000</span>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-2.5 border-t border-[#EFE8DD] flex items-center justify-between text-[11.5px] text-stone-600">
+                        <span class="flex items-center gap-1.5 font-medium text-[#187A64]">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Free Doorstep Collection
+                        </span>
+                        <span class="text-stone-400">Verified Store Agent</span>
+                    </div>
+                </div>
+
+                <!-- Form Card -->
+                <form id="cashPickupForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+
+                    <!-- Cash Amount Input -->
+                    <div class="bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-1.5">
+                        <label class="block text-[12px] font-bold uppercase tracking-wider text-stone-500">
+                            Cash Amount to Hand Over <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3.5 text-stone-600 font-bold text-lg">₹</span>
+                            <input type="number" id="cashAmountInput" required min="500" step="100" value="5000"
+                                class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2.5 pl-8 pr-4 text-stone-900 font-bold text-[16px] focus:outline-none focus:border-[#06342B] focus:bg-white transition"
+                                placeholder="5000">
+                        </div>
+                        <p class="text-[11px] text-stone-400">Keep exact cash ready for a quick and smooth handover.</p>
+                    </div>
+
+                    <!-- Person Details Section -->
+                    <div class="bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-3.5">
+                        <div class="flex items-center space-x-2 pb-1 border-b border-stone-100">
+                            <span class="text-base">👤</span>
+                            <h4 class="text-[13px] font-bold text-stone-800 uppercase tracking-wide">Cash Handover Person</h4>
+                        </div>
+
+                        <!-- Name of Person Giving Cash -->
+                        <div>
+                            <label class="block text-[12px] font-semibold text-stone-600 mb-1">
+                                Name of person who will give the cash <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="personNameInput" required
+                                class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2.5 px-3.5 text-stone-900 text-[14px] font-medium placeholder-stone-400 focus:outline-none focus:border-[#06342B] focus:bg-white transition"
+                                placeholder="e.g. Ramesh Kumar">
+                            <span class="text-[10.5px] text-stone-400 mt-0.5 block">This person will verify the OTP with the executive</span>
+                        </div>
+
+                        <!-- Contact Mobile Number -->
+                        <div>
+                            <label class="block text-[12px] font-semibold text-stone-600 mb-1">
+                                Mobile Number <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative flex items-center">
+                                <div class="absolute left-3 flex items-center space-x-1 text-stone-500 text-[13px] font-semibold">
+                                    <span>🇮🇳</span>
+                                    <span>+91</span>
+                                    <span class="text-stone-300">|</span>
+                                </div>
+                                <input type="tel" id="mobileNumberInput" required pattern="[0-9]{10}" maxlength="10"
+                                    class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2.5 pl-20 pr-3.5 text-stone-900 text-[14px] font-semibold tracking-wider placeholder-stone-400 focus:outline-none focus:border-[#06342B] focus:bg-white transition"
+                                    placeholder="9876543210">
+                            </div>
+                        </div>
+
+                        <!-- Alternate Mobile (Optional) -->
+                        <div>
+                            <label class="block text-[12px] font-medium text-stone-500 mb-1">
+                                Alternate Number (Optional)
+                            </label>
+                            <input type="tel" id="altMobileInput" pattern="[0-9]{10}" maxlength="10"
+                                class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2 px-3.5 text-stone-800 text-[13px] placeholder-stone-400 focus:outline-none focus:border-[#06342B] focus:bg-white transition"
+                                placeholder="Secondary contact number">
+                        </div>
+                    </div>
+
+                    <!-- Location & Address Section -->
+                    <div class="bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-3.5">
+                        <div class="flex items-center justify-between pb-1 border-b border-stone-100">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-base">📍</span>
+                                <h4 class="text-[13px] font-bold text-stone-800 uppercase tracking-wide">Pickup Location</h4>
+                            </div>
+                            <button type="button" onclick="detectCurrentLocation()"
+                                class="text-[11px] font-bold text-[#187A64] hover:underline flex items-center gap-1 active:scale-95 transition">
+                                <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Use GPS
+                            </button>
+                        </div>
+
+                        <!-- House / Flat / Building -->
+                        <div>
+                            <label class="block text-[12px] font-semibold text-stone-600 mb-1">
+                                Flat / House No. / Building Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="addressLine1Input" required
+                                class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2.5 px-3.5 text-stone-900 text-[14px] font-medium placeholder-stone-400 focus:outline-none focus:border-[#06342B] focus:bg-white transition"
+                                placeholder="e.g. Flat 302, Royal Palms Residency">
+                        </div>
+
+                        <!-- Street / Area / Landmark -->
+                        <div>
+                            <label class="block text-[12px] font-semibold text-stone-600 mb-1">
+                                Area / Street / Landmark <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="addressAreaInput" required
+                                class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2.5 px-3.5 text-stone-900 text-[14px] font-medium placeholder-stone-400 focus:outline-none focus:border-[#06342B] focus:bg-white transition"
+                                placeholder="e.g. Near City Gold Market, MG Road">
+                        </div>
+
+                        <!-- City & Pincode Grid -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[12px] font-semibold text-stone-600 mb-1">
+                                    City <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="cityInput" required value="Mumbai"
+                                    class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2.5 px-3.5 text-stone-900 text-[14px] font-medium focus:outline-none focus:border-[#06342B] focus:bg-white transition">
+                            </div>
+                            <div>
+                                <label class="block text-[12px] font-semibold text-stone-600 mb-1">
+                                    Pincode <span class="text-red-500">*</span>
+                                </label>
+                                <input type="tel" id="pincodeInput" required pattern="[0-9]{6}" maxlength="6" value="400001"
+                                    class="w-full bg-[#FAF7F0]/60 border border-stone-200 rounded-xl py-2.5 px-3.5 text-stone-900 text-[14px] font-semibold tracking-wider focus:outline-none focus:border-[#06342B] focus:bg-white transition">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pickup Slot Section -->
+                    <div class="bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-3">
+                        <div class="flex items-center space-x-2 pb-1 border-b border-stone-100">
+                            <span class="text-base">⏰</span>
+                            <h4 class="text-[13px] font-bold text-stone-800 uppercase tracking-wide">Pickup Time Window</h4>
+                        </div>
+
+                        <!-- Date Option Chips -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" onclick="selectDateChip(this, 'Today')"
+                                class="date-chip active border border-[#06342B] bg-[#06342B] text-white py-2 px-3 rounded-xl text-[12.5px] font-bold text-center transition">
+                                Today (Express)
+                            </button>
+                            <button type="button" onclick="selectDateChip(this, 'Tomorrow')"
+                                class="date-chip border border-stone-200 bg-[#FAF7F0]/60 text-stone-700 py-2 px-3 rounded-xl text-[12.5px] font-medium text-center transition">
+                                Tomorrow
+                            </button>
+                        </div>
+
+                        <!-- Time Slot Pills -->
+                        <div class="space-y-1.5 pt-1">
+                            <span class="text-[11.5px] font-semibold text-stone-500 block">Select Slot:</span>
+                            <div class="grid grid-cols-1 gap-2">
+                                <label class="flex items-center justify-between p-2.5 rounded-xl border-2 border-[#06342B] bg-[#F7FAF9] cursor-pointer slot-label">
+                                    <div class="flex items-center space-x-2.5">
+                                        <input type="radio" name="timeSlot" value="Morning (10:00 AM - 01:00 PM)" checked class="accent-[#06342B]" onchange="highlightSlot(this)">
+                                        <span class="text-[13px] font-bold text-stone-900">Morning (10:00 AM - 01:00 PM)</span>
+                                    </div>
+                                    <span class="text-[10.5px] font-semibold text-[#187A64] bg-[#E6F4F0] px-2 py-0.5 rounded-full">Available</span>
+                                </label>
+                                <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer slot-label">
+                                    <div class="flex items-center space-x-2.5">
+                                        <input type="radio" name="timeSlot" value="Afternoon (01:00 PM - 05:00 PM)" class="accent-[#06342B]" onchange="highlightSlot(this)">
+                                        <span class="text-[13px] font-medium text-stone-800">Afternoon (01:00 PM - 05:00 PM)</span>
+                                    </div>
+                                    <span class="text-[10.5px] font-medium text-stone-400">Standard</span>
+                                </label>
+                                <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer slot-label">
+                                    <div class="flex items-center space-x-2.5">
+                                        <input type="radio" name="timeSlot" value="Evening (05:00 PM - 08:00 PM)" class="accent-[#06342B]" onchange="highlightSlot(this)">
+                                        <span class="text-[13px] font-medium text-stone-800">Evening (05:00 PM - 08:00 PM)</span>
+                                    </div>
+                                    <span class="text-[10.5px] font-medium text-stone-400">Standard</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Safety Guarantee Note -->
+                    <div class="p-3.5 rounded-2xl bg-[#E6F4F0] border border-[#C5E5DC] flex items-start space-x-3">
+                        <div class="w-6 h-6 rounded-full bg-[#187A64] text-white flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                            ✓
+                        </div>
+                        <div>
+                            <h5 class="text-[12px] font-bold text-[#06342B]">Store Security Guarantee</h5>
+                            <p class="text-[11px] text-[#145344] mt-0.5 leading-snug">
+                                An OTP will be generated next. Only reveal that OTP when our store staff arrives and presents their official Shop Identity Badge.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-2">
+                        <button type="submit" id="submitBtn"
+                            class="press-feedback w-full bg-[#06342B] hover:bg-[#042720] text-white py-4 px-6 rounded-full font-bold text-[16px] tracking-wide shadow-lg shadow-[#06342B]/25 flex items-center justify-center space-x-2 transition cursor-pointer">
+                            <span>Schedule Pickup & Get OTP</span>
+                            <svg class="w-5 h-5 stroke-[2.2] stroke-current fill-none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- ================= VIEW 2: OTP & CONFIRMATION VIEW ================= -->
+            <div id="pickupSuccessSection" class="hidden space-y-4">
+
+                <!-- Celebration Header -->
+                <div class="text-center pt-2 pb-1 space-y-1">
+                    <div class="w-16 h-16 rounded-full bg-[#E6F4F0] border-2 border-[#187A64]/30 text-[#06342B] flex items-center justify-center mx-auto shadow-sm">
+                        <svg class="w-9 h-9 stroke-[2.8] stroke-current fill-none" viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <span class="inline-block mt-2 px-3 py-0.5 rounded-full bg-emerald-100 text-[#06342B] text-[11px] font-bold tracking-wide">
+                        ● Pickup Scheduled & Confirmed
+                    </span>
+                    <h2 class="font-serif text-[22px] font-bold text-stone-900 tracking-tight">
+                        Cash Pickup Requested!
+                    </h2>
+                    <p class="text-[12.5px] text-stone-600 max-w-[300px] mx-auto leading-relaxed">
+                        Our store executive has been assigned and will visit your location to collect the cash.
+                    </p>
+                </div>
+
+                <!-- OTP DISPLAY CARD (HERO ELEMENT) -->
+                <div class="bg-gradient-to-b from-[#FFFFFF] to-[#FAF7F0] rounded-3xl p-5 border-2 border-[#06342B] shadow-xl text-center space-y-3 pulse-otp">
+                    <div class="flex items-center justify-center gap-1.5 text-stone-500">
+                        <svg class="w-4 h-4 stroke-[2] stroke-current fill-none text-[#C88A35]" viewBox="0 0 24 24">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <span class="text-[11.5px] font-bold uppercase tracking-widest text-[#06342B]">
+                            Pickup Verification OTP
+                        </span>
+                    </div>
+
+                    <!-- 6 DIGIT OTP BOXES -->
+                    <div class="flex items-center justify-center space-x-2 py-1" id="otpContainer">
+                        <div class="w-11 h-13 py-2 rounded-xl otp-letter-box border border-[#D4B886] font-mono text-[24px] font-extrabold text-[#06342B] flex items-center justify-center" id="otpDigit0">7</div>
+                        <div class="w-11 h-13 py-2 rounded-xl otp-letter-box border border-[#D4B886] font-mono text-[24px] font-extrabold text-[#06342B] flex items-center justify-center" id="otpDigit1">4</div>
+                        <div class="w-11 h-13 py-2 rounded-xl otp-letter-box border border-[#D4B886] font-mono text-[24px] font-extrabold text-[#06342B] flex items-center justify-center" id="otpDigit2">2</div>
+                        <span class="text-stone-300 font-bold text-lg">-</span>
+                        <div class="w-11 h-13 py-2 rounded-xl otp-letter-box border border-[#D4B886] font-mono text-[24px] font-extrabold text-[#06342B] flex items-center justify-center" id="otpDigit3">9</div>
+                        <div class="w-11 h-13 py-2 rounded-xl otp-letter-box border border-[#D4B886] font-mono text-[24px] font-extrabold text-[#06342B] flex items-center justify-center" id="otpDigit4">1</div>
+                        <div class="w-11 h-13 py-2 rounded-xl otp-letter-box border border-[#D4B886] font-mono text-[24px] font-extrabold text-[#06342B] flex items-center justify-center" id="otpDigit5">8</div>
+                    </div>
+
+                    <!-- CRITICAL INSTRUCTION BADGE -->
+                    <div class="bg-amber-50 border border-amber-200/80 rounded-xl p-3 text-left flex items-start space-x-2.5">
+                        <span class="text-base shrink-0">⚠️</span>
+                        <div>
+                            <p class="text-[12px] font-bold text-amber-900 leading-snug">
+                                Tell this OTP to our shop executive in person
+                            </p>
+                            <p class="text-[11px] text-amber-800 leading-snug mt-0.5">
+                                When the executive arrives at your location, ask to see their Shop ID and give them this OTP to confirm the cash handover. Do not share on call.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Copy OTP & Share Actions -->
+                    <div class="flex items-center justify-center gap-2 pt-1">
+                        <button type="button" onclick="copyOtpToClipboard()"
+                            class="press-feedback text-[12px] font-bold text-[#06342B] bg-[#E6F4F0] hover:bg-[#d8ece7] px-4 py-2 rounded-full border border-[#187A64]/30 flex items-center gap-1.5 transition">
+                            <svg class="w-3.5 h-3.5 stroke-current fill-none stroke-[2]" viewBox="0 0 24 24">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span id="copyBtnText">Copy OTP</span>
+                        </button>
+                        <button type="button" onclick="sharePickupDetails()"
+                            class="press-feedback text-[12px] font-bold text-stone-700 bg-white hover:bg-stone-50 px-4 py-2 rounded-full border border-stone-200 flex items-center gap-1.5 transition">
+                            <svg class="w-3.5 h-3.5 stroke-current fill-none stroke-[2]" viewBox="0 0 24 24">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                <polyline points="16 6 12 2 8 6"></polyline>
+                                <line x1="12" y1="2" x2="12" y2="15"></line>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ASSIGNED SHOP EXECUTIVE INFO -->
+                <div class="bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-sm space-y-3">
+                    <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+                        <span class="text-[12px] font-bold uppercase tracking-wider text-stone-400">Assigned Shop Executive</span>
+                        <span class="text-[11px] font-bold text-[#187A64] bg-[#E6F4F0] px-2 py-0.5 rounded-full">On The Way</span>
+                    </div>
+
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#D4B886] to-[#F3E5CF] p-0.5 shrink-0 shadow-xs">
+                            <div class="w-full h-full rounded-full bg-white flex items-center justify-center text-lg">
+                                👨‍💼
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-[14px] font-bold text-stone-900 leading-snug">Rajesh Verma</h4>
+                            <p class="text-[11.5px] text-stone-500">Official Executive ID: <span class="font-mono font-bold text-stone-800">SJ-409</span></p>
+                            <p class="text-[11px] text-[#187A64] font-medium mt-0.5">Verified Jewellers Staff • Carrying Digital Scale</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DETAILS SUMMARY CARD -->
+                <div class="bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-sm space-y-2.5 text-[12.5px]">
+                    <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+                        <span class="text-[12px] font-bold uppercase tracking-wider text-stone-400">Pickup Summary</span>
+                        <span id="summaryRequestId" class="font-mono text-[11px] font-bold text-stone-600">REQ #CP-93821</span>
+                    </div>
+
+                    <div class="flex justify-between py-1">
+                        <span class="text-stone-500">Amount to Handover</span>
+                        <span id="summaryAmount" class="font-extrabold text-[15px] text-[#06342B]">₹5,000</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-stone-500">Person Giving Cash</span>
+                        <span id="summaryPerson" class="font-bold text-stone-800">Ramesh Kumar</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-stone-500">Contact Number</span>
+                        <span id="summaryMobile" class="font-bold text-stone-800">+91 9876543210</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-stone-500">Scheduled Time</span>
+                        <span id="summarySlot" class="font-bold text-stone-800">Today • 10 AM - 1 PM</span>
+                    </div>
+                    <div class="pt-1 border-t border-stone-100">
+                        <span class="text-stone-500 block mb-0.5">Pickup Address:</span>
+                        <p id="summaryAddress" class="text-stone-800 font-medium leading-snug">
+                            Flat 302, Royal Palms, MG Road, Mumbai - 400001
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="pt-2 space-y-2.5">
+                    <button type="button" onclick="window.location.href='index.html'"
+                        class="press-feedback w-full bg-[#06342B] hover:bg-[#042720] text-white py-3.5 px-6 rounded-full font-bold text-[15px] tracking-wide shadow-md transition flex items-center justify-center space-x-2">
+                        <span>Done - Return to Home</span>
+                    </button>
+                    <button type="button" onclick="window.location.href='plan.html'"
+                        class="press-feedback w-full bg-white hover:bg-stone-50 text-stone-800 py-3 px-6 rounded-full font-bold text-[14px] border border-stone-200 transition text-center block">
+                        View My Gold Plan
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TOAST NOTIFICATION -->
+        <div id="toast"
+            class="absolute top-16 inset-x-6 bg-stone-900/95 backdrop-blur text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none z-50">
+            <div class="w-7 h-7 rounded-full bg-[#187A64] text-white flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4 stroke-[2.5] stroke-current fill-none" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div>
+                <p id="toastTitle" class="text-xs font-bold leading-tight">Notification</p>
+                <p id="toastMsg" class="text-[11px] text-stone-300 leading-snug">Done</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // State
+        let currentSelectedDate = 'Today';
+        let generatedOtp = '742918';
+        let generatedRequestId = 'CP-84920';
+
+        // URL Parameters initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const amountParam = params.get('amount') || '5000';
+            const planParam = params.get('plan') || '11 Month Gold Plan';
+
+            const cleanAmount = amountParam.replace(/[^0-9]/g, '') || '5000';
+            const formattedAmount = '₹' + Number(cleanAmount).toLocaleString('en-IN');
+
+            const planEl = document.getElementById('planNameDisplay');
+            const amtDisplay = document.getElementById('amountDisplay');
+            const amtInput = document.getElementById('cashAmountInput');
+
+            if (planEl) planEl.textContent = planParam;
+            if (amtDisplay) amtDisplay.textContent = formattedAmount;
+            if (amtInput) amtInput.value = cleanAmount;
+        });
+
+        function handleGoBack() {
+            if (document.getElementById('pickupSuccessSection').classList.contains('hidden')) {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.location.href = 'payment.html';
+                }
+            } else {
+                // If in success section, return to home
+                window.location.href = 'index.html';
+            }
+        }
+
+        function selectDateChip(btn, dateVal) {
+            currentSelectedDate = dateVal;
+            document.querySelectorAll('.date-chip').forEach(b => {
+                b.classList.remove('bg-[#06342B]', 'text-white', 'font-bold', 'border-[#06342B]');
+                b.classList.add('bg-[#FAF7F0]/60', 'text-stone-700', 'font-medium', 'border-stone-200');
+            });
+            btn.classList.remove('bg-[#FAF7F0]/60', 'text-stone-700', 'font-medium', 'border-stone-200');
+            btn.classList.add('bg-[#06342B]', 'text-white', 'font-bold', 'border-[#06342B]');
+        }
+
+        function highlightSlot(radio) {
+            document.querySelectorAll('.slot-label').forEach(label => {
+                label.classList.remove('border-2', 'border-[#06342B]', 'bg-[#F7FAF9]');
+                label.classList.add('border', 'border-stone-200', 'bg-white');
+            });
+            const parentLabel = radio.closest('.slot-label');
+            if (parentLabel) {
+                parentLabel.classList.remove('border', 'border-stone-200', 'bg-white');
+                parentLabel.classList.add('border-2', 'border-[#06342B]', 'bg-[#F7FAF9]');
+            }
+        }
+
+        function detectCurrentLocation() {
+            showToast('Detecting GPS...', 'Fetching your current address location');
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        document.getElementById('addressAreaInput').value = 'Bandra West, Hill Road';
+                        document.getElementById('cityInput').value = 'Mumbai';
+                        document.getElementById('pincodeInput').value = '400050';
+                        showToast('Location Detected', 'Address details updated from GPS');
+                    },
+                    (err) => {
+                        // Fallback simulated auto-fill
+                        document.getElementById('addressAreaInput').value = 'Civil Lines, Near Market';
+                        showToast('Location Filled', 'Default shop service location auto-populated');
+                    },
+                    { timeout: 5000 }
+                );
+            } else {
+                document.getElementById('addressAreaInput').value = 'Civil Lines, Near Market';
+                showToast('Location Filled', 'Default shop service location auto-populated');
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('personNameInput').value.trim();
+            const phone = document.getElementById('mobileNumberInput').value.trim();
+            const addr1 = document.getElementById('addressLine1Input').value.trim();
+            const area = document.getElementById('addressAreaInput').value.trim();
+            const city = document.getElementById('cityInput').value.trim();
+            const pin = document.getElementById('pincodeInput').value.trim();
+            const rawAmount = document.getElementById('cashAmountInput').value.trim() || '5000';
+            const selectedSlotRadio = document.querySelector('input[name="timeSlot"]:checked');
+            const slotText = selectedSlotRadio ? selectedSlotRadio.value : 'Morning (10:00 AM - 01:00 PM)';
+
+            if (!name || !phone || !addr1 || !area || !city || !pin) {
+                showToast('Missing Fields', 'Please fill all required details');
+                return;
+            }
+
+            // Generate 6 Digit OTP
+            const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
+            generatedOtp = randomCode;
+
+            // Generate Request ID
+            const reqNum = Math.floor(10000 + Math.random() * 90000);
+            generatedRequestId = 'CP-' + reqNum;
+
+            // Populate OTP digits
+            for (let i = 0; i < 6; i++) {
+                const el = document.getElementById('otpDigit' + i);
+                if (el) el.textContent = randomCode.charAt(i);
+            }
+
+            // Populate summary card
+            const formattedAmount = '₹' + Number(rawAmount).toLocaleString('en-IN');
+            document.getElementById('summaryAmount').textContent = formattedAmount;
+            document.getElementById('summaryPerson').textContent = name;
+            document.getElementById('summaryMobile').textContent = '+91 ' + phone;
+            document.getElementById('summarySlot').textContent = currentSelectedDate + ' • ' + slotText.split('(')[0].trim();
+            document.getElementById('summaryAddress').textContent = `${addr1}, ${area}, ${city} - ${pin}`;
+            document.getElementById('summaryRequestId').textContent = 'REQ #' + generatedRequestId;
+
+            // Update Header Title
+            document.getElementById('headerTitle').textContent = 'Cash Pickup Confirmed';
+
+            // Switch to Confirmation view
+            document.getElementById('pickupFormSection').classList.add('hidden');
+            const successSection = document.getElementById('pickupSuccessSection');
+            successSection.classList.remove('hidden');
+
+            // Scroll to top
+            document.getElementById('mainScrollContainer').scrollTop = 0;
+
+            // Trigger celebration confetti
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.4 },
+                    colors: ['#06342B', '#D4B886', '#187A64', '#C88A35']
+                });
+            }
+
+            showToast('Pickup Scheduled!', `Verification OTP is ${randomCode}`);
+        }
+
+        function copyOtpToClipboard() {
+            navigator.clipboard.writeText(generatedOtp).then(() => {
+                const btn = document.getElementById('copyBtnText');
+                if (btn) btn.textContent = 'Copied!';
+                showToast('OTP Copied', `Tell code ${generatedOtp} to the shop executive`);
+                setTimeout(() => {
+                    if (btn) btn.textContent = 'Copy OTP';
+                }, 2000);
+            }).catch(() => {
+                showToast('OTP Code', `Your OTP is ${generatedOtp}`);
+            });
+        }
+
+        function sharePickupDetails() {
+            const shareText = `Cash Pickup Scheduled! Request ID: ${generatedRequestId}, Verification OTP: ${generatedOtp}. Tell this OTP to the store executive upon arrival.`;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Cash Pickup OTP',
+                    text: shareText
+                }).catch(() => {});
+            } else {
+                copyOtpToClipboard();
+            }
+        }
+
+        let toastTimer;
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            const tTitle = document.getElementById('toastTitle');
+            const tMsg = document.getElementById('toastMsg');
+            if (!toast) return;
+
+            clearTimeout(toastTimer);
+            tTitle.textContent = title;
+            tMsg.textContent = msg;
+
+            toast.classList.remove('-translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            toastTimer = setTimeout(() => {
+                toast.classList.add('-translate-y-24', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+    </script>
+
+</body>
+
+</html>

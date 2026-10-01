@@ -377,6 +377,38 @@
                     </div>
                 </div>
 
+                <!-- Option 5: Pick Cash (Doorstep Collection) -->
+                <div id="option-cash" onclick="selectPaymentMethod('cash')"
+                    class="payment-option-card press-feedback cursor-pointer bg-white rounded-2xl p-4 border border-[#EFE8DD] shadow-xs flex items-center justify-between"
+                    role="radio" aria-checked="false" tabindex="0">
+                    <div class="flex items-center space-x-3.5">
+                        <!-- Cash Icon Box -->
+                        <div
+                            class="w-10 h-10 rounded-xl bg-[#FAF7F0] border border-[#EBE1D0] flex items-center justify-center shrink-0 text-[#06342B]">
+                            <svg class="w-5 h-5 stroke-[1.8] stroke-current fill-none" viewBox="0 0 24 24">
+                                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                <circle cx="12" cy="12" r="2.5"></circle>
+                                <path d="M6 12h.01M18 12h.01"></path>
+                            </svg>
+                        </div>
+
+                        <!-- Title & Subtitle -->
+                        <div>
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="text-[14px] font-bold text-stone-900">Pick Cash</span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wide bg-[#E6F4F0] text-[#187A64] px-1.5 py-0.5 rounded">Doorstep</span>
+                            </div>
+                            <span class="text-[12px] font-medium text-stone-500 block mt-0.5">Store executive collects cash at your home</span>
+                        </div>
+                    </div>
+
+                    <!-- Radio Indicator (Unchecked) -->
+                    <div id="radio-cash"
+                        class="w-6 h-6 rounded-full border-2 border-stone-300 flex items-center justify-center shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-[#06342B] hidden"></div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Trust & Security Badge -->
@@ -485,17 +517,19 @@
             upi: 'UPI (Recommended)',
             card: 'Debit / Credit Card',
             netbanking: 'Net Banking',
-            wallets: 'Wallets'
+            wallets: 'Wallets',
+            cash: 'Pick Cash (Doorstep Collection)'
         };
 
         // Switch Payment Method Radio selection
         function selectPaymentMethod(methodKey) {
             selectedMethod = methodKey;
-            const methods = ['upi', 'card', 'netbanking', 'wallets'];
+            const methods = ['upi', 'card', 'netbanking', 'wallets', 'cash'];
 
             methods.forEach(id => {
                 const cardEl = document.getElementById('option-' + id);
                 const radioEl = document.getElementById('radio-' + id);
+                if (!cardEl || !radioEl) return;
                 const dotEl = radioEl.querySelector('div');
 
                 if (id === methodKey) {
@@ -518,6 +552,16 @@
                     dotEl.classList.add('hidden');
                 }
             });
+
+            // Update CTA button label if cash is selected
+            const payBtnSpan = document.querySelector('#payBtn span');
+            if (payBtnSpan) {
+                if (methodKey === 'cash') {
+                    payBtnSpan.textContent = 'Schedule Cash Pickup →';
+                } else {
+                    payBtnSpan.textContent = 'Pay ₹5,000';
+                }
+            }
         }
 
         // Toast alert helper
@@ -548,6 +592,11 @@
 
         // Initiate Payment
         function initiatePayment() {
+            if (selectedMethod === 'cash') {
+                window.location.href = 'cash-pickup.html?amount=5000&plan=11 Month Gold Plan';
+                return;
+            }
+
             const modal = document.getElementById('paymentModal');
             const loadingState = document.getElementById('modalLoadingState');
             const successState = document.getElementById('modalSuccessState');

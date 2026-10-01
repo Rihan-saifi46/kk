@@ -320,6 +320,40 @@
           </div>
         </div>
 
+        <!-- Card 5: Pick Cash -->
+        <div onclick="selectPaymentMethod('cash')" id="method-card-cash" class="bg-white rounded-[20px] border border-cardBorder p-4 shadow-subtleCard flex items-center justify-between cursor-pointer transition-all hover:border-[#D1C7BA]">
+          <div class="flex items-center gap-3.5">
+            <!-- Cash Icon Box -->
+            <div class="w-11 h-11 rounded-[12px] bg-[#FAF8F5] border border-[#ECE5DC] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6 text-[#073B2C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="2" y="6" width="20" height="12" rx="2" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="2.5"/>
+                <path d="M6 12h.01M18 12h.01" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <!-- Labels -->
+            <div>
+              <div class="flex items-center gap-1.5">
+                <div class="text-[15px] font-bold text-textHeading">
+                  Pick Cash
+                </div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wide bg-emerald-100 text-[#073B2C] px-1.5 py-0.5 rounded">
+                  Doorstep
+                </span>
+              </div>
+              <p class="text-[13px] text-labelMuted mt-0.5">
+                Store staff collects cash at your home
+              </p>
+            </div>
+          </div>
+
+          <!-- Radio Indicator -->
+          <div id="radio-cash" class="w-6 h-6 rounded-full border-2 border-neutral-300 flex items-center justify-center shrink-0">
+            <div class="w-3 h-3 rounded-full bg-brandDarkGreen radio-dot"></div>
+          </div>
+        </div>
+
       </div>
 
     </main>
@@ -404,7 +438,8 @@
       'upi': 'UPI (Recommended)',
       'card': 'Debit / Credit Card',
       'netbanking': 'Net Banking',
-      'wallets': 'Wallets'
+      'wallets': 'Wallets',
+      'cash': 'Pick Cash (Doorstep)'
     };
 
     function triggerToast(message) {
@@ -423,11 +458,12 @@
 
     function selectPaymentMethod(methodKey) {
       selectedMethod = methodKey;
-      const methods = ['upi', 'card', 'netbanking', 'wallets'];
+      const methods = ['upi', 'card', 'netbanking', 'wallets', 'cash'];
 
       methods.forEach(id => {
         const cardElem = document.getElementById(`method-card-${id}`);
         const radioElem = document.getElementById(`radio-${id}`);
+        if (!cardElem || !radioElem) return;
         
         if (id === methodKey) {
           cardElem.classList.add('active-card');
@@ -440,10 +476,20 @@
         }
       });
 
+      const btnLabel = document.getElementById('payBtnLabel');
+      if (btnLabel) {
+        btnLabel.innerText = methodKey === 'cash' ? 'Proceed with Cash Pickup →' : 'Pay ₹5,000';
+      }
+
       triggerToast('Selected ' + methodNames[methodKey]);
     }
 
     function handleStartPaymentProcess() {
+      if (selectedMethod === 'cash') {
+        window.location.href = 'cash-pickup.html?amount=5000&plan=Gold Savings Plan';
+        return;
+      }
+
       const payBtn = document.getElementById('mainPayBtn');
       const btnLabel = document.getElementById('payBtnLabel');
       const btnSpinner = document.getElementById('btnSpinner');
