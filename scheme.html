@@ -534,6 +534,17 @@
                     <label
                         class="flex items-center justify-between p-3 rounded-xl bg-white border border-[#D9DFDC] cursor-pointer hover:border-[#073B2C]">
                         <div class="flex items-center gap-2.5">
+                            <span class="text-base">📲</span>
+                            <div>
+                                <span class="text-xs font-semibold text-neutral-800 block">Scan UPI QR Code</span>
+                                <span class="text-[10.5px] text-neutral-500">Scan &amp; pay via any UPI app</span>
+                            </div>
+                        </div>
+                        <input type="radio" name="payMethod" value="qr" class="accent-[#073B2C]">
+                    </label>
+                    <label
+                        class="flex items-center justify-between p-3 rounded-xl bg-white border border-[#D9DFDC] cursor-pointer hover:border-[#073B2C]">
+                        <div class="flex items-center gap-2.5">
                             <span class="text-base">🏦</span>
                             <span class="text-xs font-semibold text-neutral-800">Net Banking / Debit Card</span>
                         </div>
@@ -598,6 +609,10 @@
                 const amt = document.getElementById('modalPaymentAmount').innerText.replace(/[^0-9]/g, '') || '5000';
                 const plan = document.getElementById('modalPaymentItem').innerText || 'October Instalment';
                 window.location.href = `cash-pickup.html?amount=${amt}&plan=${encodeURIComponent(plan)}`;
+                return;
+            }
+            if (selectedRadio && selectedRadio.value === 'qr') {
+                window.location.href = 'payment.html';
                 return;
             }
 
